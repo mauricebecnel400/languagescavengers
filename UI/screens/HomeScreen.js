@@ -17,10 +17,10 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.earthcontainer}>
+                    <Text style={styles.logoText}> Language Scavengers </Text>
                     <Image 
+                        style={styles.earth}
                         source={require('../assets/LanguageScavengersWorld.png')}
-                        style={{flex:1, height: undefined, width: undefined}}
-                        resizeMode="contain"
                     />
                 </View>
             </View>
@@ -31,15 +31,22 @@ export default class HomeScreen extends React.Component {
 const styles =  StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        backgroundColor: 'powderblue',
-        justifyContent: 'center',
-        width: '100%',
-    },
-    earth: {
-        
+        backgroundColor: '#ADD8E6',
     },
     earthcontainer: {
         width: '100%',
+        alignItems: 'center',
+        paddingTop: 10,
+    },
+    logoText: {
+        fontSize: 30,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'center', 
+        fontWeight: 'bold',
+        padding: 5,
+    },
+    earth: {
+        resizeMode: 'contain',
     },
 });
