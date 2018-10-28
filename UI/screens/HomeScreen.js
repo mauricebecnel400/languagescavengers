@@ -8,6 +8,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import ScavengerModeTile from '../components/ScavengerModeTile';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -17,12 +18,16 @@ export default class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.earthcontainer}>
-                    <Text style={styles.logoText}> Language Scavengers </Text>
                     <Image 
                         style={styles.earth}
                         source={require('../assets/LanguageScavengersWorld.png')}
                     />
+                    <Text style={styles.headerSubText}> Let's Find New Words</Text>
                 </View>
+                <ScavengerModeTile/>
+                <ScavengerModeTile/>
+                <ScavengerModeTile/>
+
             </View>
         )
     }
@@ -44,9 +49,16 @@ const styles =  StyleSheet.create({
         lineHeight: 24,
         textAlign: 'center', 
         fontWeight: 'bold',
-        padding: 5,
     },
     earth: {
         resizeMode: 'contain',
     },
+
+    headerSubText: {
+        fontSize: 14,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'center',
+        padding: 5,
+    }
 });
