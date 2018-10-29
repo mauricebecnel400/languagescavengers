@@ -4,34 +4,29 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Card from './Card';
 
 
-export default class ScavengerModeTile extends React.Component {
+export default class SettingTile extends React.Component {
 
     render() {
         return (
-            <TouchableHighlight 
-                onPress={() => this.props.navigation.navigate('ScavengerMode')} 
-                underlayColor="white" 
-            >
-                <Card> 
-                    <View style={styles.container}>
-                        <View style={styles.Header}>
-                            <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
-                            <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
-                        </View>
-                        <View style={styles.SubHeader}>
-                            <Text style={styles.SubText}> Current Word  </Text>
-                            <Text style={styles.SubText}> Round Score  </Text>
-                        </View>
+            <Card> 
+                <View style={styles.container}>
+                    <View style={styles.Header}>
+                        <FontAwesome name="cogs" size={30} style={styles.MagnifyingGlass} />
+                        <Text style={styles.TileHeaderText}> Settings </Text>
                     </View>
-                </Card>
-            </TouchableHighlight>
+                    <View style={styles.SubHeader}>
+                        <Text style={styles.SubText}> Current Word  </Text>
+                        <Text style={styles.SubText}> Round Score  </Text>
+                    </View>
+                </View>
+            </Card>
         )
     }
 
@@ -43,6 +38,7 @@ const styles =  StyleSheet.create({
     Header: {
         flex: 1,
         flexDirection: 'row',
+
     },
     MagnifyingGlass: {
         padding: 10,

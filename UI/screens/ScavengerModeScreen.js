@@ -1,0 +1,49 @@
+import React from 'react';
+import {
+    View,
+    Image,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    StyleSheet,
+} from 'react-native';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import Card from '../components/Card';
+
+export default class ScavengerMode extends React.Component {
+    render() {
+        return (
+            <View style={styles.container}>
+                <Card>
+                    <View style={styles.Header}>
+                        <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
+                        <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
+                    </View>
+                </Card>
+            </View>
+        )
+    }
+
+}
+const styles =  StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#ADD8E6',
+    },
+    Header: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    TileHeaderText: {
+        fontSize: 30,
+        paddingTop: 20,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    MagnifyingGlass: {
+        padding: 10,
+        color: 'rgba(96,100,109, 1)',
+    },
+});

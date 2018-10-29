@@ -1,19 +1,18 @@
 import React from 'react';
+import { StackNavigator } from 'react-navigation';
 import {
     View,
     Image,
     ScrollView,
     Text,
-    TouchableOpacity,
+    TouchableHighlight,
     StyleSheet,
 } from 'react-native';
-import { WebBrowser } from 'expo';
 import ScavengerModeTile from '../components/ScavengerModeTile';
+import WordBookTile from '../components/WordBookTile';
+import SettingTile from '../components/SettingTile';
 
 export default class HomeScreen extends React.Component {
-    static navigationOptions = {
-        title: 'Home',
-    };
     render() {
         return (
             <View style={styles.container}>
@@ -24,7 +23,9 @@ export default class HomeScreen extends React.Component {
                     />
                     <Text style={styles.headerSubText}> Let's Find New Words</Text>
                 </View>
-                <ScavengerModeTile/>
+                <ScavengerModeTile navigation={this.props.navigation}/>
+                <WordBookTile/>
+                <SettingTile/>
             </View>
         )
     }
