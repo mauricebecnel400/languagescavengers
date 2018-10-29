@@ -20,15 +20,13 @@ export default class ScavengerModeTile extends React.Component {
                 underlayColor="white" 
             >
                 <Card> 
-                    <View style={styles.container}>
-                        <View style={styles.Header}>
-                            <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
-                            <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
-                        </View>
-                        <View style={styles.SubHeader}>
-                            <Text style={styles.SubText}> Current Word  </Text>
-                            <Text style={styles.SubText}> Round Score  </Text>
-                        </View>
+                    <View style={styles.Header}>
+                        <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
+                        <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
+                    </View>
+                    <View style={styles.SubHeader}>
+                        <Text style={styles.SubText}> Current Word  </Text>
+                        <Text style={styles.SubText}> Overall Score  </Text>
                     </View>
                 </Card>
             </TouchableHighlight>

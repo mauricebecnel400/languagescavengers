@@ -12,7 +12,6 @@ import Card from './Card';
 
 
 export default class SettingTile extends React.Component {
-
     render() {
         return (
             <Card> 
@@ -22,7 +21,7 @@ export default class SettingTile extends React.Component {
                         <Text style={styles.TileHeaderText}> Settings </Text>
                     </View>
                     <View style={styles.SubHeader}>
-                        <Text style={styles.SubText}> Current Word  </Text>
+                        <Text style={styles.SubText}> Current Word </Text>
                         <Text style={styles.SubText}> Round Score  </Text>
                     </View>
                 </View>

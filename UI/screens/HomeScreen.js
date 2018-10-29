@@ -13,6 +13,7 @@ import WordBookTile from '../components/WordBookTile';
 import SettingTile from '../components/SettingTile';
 
 export default class HomeScreen extends React.Component {
+
     render() {
         return (
             <View style={styles.container}>
