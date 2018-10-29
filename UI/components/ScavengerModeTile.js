@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
-import FontAwesome, { Icons } from 'react-native-fontawesome';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Card from './Card';
 
 
@@ -17,10 +17,14 @@ export default class ScavengerModeTile extends React.Component {
         return (
             <Card> 
                 <View style={styles.container}>
-                    <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>
-                        <FontAwesome>{Icons.chevronLeft}</FontAwesome>
-                    </Text>
-                    <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
+                    <View style={styles.Header}>
+                        <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
+                        <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
+                    </View>
+                    <View style={styles.SubHeader}>
+                        <Text style={styles.SubText}> Current Word  </Text>
+                        <Text style={styles.SubText}> Round Score  </Text>
+                    </View>
                 </View>
             </Card>
         )
@@ -28,20 +32,37 @@ export default class ScavengerModeTile extends React.Component {
 
 }
 const styles =  StyleSheet.create({
-    containter: {
+    container: {
         flex: 1,
     },
     Header: {
-        flex: 1, 
+        flex: 1,
         flexDirection: 'row',
     },
+    MagnifyingGlass: {
+        padding: 10,
+        color: 'rgba(96,100,109, 1)',
+    },
     TileHeaderText: {
-        fontSize: 20,
+        fontSize: 30,
+        paddingTop: 20,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    SubHeader: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    SubText: {
+        fontSize: 17,
         padding: 10,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',
         fontWeight: 'bold',
-
     }
+
+
 });
