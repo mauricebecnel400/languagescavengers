@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import CardScroll from '../components/CardScroll';
-import CameraButton from '../components/CameraButton';
+import ButtonCamera from '../components/ButtonCamera';
+import ButtonSkip from '../components/ButtonSkip';
 
 export default class ScavengerMode extends React.Component {
     constructor(props) {
@@ -43,8 +44,8 @@ export default class ScavengerMode extends React.Component {
                     </View>
                 </CardScroll>
                 <View style={styles.Options}>
-                    <CameraButton/>
-                    <CameraButton/>
+                    <ButtonCamera/>
+                    <ButtonSkip/>
                 </View>
             </View>
         )
@@ -97,5 +98,6 @@ const styles =  StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignContent: 'center',
+        justifyContent: 'center'
     }
 });

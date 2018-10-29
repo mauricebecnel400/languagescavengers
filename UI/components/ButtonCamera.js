@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
-export default class CameraButton extends React.Component {
+export default class ButtonCamera extends React.Component {
 
     render() {
         return (
@@ -28,11 +28,12 @@ export default class CameraButton extends React.Component {
 }
 const styles =  StyleSheet.create({
     container: {
-        alignItems: 'center',
     },
     Button: {
-        height: 80,
-        width: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 100,
+        width: 100,
         backgroundColor: '#78C928',
         borderRadius: 20,
         margin: 15,
@@ -40,10 +41,8 @@ const styles =  StyleSheet.create({
         shadowRadius: 2,
         shadowColor: 'grey',
         shadowOffset: { height: 8, width: 0 },
-        alignContent: 'center',
     },
     Camera: {
-        padding: 10,
         color: '#FFFFFF',
     }
 
