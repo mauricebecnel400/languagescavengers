@@ -9,9 +9,19 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "expo": "^30.0.1",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
-    "react-navigation": "^2.18.0"
+    "react-native-fontawesome": "^5.7.0",
+    "react-navigation": "^2.18.0",
+    "react-redux": "^5.1.0",
+    "redux": "^4.0.1",
+    "redux-axios-middleware": "^4.0.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
   }
 }

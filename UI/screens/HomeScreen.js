@@ -25,9 +25,6 @@ export default class HomeScreen extends React.Component {
                     <Text style={styles.headerSubText}> Let's Find New Words</Text>
                 </View>
                 <ScavengerModeTile/>
-                <ScavengerModeTile/>
-                <ScavengerModeTile/>
-
             </View>
         )
     }

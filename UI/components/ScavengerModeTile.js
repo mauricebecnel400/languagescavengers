@@ -7,27 +7,41 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import FontAwesome, { Icons } from 'react-native-fontawesome';
+import Card from './Card';
+
 
 export default class ScavengerModeTile extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-            </View>
+            <Card> 
+                <View style={styles.container}>
+                    <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>
+                        <FontAwesome>{Icons.chevronLeft}</FontAwesome>
+                    </Text>
+                    <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
+                </View>
+            </Card>
         )
     }
 
 }
 const styles =  StyleSheet.create({
-    container: {
+    containter: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
-        margin: 15,
-        shadowOpacity: 0.75,
-        shadowRadius: 2,
-        shadowColor: 'grey',
-        shadowOffset: { height: 8, width: 0 },
     },
+    Header: {
+        flex: 1, 
+        flexDirection: 'row',
+    },
+    TileHeaderText: {
+        fontSize: 20,
+        padding: 10,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+
+    }
 });
