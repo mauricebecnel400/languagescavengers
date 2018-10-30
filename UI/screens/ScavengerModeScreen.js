@@ -11,6 +11,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import CardScroll from '../components/CardScroll';
 import ButtonCamera from '../components/ButtonCamera';
 import ButtonSkip from '../components/ButtonSkip';
+import ExpoCamera from '../components/ExpoCamera';
 
 export default class ScavengerMode extends React.Component {
     constructor(props) {
@@ -18,36 +19,55 @@ export default class ScavengerMode extends React.Component {
         this.state = {
             overallScore: 300,
             roundScore: 10,
-            currentWord: "Lapiz",
+            currentWord: 'Lapiz',
+            cameraEnabled: false,
         };
+        this.handleCameraClick = this.handleCameraClick.bind(this);
     
-    }    
+    };
+    
+    static navigationOptions = {
+        headerTransparent: true,
+    };
+    
+    handleCameraClick() {
+        this.setState({ cameraEnabled: true });
+    };
+
     render() {
-        return (
-            <View style={styles.container}>
-                <CardScroll>
-                    <View style={styles.Header}>
-                        <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
-                        <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
-                    </View>
-                    <View style={styles.SubHeader}>
-                        <Text style={styles.SubText}> Overall Score </Text>
-                        <Text style={styles.CurrentWord}> {this.state.overallScore} points</Text>
-                    </View>
-                    <View style={styles.SubHeader}>
-                        <Text style={styles.SubText}> Round Score </Text>
-                        <Text style={styles.CurrentWord}> {this.state.roundScore} points</Text>
-                    </View>
-                    <View style={styles.SubHeader}>
-                        <Text style={styles.SubText}> Current Word </Text>
-                        <Text style={styles.CurrentWord}> {this.state.currentWord} </Text>
-                    </View>
-                </CardScroll>
-                <View style={styles.Options}>
-                    <ButtonCamera/>
-                    <ButtonSkip/>
+        let screen = (
+            <ScrollView style={styles.container}>
+            <CardScroll>
+                <View style={styles.Header}>
+                    <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
+                    <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
                 </View>
+                <View style={styles.SubHeader}>
+                    <Text style={styles.SubText}> Overall Score </Text>
+                    <Text style={styles.CurrentWord}> {this.state.overallScore} points</Text>
+                </View>
+                <View style={styles.SubHeader}>
+                    <Text style={styles.SubText}> Round Score </Text>
+                    <Text style={styles.CurrentWord}> {this.state.roundScore} points</Text>
+                </View>
+                <View style={styles.SubHeader}>
+                    <Text style={styles.SubText}> Current Word </Text>
+                    <Text style={styles.CurrentWord}> {this.state.currentWord} </Text>
+                </View>
+            </CardScroll>
+            <View style={styles.Options}>
+                <ButtonCamera toggleCamera = {this.handleCameraClick}/>
+                <ButtonSkip/>
             </View>
+        </ScrollView>
+        )
+        if (this.state.cameraEnabled === true) {
+            screen = (
+                <ExpoCamera/>
+            );
+        };
+        return (
+            screen
         )
     }
 
@@ -56,6 +76,7 @@ const styles =  StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ADD8E6',
+        paddingTop: 65,
     },
     Header: {
         flex: 1,

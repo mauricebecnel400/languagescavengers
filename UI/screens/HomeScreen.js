@@ -13,21 +13,26 @@ import WordBookTile from '../components/WordBookTile';
 import SettingTile from '../components/SettingTile';
 
 export default class HomeScreen extends React.Component {
+    static navigationOptions = { 
+        headerTransparent: true
+    };
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.earthcontainer}>
-                    <Image 
-                        style={styles.earth}
-                        source={require('../assets/LanguageScavengersWorld.png')}
-                    />
-                    <Text style={styles.headerSubText}> Let's Find New Words</Text>
+            <ScrollView style={styles.container}>
+                <View>
+                    <View style={styles.earthcontainer}>
+                        <Image 
+                            style={styles.earth}
+                            source={require('../assets/LanguageScavengersWorld.png')}
+                        />
+                        <Text style={styles.headerSubText}> Let's Find New Words</Text>
+                    </View>
+                    <ScavengerModeTile navigation={this.props.navigation}/>
+                    <WordBookTile/>
+                    <SettingTile/>
                 </View>
-                <ScavengerModeTile navigation={this.props.navigation}/>
-                <WordBookTile/>
-                <SettingTile/>
-            </View>
+            </ScrollView>
         )
     }
 
@@ -36,11 +41,11 @@ const styles =  StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ADD8E6',
+        paddingTop: 35,
     },
     earthcontainer: {
         width: '100%',
         alignItems: 'center',
-        paddingTop: 10,
     },
     logoText: {
         fontSize: 30,

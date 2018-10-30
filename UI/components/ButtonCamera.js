@@ -15,7 +15,7 @@ export default class ButtonCamera extends React.Component {
         return (
             <TouchableHighlight 
             style={styles.container}
-            onPress={() => this.props.navigation.navigate('ScavengerMode')} 
+            onPress={() => this.props.toggleCamera()} 
             underlayColor="white"
             >
                 <View style={styles.Button}>

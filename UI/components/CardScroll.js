@@ -12,9 +12,9 @@ export default class CardScroll extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 {this.props.children}
-            </View>
+            </ScrollView>
         )
     }
 
