@@ -12,6 +12,7 @@ import CardScroll from '../components/CardScroll';
 import ButtonCamera from '../components/ButtonCamera';
 import ButtonSkip from '../components/ButtonSkip';
 import ExpoCamera from '../components/ExpoCamera';
+import Card from '../components/Card';
 
 export default class ScavengerMode extends React.Component {
     constructor(props) {
@@ -21,20 +22,36 @@ export default class ScavengerMode extends React.Component {
             roundScore: 10,
             currentWord: 'Lapiz',
             cameraEnabled: false,
+            result: false,
         };
         this.handleCameraClick = this.handleCameraClick.bind(this);
-    
+        this.handleSkipClick = this.handleSkipClick.bind(this);
     };
     
     static navigationOptions = {
         headerTransparent: true,
     };
     
+    handleSkipClick() {
+        this.setState({
+            currentWord: 'Silla',
+        })
+    }
+
     handleCameraClick() {
-        this.setState({ cameraEnabled: true });
+        if (this.state.cameraEnabled){
+            this.setState({
+                cameraEnabled: false,
+                result: true,
+            });
+        }
+        else {
+            this.setState({cameraEnabled: true});
+        }
     };
 
     render() {
+        let result;
         let screen = (
             <ScrollView style={styles.container}>
             <CardScroll>
@@ -56,15 +73,29 @@ export default class ScavengerMode extends React.Component {
                 </View>
             </CardScroll>
             <View style={styles.Options}>
-                <ButtonCamera toggleCamera = {this.handleCameraClick}/>
-                <ButtonSkip/>
+                <ButtonCamera clickHandler = {this.handleCameraClick}/>
+                <ButtonSkip clickHandler = {this.handleSkipClick}/>
             </View>
         </ScrollView>
-        )
+        );
         if (this.state.cameraEnabled === true) {
             screen = (
-                <ExpoCamera/>
+                <ExpoCamera clickHandler = {this.handleCameraClick}/>
             );
+        };
+        if (this.state.result === true) {
+            screen = (
+                <ScrollView style={styles.container}>
+                    <Card>
+                        <FontAwesome name="check" size={60} style={styles.Camera} />
+                     Correct
+                    </Card>
+                    <View style={styles.Options}>
+                    <ButtonCamera clickHandler = {this.handleCameraClick}/>
+                    <ButtonSkip clickHandler = {this.handleSkipClick}/>
+                </View>
+                </ScrollView>
+            )
         };
         return (
             screen

@@ -13,9 +13,9 @@ export default class Card extends React.Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
                 {this.props.children}
-            </ScrollView>
+            </View>
         )
     }
 

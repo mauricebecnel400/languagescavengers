@@ -15,7 +15,7 @@ export default class ButtonCamera extends React.Component {
         return (
             <TouchableHighlight 
             style={styles.container}
-            onPress={() => this.props.toggleCamera()} 
+            onPress={() => this.props.clickHandler()} 
             underlayColor="white"
             >
                 <View style={styles.Button}>
@@ -26,6 +26,7 @@ export default class ButtonCamera extends React.Component {
     }
 
 }
+
 const styles =  StyleSheet.create({
     container: {
     },

@@ -9,23 +9,24 @@ import {
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
-export default class ButtonSkip extends React.Component {
+export default class ButtonCamera extends React.Component {
 
     render() {
         return (
             <TouchableHighlight 
             style={styles.container}
-            onPress={() => this.props.this.props.clickHandler()} 
-            underlayColor="white"
+            onPress={() => this.props.clickHandler()} 
+            underlayColor="transparent"
             >
                 <View style={styles.Button}>
-                    <FontAwesome name="arrow-right" size={60} style={styles.Arrow} />
+                    <FontAwesome name="camera" size={60} style={styles.Camera} />
                 </View>
             </TouchableHighlight>
         )
     }
 
 }
+
 const styles =  StyleSheet.create({
     container: {
     },
@@ -34,7 +35,7 @@ const styles =  StyleSheet.create({
         justifyContent: 'center',
         height: 100,
         width: 100,
-        backgroundColor: '#ff0000',
+        backgroundColor: 'transparent',
         borderRadius: 20,
         margin: 15,
         shadowOpacity: 0.75,
@@ -42,7 +43,7 @@ const styles =  StyleSheet.create({
         shadowColor: 'grey',
         shadowOffset: { height: 8, width: 0 },
     },
-    Arrow: {
+    Camera: {
         color: '#FFFFFF',
     }
 
