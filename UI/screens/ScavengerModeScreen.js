@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
+import { Permissions, ImagePicker } from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import CardScroll from '../components/CardScroll';
 import ButtonCamera from '../components/ButtonCamera';
@@ -27,11 +28,11 @@ export default class ScavengerMode extends React.Component {
         this.handleCameraClick = this.handleCameraClick.bind(this);
         this.handleSkipClick = this.handleSkipClick.bind(this);
     };
-    
+
     static navigationOptions = {
         headerTransparent: true,
     };
-    
+
     handleSkipClick() {
         this.setState({
             currentWord: 'Silla',
@@ -44,8 +45,11 @@ export default class ScavengerMode extends React.Component {
                 cameraEnabled: false,
                 result: true,
             });
-        }
+			takePhotoAsync();
+			}
         else {
+			result = getPermsAsync();
+			//console.log( res
             this.setState({cameraEnabled: true});
         }
     };
@@ -101,6 +105,46 @@ export default class ScavengerMode extends React.Component {
             screen
         )
     }
+
+}
+
+async function getPermsAsync(){
+	const { status } = await Permissions.askAsync( Permissions.CAMERA, Permissions.CAMERA_ROLL );
+	if( status === 'granted' ) {
+		return status;
+	}
+	else
+		return 69;
+
+}
+async function takePhotoAsync(){
+let result = await ImagePicker.launchCameraAsync({
+    allowsEditing: true,
+    aspect: [4, 3],
+  });
+
+  if (result.cancelled) {
+    return;
+  }
+let localUri = result.uri;
+let filename = localUri.split('/').pop();
+console.log("from result", result, localUri, filename )
+ // Infer the type of the image
+  let match = /\.(\w+)$/.exec(filename);
+  let type = match ? `image/${match[1]}` : `image`;
+
+  // Upload the image using the fetch and FormData APIs
+  let formData = new FormData();
+  // Assume "photo" is the name of the form field the server expects
+  formData.append('photo', { uri: localUri, name: filename, type });
+	console.log(formData);
+  return await fetch('http://192.168.1.12:8080/post', {
+    method: 'POST',
+    body: formData,
+    header: {
+      'content-type': 'multipart/form-data',
+    },
+  });
 
 }
 const styles =  StyleSheet.create({

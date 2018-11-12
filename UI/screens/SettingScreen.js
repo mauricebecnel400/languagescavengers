@@ -1,3 +1,7 @@
+/*Team: Language Scavengers
+ * File: SettingScreen
+ * Purpose: The purpose of this file is to create a interactive Setting screen that allows users to
+ * change the volume of the music and to switch between languages. */
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import {
@@ -25,7 +29,7 @@ export default class SettingScreen extends React.Component{
                     <View style={styles.container}>
                         <Image
                             style={styles.earth}
-                            source={require('../assets/Gear.png')}
+                            source={require('../assets/gear1.png')}
                         />
                     </View>
                     <LanguageSelectTile navigation={this.props.navigation}/>

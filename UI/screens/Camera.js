@@ -11,7 +11,9 @@ import {
 import { RNCamera } from 'react-native-camera';
 
 class BadInstagramCloneApp extends Component {
+
   render() {
+      console.log( "what up dawg, from camera.js" );
     return (
       <View style={styles.container}>
         <RNCamera
@@ -44,6 +46,7 @@ class BadInstagramCloneApp extends Component {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options)
       console.log(data.uri);
+        console.log(data.uri.split('/').pop());
     }
   };
 }
