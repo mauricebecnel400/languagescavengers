@@ -13,7 +13,7 @@ import WordBookTile from '../components/WordBookTile';
 import SettingTile from '../components/SettingTile';
 
 export default class HomeScreen extends React.Component {
-    static navigationOptions = { 
+    static navigationOptions = {
         headerTransparent: true
     };
 
@@ -22,15 +22,15 @@ export default class HomeScreen extends React.Component {
             <ScrollView style={styles.container}>
                 <View>
                     <View style={styles.earthcontainer}>
-                        <Image 
+                        <Image
                             style={styles.earth}
                             source={require('../assets/LanguageScavengersWorld.png')}
                         />
                         <Text style={styles.headerSubText}> Let's Find New Words</Text>
                     </View>
                     <ScavengerModeTile navigation={this.props.navigation}/>
-                    <WordBookTile/>
-                    <SettingTile/>
+                    <WordBookTile navigation={this.props.navigation}/>
+                    <SettingTile navigation={this.props.navigation}/>
                 </View>
             </ScrollView>
         )
@@ -51,7 +51,7 @@ const styles =  StyleSheet.create({
         fontSize: 30,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
-        textAlign: 'center', 
+        textAlign: 'center',
         fontWeight: 'bold',
     },
     earth: {

@@ -4,7 +4,7 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableOpacity,
+    TouchableHighlight,
     StyleSheet,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -14,18 +14,22 @@ import Card from './Card';
 export default class SettingTile extends React.Component {
     render() {
         return (
-            <Card> 
-                <View style={styles.container}>
-                    <View style={styles.Header}>
-                        <FontAwesome name="cogs" size={30} style={styles.MagnifyingGlass} />
-                        <Text style={styles.TileHeaderText}> Settings </Text>
-                    </View>
-                    <View style={styles.SubHeader}>
-                        <Text style={styles.SubText}> Current Word </Text>
-                        <Text style={styles.SubText}> Round Score  </Text>
-                    </View>
-                </View>
-            </Card>
+            <TouchableHighlight
+                onPress={() => this.props.navigation.navigate('SettingMode')}
+                underlayColor="white"
+             >
+                  <Card>
+                      <View style={styles.Header}>
+                          <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
+                          <Text style={styles.TileHeaderText}> Settings </Text>
+                      </View>
+                      <View style={styles.SubHeader}>
+                          <Text style={styles.SubText}> Change Language </Text>
+                          <Text style={styles.SubText}> Adjust settings </Text>
+                      </View>
+                  </Card>
+            </TouchableHighlight>
+
         )
     }
 
