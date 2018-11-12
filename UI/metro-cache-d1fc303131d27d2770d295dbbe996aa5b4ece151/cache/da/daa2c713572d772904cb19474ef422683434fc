@@ -1,0 +1,432 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class,
+      _temp,
+      _initialiseProps,
+      _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-native-gesture-handler/Swipeable.js";
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _AnimatedEvent = _require(_dependencyMap[3], "react-native/Libraries/Animated/src/AnimatedEvent");
+
+  var _reactNativeGestureHandler = _require(_dependencyMap[4], "react-native-gesture-handler");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    Swipeable: {
+      displayName: "Swipeable"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-native-gesture-handler/Swipeable.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var DRAG_TOSS = 0.05;
+
+  if (!Math.sign) {
+    Math.sign = function (x) {
+      return (x > 0) - (x < 0) || +x;
+    };
+  }
+
+  var Swipeable = _wrapComponent("Swipeable")((_temp = _class = function (_Component) {
+    _inherits(Swipeable, _Component);
+
+    function Swipeable(props) {
+      _classCallCheck(this, Swipeable);
+
+      var _this = _possibleConstructorReturn(this, (Swipeable.__proto__ || Object.getPrototypeOf(Swipeable)).call(this, props));
+
+      _initialiseProps.call(_this);
+
+      var dragX = new _reactNative.Animated.Value(0);
+      _this.state = {
+        dragX: dragX,
+        rowTranslation: new _reactNative.Animated.Value(0),
+        rowState: 0,
+        leftWidth: undefined,
+        rightOffset: undefined,
+        rowWidth: undefined
+      };
+
+      _this._updateAnimatedEvent(props, _this.state);
+
+      _this._onGestureEvent = _reactNative.Animated.event([{
+        nativeEvent: {
+          translationX: dragX
+        }
+      }], {
+        useNativeDriver: props.useNativeAnimations
+      });
+      return _this;
+    }
+
+    _createClass(Swipeable, [{
+      key: "componentWillUpdate",
+      value: function componentWillUpdate(props, state) {
+        if (this.props.friction !== props.friction || this.props.overshootLeft !== props.overshootLeft || this.props.overshootRight !== props.overshootRight || this.state.leftWidth !== state.leftWidth || this.state.rightOffset !== state.rightOffset || this.state.rowWidth !== state.rowWidth) {
+          this._updateAnimatedEvent(props, state);
+        }
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this2 = this;
+
+        var rowState = this.state.rowState;
+        var _props = this.props,
+            children = _props.children,
+            renderLeftActions = _props.renderLeftActions,
+            renderRightActions = _props.renderRightActions;
+
+        var left = renderLeftActions && _react3.default.createElement(
+          _reactNative.Animated.View,
+          {
+            style: [styles.leftActions, {
+              transform: [{
+                translateX: this._leftActionTranslate
+              }]
+            }],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 269
+            }
+          },
+          renderLeftActions(this._showLeftAction, this._transX),
+          _react3.default.createElement(_reactNative.View, {
+            onLayout: function onLayout(_ref) {
+              var nativeEvent = _ref.nativeEvent;
+              return _this2.setState({
+                leftWidth: nativeEvent.layout.x
+              });
+            },
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 275
+            }
+          })
+        );
+
+        var right = renderRightActions && _react3.default.createElement(
+          _reactNative.Animated.View,
+          {
+            style: [styles.rightActions, {
+              transform: [{
+                translateX: this._rightActionTranslate
+              }]
+            }],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 284
+            }
+          },
+          renderRightActions(this._showRightAction, this._transX),
+          _react3.default.createElement(_reactNative.View, {
+            onLayout: function onLayout(_ref2) {
+              var nativeEvent = _ref2.nativeEvent;
+              return _this2.setState({
+                rightOffset: nativeEvent.layout.x
+              });
+            },
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 290
+            }
+          })
+        );
+
+        return _react3.default.createElement(
+          _reactNativeGestureHandler.PanGestureHandler,
+          _extends({}, this.props, {
+            minDeltaX: 10,
+            onGestureEvent: this._onGestureEvent,
+            onHandlerStateChange: this._onHandlerStateChange,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 299
+            }
+          }),
+          _react3.default.createElement(
+            _reactNative.Animated.View,
+            {
+              onLayout: this._onRowLayout,
+              style: styles.container,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 304
+              }
+            },
+            left,
+            right,
+            _react3.default.createElement(
+              _reactNativeGestureHandler.TapGestureHandler,
+              {
+                enabled: rowState !== 0,
+                onHandlerStateChange: this._onTapHandlerStateChange,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 307
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Animated.View,
+                {
+                  pointerEvents: rowState === 0 ? 'auto' : 'box-only',
+                  style: {
+                    transform: [{
+                      translateX: this._transX
+                    }]
+                  },
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 310
+                  }
+                },
+                children
+              )
+            )
+          )
+        );
+      }
+    }]);
+
+    return Swipeable;
+  }(_react2.Component), _class.defaultProps = {
+    friction: 1,
+    useNativeAnimations: true
+  }, _initialiseProps = function _initialiseProps() {
+    var _this3 = this;
+
+    this._updateAnimatedEvent = function (props, state) {
+      var friction = props.friction,
+          useNativeAnimations = props.useNativeAnimations;
+      var dragX = state.dragX,
+          rowTranslation = state.rowTranslation,
+          _state$leftWidth = state.leftWidth,
+          leftWidth = _state$leftWidth === undefined ? 0 : _state$leftWidth,
+          _state$rowWidth = state.rowWidth,
+          rowWidth = _state$rowWidth === undefined ? 0 : _state$rowWidth;
+      var _state$rightOffset = state.rightOffset,
+          rightOffset = _state$rightOffset === undefined ? rowWidth : _state$rightOffset;
+      var rightWidth = Math.max(0, rowWidth - rightOffset);
+      var _props$overshootLeft = props.overshootLeft,
+          overshootLeft = _props$overshootLeft === undefined ? leftWidth > 0 : _props$overshootLeft,
+          _props$overshootRight = props.overshootRight,
+          overshootRight = _props$overshootRight === undefined ? rightWidth > 0 : _props$overshootRight;
+
+      var transX = _reactNative.Animated.add(rowTranslation, dragX.interpolate({
+        inputRange: [0, friction],
+        outputRange: [0, 1]
+      })).interpolate({
+        inputRange: [-rightWidth - 1, -rightWidth, leftWidth, leftWidth + 1],
+        outputRange: [-rightWidth - (overshootRight ? 1 : 0), -rightWidth, leftWidth, leftWidth + (overshootLeft ? 1 : 0)]
+      });
+
+      _this3._transX = transX;
+      _this3._showLeftAction = transX.interpolate({
+        inputRange: [-1, 0, leftWidth],
+        outputRange: [0, 0, 1],
+        extrapolate: 'clamp'
+      });
+      _this3._leftActionTranslate = _this3._showLeftAction.interpolate({
+        inputRange: [0, Number.MIN_VALUE],
+        outputRange: [-10000, 0],
+        extrapolate: 'clamp'
+      });
+      _this3._showRightAction = transX.interpolate({
+        inputRange: [-rightWidth, 0, 1],
+        outputRange: [1, 0, 0],
+        extrapolate: 'clamp'
+      });
+      _this3._rightActionTranslate = _this3._showRightAction.interpolate({
+        inputRange: [0, Number.MIN_VALUE],
+        outputRange: [-10000, 0],
+        extrapolate: 'clamp'
+      });
+    };
+
+    this._onTapHandlerStateChange = function (_ref3) {
+      var nativeEvent = _ref3.nativeEvent;
+
+      if (nativeEvent.oldState === _reactNativeGestureHandler.State.ACTIVE) {
+        _this3.close();
+      }
+    };
+
+    this._onHandlerStateChange = function (_ref4) {
+      var nativeEvent = _ref4.nativeEvent;
+
+      if (nativeEvent.oldState === _reactNativeGestureHandler.State.ACTIVE) {
+        _this3._handleRelease(nativeEvent);
+      }
+    };
+
+    this._handleRelease = function (nativeEvent) {
+      var velocityX = nativeEvent.velocityX,
+          dragX = nativeEvent.translationX;
+      var _state = _this3.state,
+          _state$leftWidth2 = _state.leftWidth,
+          leftWidth = _state$leftWidth2 === undefined ? 0 : _state$leftWidth2,
+          _state$rowWidth2 = _state.rowWidth,
+          rowWidth = _state$rowWidth2 === undefined ? 0 : _state$rowWidth2,
+          rowState = _state.rowState;
+      var _state$rightOffset2 = _this3.state.rightOffset,
+          rightOffset = _state$rightOffset2 === undefined ? rowWidth : _state$rightOffset2;
+      var rightWidth = rowWidth - rightOffset;
+      var _props2 = _this3.props,
+          friction = _props2.friction,
+          _props2$leftThreshold = _props2.leftThreshold,
+          leftThreshold = _props2$leftThreshold === undefined ? leftWidth / 2 : _props2$leftThreshold,
+          _props2$rightThreshol = _props2.rightThreshold,
+          rightThreshold = _props2$rightThreshol === undefined ? rightWidth / 2 : _props2$rightThreshol;
+      var startOffsetX = _this3._currentOffset() + dragX / friction;
+      var translationX = (dragX + DRAG_TOSS * velocityX) / friction;
+      var toValue = 0;
+
+      if (rowState === 0) {
+        if (translationX > leftThreshold) {
+          toValue = leftWidth;
+        } else if (translationX < -rightThreshold) {
+          toValue = -rightWidth;
+        }
+      } else if (rowState === 1) {
+        if (translationX > -leftThreshold) {
+          toValue = leftWidth;
+        }
+      } else {
+        if (translationX < rightThreshold) {
+          toValue = -rightWidth;
+        }
+      }
+
+      _this3._animateRow(startOffsetX, toValue, velocityX / friction);
+    };
+
+    this._animateRow = function (fromValue, toValue, velocityX) {
+      var _state2 = _this3.state,
+          dragX = _state2.dragX,
+          rowTranslation = _state2.rowTranslation;
+      dragX.setValue(0);
+      rowTranslation.setValue(fromValue);
+
+      _this3.setState({
+        rowState: Math.sign(toValue)
+      });
+
+      _reactNative.Animated.spring(rowTranslation, _extends({
+        restSpeedThreshold: 1.7,
+        restDisplacementThreshold: 0.4,
+        velocity: velocityX,
+        bounciness: 0,
+        toValue: toValue,
+        useNativeDriver: _this3.props.useNativeAnimations
+      }, _this3.props.animationOptions)).start(function (_ref5) {
+        var finished = _ref5.finished;
+
+        if (finished) {
+          if (toValue > 0 && _this3.props.onSwipeableLeftOpen) {
+            _this3.props.onSwipeableLeftOpen();
+          } else if (toValue < 0 && _this3.props.onSwipeableRightOpen) {
+            _this3.props.onSwipeableRightOpen();
+          }
+
+          if (toValue === 0) {
+            _this3.props.onSwipeableClose && _this3.props.onSwipeableClose();
+          } else {
+            _this3.props.onSwipeableOpen && _this3.props.onSwipeableOpen();
+          }
+        }
+      });
+
+      if (toValue > 0 && _this3.props.onSwipeableLeftWillOpen) {
+        _this3.props.onSwipeableLeftWillOpen();
+      } else if (toValue < 0 && _this3.props.onSwipeableRightWillOpen) {
+        _this3.props.onSwipeableRightWillOpen();
+      }
+
+      if (toValue === 0) {
+        _this3.props.onSwipeableWillClose && _this3.props.onSwipeableWillClose();
+      } else {
+        _this3.props.onSwipeableWillOpen && _this3.props.onSwipeableWillOpen();
+      }
+    };
+
+    this._onRowLayout = function (_ref6) {
+      var nativeEvent = _ref6.nativeEvent;
+
+      _this3.setState({
+        rowWidth: nativeEvent.layout.width
+      });
+    };
+
+    this._currentOffset = function () {
+      var _state3 = _this3.state,
+          _state3$leftWidth = _state3.leftWidth,
+          leftWidth = _state3$leftWidth === undefined ? 0 : _state3$leftWidth,
+          _state3$rowWidth = _state3.rowWidth,
+          rowWidth = _state3$rowWidth === undefined ? 0 : _state3$rowWidth,
+          rowState = _state3.rowState;
+      var _state$rightOffset3 = _this3.state.rightOffset,
+          rightOffset = _state$rightOffset3 === undefined ? rowWidth : _state$rightOffset3;
+      var rightWidth = rowWidth - rightOffset;
+
+      if (rowState === 1) {
+        return leftWidth;
+      } else if (rowState === -1) {
+        return -rightWidth;
+      }
+
+      return 0;
+    };
+
+    this.close = function () {
+      _this3._animateRow(_this3._currentOffset(), 0);
+    };
+  }, _temp));
+
+  exports.default = Swipeable;
+
+  var styles = _reactNative.StyleSheet.create({
+    container: {
+      overflow: 'hidden'
+    },
+    leftActions: _extends({}, _reactNative.StyleSheet.absoluteFillObject, {
+      flexDirection: 'row'
+    }),
+    rightActions: _extends({}, _reactNative.StyleSheet.absoluteFillObject, {
+      flexDirection: 'row-reverse'
+    })
+  });
+});

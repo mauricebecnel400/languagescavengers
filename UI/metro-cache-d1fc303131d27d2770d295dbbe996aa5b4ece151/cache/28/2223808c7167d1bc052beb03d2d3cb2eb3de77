@@ -1,0 +1,54 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    get Lottie() {
+      return _require(_dependencyMap[0], "lottie-react-native");
+    },
+
+    get Branch() {
+      return _require(_dependencyMap[1], './Branch').default;
+    },
+
+    get GestureHandler() {
+      console.warn('GestureHandler is no longer in DangerZone, you can now import it directly from the expo package.');
+      return _require(_dependencyMap[2], "react-native-gesture-handler");
+    },
+
+    get Localization() {
+      return _require(_dependencyMap[3], './Localization').default;
+    },
+
+    get Stripe() {
+      return _require(_dependencyMap[4], "expo-payments-stripe").PaymentsStripe;
+    },
+
+    get Print() {
+      console.warn('Print is no longer in DangerZone, you can now import it directly from the expo package.');
+      return _require(_dependencyMap[5], "expo-print").Print;
+    },
+
+    get DeviceMotion() {
+      return _require(_dependencyMap[6], "expo-sensors").DeviceMotion;
+    },
+
+    get Animated() {
+      return _require(_dependencyMap[7], "react-native-reanimated").default;
+    },
+
+    get Easing() {
+      return _require(_dependencyMap[7], "react-native-reanimated").Easing;
+    },
+
+    get Screen() {
+      return _require(_dependencyMap[8], "react-native-screens").Screen;
+    },
+
+    get ScreenContainer() {
+      return _require(_dependencyMap[8], "react-native-screens").ScreenContainer;
+    },
+
+    get ScreenStack() {
+      return _require(_dependencyMap[8], "react-native-screens").ScreenStack;
+    }
+
+  };
+});

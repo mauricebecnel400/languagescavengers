@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+	module.exports = _require(_dependencyMap[0], "react-native/Libraries/Image/AssetRegistry").registerAsset({
+		"__packager_asset": true,
+		"httpServerLocation": "/assets/node_modules/@expo/vector-icons/fonts",
+		"scales": [1],
+		"hash": "744ce60078c17d86006dd0edabcd59a7",
+		"name": "Entypo",
+		"type": "ttf",
+		"fileHashes": ["744ce60078c17d86006dd0edabcd59a7"]
+	});
+});

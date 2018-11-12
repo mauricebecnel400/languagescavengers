@@ -1,0 +1,136 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if ((typeof Symbol === "function" ? Symbol.iterator : "@@iterator") in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+    exports.props2transform = props2transform;
+
+    exports.default = function (props) {
+        return transformToMatrix(props2transform(props), props.transform ? props2transform(props.transform) : null);
+    };
+
+    var _Matrix2D = _require(_dependencyMap[0], "../Matrix2D");
+
+    var _Matrix2D2 = _interopRequireDefault(_Matrix2D);
+
+    var _lodash = _require(_dependencyMap[1], "lodash");
+
+    var _lodash2 = _interopRequireDefault(_lodash);
+
+    var _pegjs = _require(_dependencyMap[2], "pegjs");
+
+    var _pegjs2 = _interopRequireDefault(_pegjs);
+
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+    var pooledMatrix = new _Matrix2D2.default();
+
+    function transformToMatrix(props, transform) {
+        pooledMatrix.reset();
+        appendTransform(props);
+
+        if (transform) {
+            appendTransform(transform);
+        }
+
+        return pooledMatrix.toArray();
+    }
+
+    var transformParser = _pegjs2.default.generate("\n{\n    var deg2rad = Math.PI / 180;\n\n    /*\n     \u2554\u2550        \u2550\u2557   \u2554\u2550        \u2550\u2557   \u2554\u2550     \u2550\u2557\n     \u2551 al cl el \u2551   \u2551 ar cr er \u2551   \u2551 a c e \u2551\n     \u2551 bl dl fl \u2551 * \u2551 br dr fr \u2551 = \u2551 b d f \u2551\n     \u2551 0  0  1  \u2551   \u2551 0  0  1  \u2551   \u2551 0 0 1 \u2551\n     \u255A\u2550        \u2550\u255D   \u255A\u2550        \u2550\u255D   \u255A\u2550     \u2550\u255D\n    */\n    function multiply_matrices(l, r) {\n        var [al, cl, el, bl, dl, fl] = l;\n        var [ar, cr, er, br, dr, fr] = r;\n\n        var a = al * ar + cl * br;\n        var c = al * cr + cl * dr;\n        var e = al * er + cl * fr + el;\n        var b = bl * ar + dl * br;\n        var d = bl * cr + dl * dr;\n        var f = bl * er + dl * fr + fl;\n\n        return [a, c, e, b, d, f];\n    }\n}\n\ntransformList\n    = wsp* ts:transforms? wsp* { return ts; }\n\ntransforms\n    = t:transform commaWsp* ts:transforms\n    {\n        return multiply_matrices(t, ts);\n    }\n    / t:transform\n\ntransform\n    = matrix\n    / translate\n    / scale\n    / rotate\n    / skewX\n    / skewY\n\nmatrix\n    = \"matrix\" wsp* \"(\" wsp*\n        a:number commaWsp\n        b:number commaWsp\n        c:number commaWsp\n        d:number commaWsp\n        e:number commaWsp\n        f:number wsp* \")\"\n    {\n        return [\n            a, c, e,\n            b, d, f\n        ];\n    }\n\ntranslate\n    = \"translate\" wsp* \"(\" wsp* tx:number ty:commaWspNumber? wsp* \")\"\n    {\n        return [\n            1, 0, tx,\n            0, 1, ty || 0\n        ];\n    }\n\nscale\n    = \"scale\" wsp* \"(\" wsp* sx:number sy:commaWspNumber? wsp* \")\"\n    {\n        return [\n            sx, 0,                     0,\n            0,  sy === null ? sx : sy, 0\n        ];\n    }\n\nrotate\n    = \"rotate\" wsp* \"(\" wsp* angle:number c:commaWspTwoNumbers? wsp* \")\"\n    {\n        var cos = Math.cos(deg2rad * angle);\n        var sin = Math.sin(deg2rad * angle);\n        if (c !== null) {\n            var [x, y] = c;\n            return [\n                cos, -sin, cos * -x + -sin * -y + x,\n                sin,  cos, sin * -x +  cos * -y + y\n            ];\n        }\n        return [\n            cos, -sin, 0,\n            sin,  cos, 0\n        ];\n    }\n\nskewX\n    = \"skewX\" wsp* \"(\" wsp* angle:number wsp* \")\"\n    {\n        return [\n            1, Math.tan(deg2rad * angle), 0,\n            0, 1,                         0\n        ];\n    }\n\nskewY\n    = \"skewY\" wsp* \"(\" wsp* angle:number wsp* \")\"\n    {\n        return [\n            1,                         0, 0,\n            Math.tan(deg2rad * angle), 1, 0\n        ];\n    }\n\nnumber\n    = f:(sign? floatingPointConstant) { return parseFloat(f.join(\"\")); }\n    / i:(sign? integerConstant) { return parseInt(i.join(\"\")); }\n\ncommaWspNumber\n    = commaWsp n:number { return n; }\n\ncommaWspTwoNumbers\n    = commaWsp n1:number commaWsp n2:number { return [n1, n2]; }\n\ncommaWsp\n    = (wsp+ comma? wsp*) / (comma wsp*)\n\ncomma\n    = \",\"\n\nintegerConstant\n    = ds:digitSequence { return ds.join(\"\"); }\n\nfloatingPointConstant\n    = f:(fractionalConstant exponent?) { return f.join(\"\"); }\n    / d:(digitSequence exponent) { return d.join(\"\"); }\n\nfractionalConstant \"fractionalConstant\"\n    = d1:digitSequence? \".\" d2:digitSequence { return [d1 ? d1.join(\"\") : null, \".\", d2.join(\"\")].join(\"\"); }\n    / d:digitSequence \".\" { return d.join(\"\"); }\n\nexponent\n    =  e:([eE] sign? digitSequence) { return [e[0], e[1], e[2].join(\"\")].join(\"\"); }\n\nsign\n    = [+-]\n\ndigitSequence\n    = digit+\n\ndigit\n    = [0-9]\n\nwsp\n    = [\\u0020\\u0009\\u000D\\u000A]\n");
+
+    function appendTransform(transform) {
+        if (transform) {
+            if (typeof transform === 'string') {
+                try {
+                    var _transformParser$pars = transformParser.parse(transform),
+                        _transformParser$pars2 = _slicedToArray(_transformParser$pars, 6),
+                        a = _transformParser$pars2[0],
+                        c = _transformParser$pars2[1],
+                        e = _transformParser$pars2[2],
+                        b = _transformParser$pars2[3],
+                        d = _transformParser$pars2[4],
+                        f = _transformParser$pars2[5];
+
+                    pooledMatrix.append.apply(pooledMatrix, [a, b, c, d, e, f]);
+                } catch (e) {
+                    console.error(e);
+                }
+            } else {
+                pooledMatrix.appendTransform(transform.x + transform.originX, transform.y + transform.originY, transform.scaleX, transform.scaleY, transform.rotation, transform.skewX, transform.skewY, transform.originX, transform.originY);
+            }
+        }
+    }
+
+    function universal2axis(universal, axisX, axisY, defaultValue) {
+        var coords = [];
+        var x = void 0;
+        var y = void 0;
+
+        if (_lodash2.default.isString(universal)) {
+            coords = universal.split(/\s*,\s*/);
+
+            if (coords.length === 2) {
+                x = +coords[0];
+                y = +coords[1];
+            } else if (coords.length === 1) {
+                x = y = +coords[0];
+            }
+        } else if (_lodash2.default.isNumber(universal)) {
+            x = y = universal;
+        }
+
+        axisX = +axisX;
+
+        if (!isNaN(axisX)) {
+            x = axisX;
+        }
+
+        axisY = +axisY;
+
+        if (!isNaN(axisY)) {
+            y = axisY;
+        }
+
+        return [x || defaultValue || 0, y || defaultValue || 0];
+    }
+
+    function props2transform(props) {
+        if (props && typeof props === 'string') {
+            return props;
+        }
+
+        var _universal2axis = universal2axis(props.origin, props.originX, props.originY),
+            _universal2axis2 = _slicedToArray(_universal2axis, 2),
+            originX = _universal2axis2[0],
+            originY = _universal2axis2[1];
+
+        var _universal2axis3 = universal2axis(props.scale, props.scaleX, props.scaleY, 1),
+            _universal2axis4 = _slicedToArray(_universal2axis3, 2),
+            scaleX = _universal2axis4[0],
+            scaleY = _universal2axis4[1];
+
+        var _universal2axis5 = universal2axis(props.skew, props.skewX, props.skewY),
+            _universal2axis6 = _slicedToArray(_universal2axis5, 2),
+            skewX = _universal2axis6[0],
+            skewY = _universal2axis6[1];
+
+        var _universal2axis7 = universal2axis(props.translate, _lodash2.default.isNil(props.translateX) ? props.x || 0 : props.translateX, _lodash2.default.isNil(props.translateY) ? props.y || 0 : props.translateY),
+            _universal2axis8 = _slicedToArray(_universal2axis7, 2),
+            translateX = _universal2axis8[0],
+            translateY = _universal2axis8[1];
+
+        return {
+            rotation: +props.rotation || 0,
+            scaleX: scaleX,
+            scaleY: scaleY,
+            originX: originX,
+            originY: originY,
+            skewX: skewX,
+            skewY: skewY,
+            x: translateX,
+            y: translateY
+        };
+    }
+});

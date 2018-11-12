@@ -1,0 +1,15 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _expo = _require(_dependencyMap[0], "expo");
+
+  var _App = _require(_dependencyMap[1], "../../App");
+
+  var _App2 = _interopRequireDefault(_App);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  if (__DEV__) {
+    _expo.KeepAwake.activate();
+  }
+
+  (0, _expo.registerRootComponent)(_App2.default);
+});

@@ -1,0 +1,127 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _base = _require(_dependencyMap[0], "./base");
+
+  var _AnimatedBezier = _require(_dependencyMap[1], "./core/AnimatedBezier");
+
+  var _AnimatedBezier2 = _interopRequireDefault(_AnimatedBezier);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var Easing = function () {
+    function Easing() {
+      _classCallCheck(this, Easing);
+    }
+
+    _createClass(Easing, null, [{
+      key: "linear",
+      value: function linear(t) {
+        return t;
+      }
+    }, {
+      key: "ease",
+      value: function ease(t) {
+        return new _AnimatedBezier2.default(t, 0.42, 0, 1, 1);
+      }
+    }, {
+      key: "quad",
+      value: function quad(t) {
+        return (0, _base.multiply)(t, t);
+      }
+    }, {
+      key: "cubic",
+      value: function cubic(t) {
+        return (0, _base.multiply)(t, t, t);
+      }
+    }, {
+      key: "poly",
+      value: function poly(n) {
+        return function (t) {
+          return (0, _base.pow)(t, n);
+        };
+      }
+    }, {
+      key: "sin",
+      value: function sin(t) {
+        return (0, _base.sub)(1, (0, _base.cos)((0, _base.multiply)(t, Math.PI, 0.5)));
+      }
+    }, {
+      key: "circle",
+      value: function circle(t) {
+        return (0, _base.sub)(1, (0, _base.sqrt)((0, _base.sub)(1, (0, _base.multiply)(t, t))));
+      }
+    }, {
+      key: "exp",
+      value: function exp(t) {
+        return (0, _base.pow)(2, (0, _base.multiply)(10, (0, _base.sub)(t, 1)));
+      }
+    }, {
+      key: "elastic",
+      value: function elastic() {
+        var bounciness = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+        var p = bounciness * Math.PI;
+        return function (t) {
+          return (0, _base.sub)(1, (0, _base.multiply)((0, _base.pow)((0, _base.cos)((0, _base.multiply)(t, Math.PI, 0.5)), 3), (0, _base.cos)((0, _base.multiply)(t, p))));
+        };
+      }
+    }, {
+      key: "back",
+      value: function back(s) {
+        if (s === undefined) {
+          s = 1.70158;
+        }
+
+        return function (t) {
+          return (0, _base.multiply)(t, t, (0, _base.sub)((0, _base.multiply)((0, _base.add)(s, 1), t), s));
+        };
+      }
+    }, {
+      key: "bounce",
+      value: function bounce(t) {
+        var sq = function sq(v) {
+          return (0, _base.multiply)(7.5625, v, v);
+        };
+
+        return (0, _base.cond)((0, _base.lessThan)(t, 1 / 2.75), sq(t), (0, _base.cond)((0, _base.lessThan)(t, 2 / 2.75), (0, _base.add)(0.75, sq((0, _base.sub)(t, 1.5 / 2.75))), (0, _base.cond)((0, _base.lessThan)(t, 2.5 / 2.76), (0, _base.add)(0.9375, sq((0, _base.sub)(t, 2.25 / 2.75))), (0, _base.add)(0.984375, sq((0, _base.sub)(t, 2.625 / 2.75))))));
+      }
+    }, {
+      key: "bezier",
+      value: function bezier(x1, y1, x2, y2) {
+        return function (t) {
+          return new _AnimatedBezier2.default(t, x1, y1, x2, y2);
+        };
+      }
+    }, {
+      key: "in",
+      value: function _in(easing) {
+        return easing;
+      }
+    }, {
+      key: "out",
+      value: function out(easing) {
+        return function (t) {
+          return (0, _base.sub)(1, easing((0, _base.sub)(1, t)));
+        };
+      }
+    }, {
+      key: "inOut",
+      value: function inOut(easing) {
+        return function (t) {
+          return (0, _base.cond)((0, _base.lessThan)(t, 0.5), (0, _base.divide)(easing((0, _base.multiply)(t, 2)), 2), (0, _base.sub)(1, (0, _base.divide)(easing((0, _base.multiply)((0, _base.sub)(1, t), 2)), 2)));
+        };
+      }
+    }]);
+
+    return Easing;
+  }();
+
+  exports.default = Easing;
+});

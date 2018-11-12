@@ -1,0 +1,58 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  "use strict";
+
+  var arrays = _require(_dependencyMap[0], "../utils/arrays"),
+      objects = _require(_dependencyMap[1], "../utils/objects");
+
+  var compiler = {
+    visitor: _require(_dependencyMap[2], "./visitor"),
+    passes: {
+      check: {
+        reportUndefinedRules: _require(_dependencyMap[3], "./passes/report-undefined-rules"),
+        reportDuplicateRules: _require(_dependencyMap[4], "./passes/report-duplicate-rules"),
+        reportDuplicateLabels: _require(_dependencyMap[5], "./passes/report-duplicate-labels"),
+        reportInfiniteRecursion: _require(_dependencyMap[6], "./passes/report-infinite-recursion"),
+        reportInfiniteRepetition: _require(_dependencyMap[7], "./passes/report-infinite-repetition")
+      },
+      transform: {
+        removeProxyRules: _require(_dependencyMap[8], "./passes/remove-proxy-rules")
+      },
+      generate: {
+        generateBytecode: _require(_dependencyMap[9], "./passes/generate-bytecode"),
+        generateJS: _require(_dependencyMap[10], "./passes/generate-js")
+      }
+    },
+    compile: function compile(ast, passes, options) {
+      options = options !== void 0 ? options : {};
+      var stage;
+      options = objects.clone(options);
+      objects.defaults(options, {
+        allowedStartRules: [ast.rules[0].name],
+        cache: false,
+        dependencies: {},
+        exportVar: null,
+        format: "bare",
+        optimize: "speed",
+        output: "parser",
+        trace: false
+      });
+
+      for (stage in passes) {
+        if (passes.hasOwnProperty(stage)) {
+          arrays.each(passes[stage], function (p) {
+            p(ast, options);
+          });
+        }
+      }
+
+      switch (options.output) {
+        case "parser":
+          return eval(ast.code);
+
+        case "source":
+          return ast.code;
+      }
+    }
+  };
+  module.exports = compiler;
+});

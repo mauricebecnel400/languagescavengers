@@ -1,0 +1,158 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class,
+      _temp2,
+      _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-stack/dist/views/StackView/StackView.js";
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _reactNavigation = _require(_dependencyMap[3], "react-navigation");
+
+  var _StackViewLayout = _require(_dependencyMap[4], "./StackViewLayout");
+
+  var _StackViewLayout2 = _interopRequireDefault(_StackViewLayout);
+
+  var _Transitioner = _require(_dependencyMap[5], "../Transitioner");
+
+  var _Transitioner2 = _interopRequireDefault(_Transitioner);
+
+  var _StackViewTransitionConfigs = _require(_dependencyMap[6], "./StackViewTransitionConfigs");
+
+  var _StackViewTransitionConfigs2 = _interopRequireDefault(_StackViewTransitionConfigs);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    StackView: {
+      displayName: "StackView"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-stack/dist/views/StackView/StackView.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var NativeAnimatedModule = _reactNative.NativeModules && _reactNative.NativeModules.NativeAnimatedModule;
+
+  var StackView = _wrapComponent("StackView")((_temp2 = _class = function (_React$Component) {
+    _inherits(StackView, _React$Component);
+
+    function StackView() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, StackView);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = StackView.__proto__ || Object.getPrototypeOf(StackView)).call.apply(_ref, [this].concat(args))), _this), _this._configureTransition = function (transitionProps, prevTransitionProps) {
+        return _extends({}, _StackViewTransitionConfigs2.default.getTransitionConfig(_this.props.navigationConfig.transitionConfig, transitionProps, prevTransitionProps, _this.props.navigationConfig.mode === 'modal').transitionSpec, {
+          useNativeDriver: !!NativeAnimatedModule
+        });
+      }, _this._render = function (transitionProps, lastTransitionProps) {
+        var _this$props = _this.props,
+            screenProps = _this$props.screenProps,
+            navigationConfig = _this$props.navigationConfig;
+        return _react3.default.createElement(_StackViewLayout2.default, _extends({}, navigationConfig, {
+          onGestureBegin: _this.props.onGestureBegin,
+          onGestureCanceled: _this.props.onGestureCanceled,
+          onGestureEnd: _this.props.onGestureEnd,
+          screenProps: screenProps,
+          descriptors: _this.props.descriptors,
+          transitionProps: transitionProps,
+          lastTransitionProps: lastTransitionProps,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 49
+          }
+        }));
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(StackView, [{
+      key: "render",
+      value: function render() {
+        var _this2 = this;
+
+        return _react3.default.createElement(_Transitioner2.default, {
+          render: this._render,
+          configureTransition: this._configureTransition,
+          screenProps: this.props.screenProps,
+          navigation: this.props.navigation,
+          descriptors: this.props.descriptors,
+          onTransitionStart: this.props.onTransitionStart || this.props.navigationConfig.onTransitionStart,
+          onTransitionEnd: function onTransitionEnd(transition, lastTransition) {
+            var _props = _this2.props,
+                navigationConfig = _props.navigationConfig,
+                navigation = _props.navigation;
+            var onTransitionEnd = _this2.props.onTransitionEnd || navigationConfig.onTransitionEnd;
+
+            if (transition.navigation.state.isTransitioning) {
+              navigation.dispatch(_reactNavigation.StackActions.completeTransition({
+                key: navigation.state.key
+              }));
+            }
+
+            onTransitionEnd && onTransitionEnd(transition, lastTransition);
+          },
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 19
+          }
+        });
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var navigation = this.props.navigation;
+
+        if (navigation.state.isTransitioning) {
+          navigation.dispatch(_reactNavigation.StackActions.completeTransition({
+            key: navigation.state.key
+          }));
+        }
+      }
+    }]);
+
+    return StackView;
+  }(_react3.default.Component), _class.defaultProps = {
+    navigationConfig: {
+      mode: 'card'
+    }
+  }, _temp2));
+
+  exports.default = StackView;
+});

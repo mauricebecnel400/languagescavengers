@@ -1,0 +1,442 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.SortBy = exports.MediaType = undefined;
+  exports.createAssetAsync = createAssetAsync;
+  exports.addAssetsToAlbumAsync = addAssetsToAlbumAsync;
+  exports.removeAssetsFromAlbumAsync = removeAssetsFromAlbumAsync;
+  exports.deleteAssetsAsync = deleteAssetsAsync;
+  exports.getAssetInfoAsync = getAssetInfoAsync;
+  exports.getAlbumsAsync = getAlbumsAsync;
+  exports.getAlbumAsync = getAlbumAsync;
+  exports.createAlbumAsync = createAlbumAsync;
+  exports.deleteAlbumsAsync = deleteAlbumsAsync;
+  exports.getAssetsAsync = getAssetsAsync;
+  exports.addListener = addListener;
+  exports.removeSubscription = removeSubscription;
+  exports.removeAllListeners = removeAllListeners;
+  exports.getMomentsAsync = getMomentsAsync;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _expoCore = _require(_dependencyMap[1], "expo-core");
+
+  var MediaLibrary = _expoCore.NativeModulesProxy.ExponentMediaLibrary;
+  var eventEmitter = new _expoCore.EventEmitter(MediaLibrary);
+
+  function arrayize(item) {
+    if (Array.isArray(item)) {
+      return item;
+    }
+
+    return item ? [item] : [];
+  }
+
+  function getId(ref) {
+    if (typeof ref === 'string') {
+      return ref;
+    }
+
+    return ref ? ref.id : undefined;
+  }
+
+  function checkAssetIds(assetIds) {
+    if (assetIds.some(function (id) {
+      return !id || typeof id !== 'string';
+    })) {
+      throw new Error('Asset ID must be a string!');
+    }
+  }
+
+  function checkAlbumIds(albumIds) {
+    if (albumIds.some(function (id) {
+      return !id || typeof id !== 'string';
+    })) {
+      throw new Error('Album ID must be a string!');
+    }
+  }
+
+  function checkMediaType(mediaType) {
+    if (Object.values(MediaType).indexOf(mediaType) === -1) {
+      throw new Error("Invalid mediaType: " + mediaType);
+    }
+  }
+
+  function checkSortBy(sortBy) {
+    if (Array.isArray(sortBy)) {
+      checkSortByKey(sortBy[0]);
+
+      if (typeof sortBy[1] !== 'boolean') {
+        throw new Error('Invalid sortBy array argument. Second item must be a boolean!');
+      }
+    } else {
+      checkSortByKey(sortBy);
+    }
+  }
+
+  function checkSortByKey(sortBy) {
+    if (Object.values(SortBy).indexOf(sortBy) === -1) {
+      throw new Error("Invalid sortBy key: " + sortBy);
+    }
+  }
+
+  var MediaType = exports.MediaType = MediaLibrary.MediaType;
+  var SortBy = exports.SortBy = MediaLibrary.SortBy;
+
+  function createAssetAsync(localUri) {
+    var asset;
+    return regeneratorRuntime.async(function createAssetAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!(!localUri || typeof localUri !== 'string')) {
+              _context.next = 2;
+              break;
+            }
+
+            throw new Error('Invalid argument "localUri". It must be a string!');
+
+          case 2:
+            _context.next = 4;
+            return regeneratorRuntime.awrap(MediaLibrary.createAssetAsync(localUri));
+
+          case 4:
+            asset = _context.sent;
+
+            if (!Array.isArray(asset)) {
+              _context.next = 7;
+              break;
+            }
+
+            return _context.abrupt("return", asset[0]);
+
+          case 7:
+            return _context.abrupt("return", asset);
+
+          case 8:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function addAssetsToAlbumAsync(assets, album) {
+    var copy = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var assetIds, albumId;
+    return regeneratorRuntime.async(function addAssetsToAlbumAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            assetIds = arrayize(assets).map(getId);
+            albumId = getId(album);
+            checkAssetIds(assetIds);
+
+            if (!(!albumId || typeof albumId !== 'string')) {
+              _context2.next = 5;
+              break;
+            }
+
+            throw new Error('Invalid album ID. It must be a string!');
+
+          case 5:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context2.next = 7;
+              break;
+            }
+
+            return _context2.abrupt("return", MediaLibrary.addAssetsToAlbumAsync(assetIds, albumId));
+
+          case 7:
+            return _context2.abrupt("return", MediaLibrary.addAssetsToAlbumAsync(assetIds, albumId, !!copy));
+
+          case 8:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function removeAssetsFromAlbumAsync(assets, album) {
+    var assetIds, albumId;
+    return regeneratorRuntime.async(function removeAssetsFromAlbumAsync$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            assetIds = arrayize(assets).map(getId);
+            albumId = getId(album);
+            checkAssetIds(assetIds);
+            return _context3.abrupt("return", MediaLibrary.removeAssetsFromAlbumAsync(assetIds, albumId));
+
+          case 4:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function deleteAssetsAsync(assets) {
+    var assetIds;
+    return regeneratorRuntime.async(function deleteAssetsAsync$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            assetIds = arrayize(assets).map(getId);
+            checkAssetIds(assetIds);
+            return _context4.abrupt("return", MediaLibrary.deleteAssetsAsync(assetIds));
+
+          case 3:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getAssetInfoAsync(asset) {
+    var assetId, assetInfo;
+    return regeneratorRuntime.async(function getAssetInfoAsync$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            assetId = getId(asset);
+            checkAssetIds([assetId]);
+            _context5.next = 4;
+            return regeneratorRuntime.awrap(MediaLibrary.getAssetInfoAsync(assetId));
+
+          case 4:
+            assetInfo = _context5.sent;
+
+            if (!Array.isArray(assetInfo)) {
+              _context5.next = 7;
+              break;
+            }
+
+            return _context5.abrupt("return", assetInfo[0]);
+
+          case 7:
+            return _context5.abrupt("return", assetInfo);
+
+          case 8:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getAlbumsAsync() {
+    return regeneratorRuntime.async(function getAlbumsAsync$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            return _context6.abrupt("return", MediaLibrary.getAlbumsAsync());
+
+          case 1:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getAlbumAsync(title) {
+    return regeneratorRuntime.async(function getAlbumAsync$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            if (!(typeof title !== 'string')) {
+              _context7.next = 2;
+              break;
+            }
+
+            throw new Error('Album title must be a string!');
+
+          case 2:
+            return _context7.abrupt("return", MediaLibrary.getAlbumAsync(title));
+
+          case 3:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function createAlbumAsync(albumName, asset) {
+    var copyAsset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var assetId;
+    return regeneratorRuntime.async(function createAlbumAsync$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            assetId = getId(asset);
+
+            if (!(_reactNative.Platform.OS === 'android' && (typeof assetId !== 'string' || assetId.length === 0))) {
+              _context8.next = 3;
+              break;
+            }
+
+            throw new Error('MediaLibrary.createAlbumAsync must be called with an asset on Android.');
+
+          case 3:
+            if (!(!albumName || typeof albumName !== 'string')) {
+              _context8.next = 5;
+              break;
+            }
+
+            throw new Error('Invalid argument "albumName". It must be a string!');
+
+          case 5:
+            if (!(assetId != null && typeof assetId !== 'string')) {
+              _context8.next = 7;
+              break;
+            }
+
+            throw new Error('Asset ID must be a string!');
+
+          case 7:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context8.next = 9;
+              break;
+            }
+
+            return _context8.abrupt("return", MediaLibrary.createAlbumAsync(albumName, assetId));
+
+          case 9:
+            return _context8.abrupt("return", MediaLibrary.createAlbumAsync(albumName, assetId, !!copyAsset));
+
+          case 10:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function deleteAlbumsAsync(albums) {
+    var assetRemove = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var albumIds;
+    return regeneratorRuntime.async(function deleteAlbumsAsync$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            albumIds = arrayize(albums).map(getId);
+            checkAlbumIds(albumIds);
+
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context9.next = 4;
+              break;
+            }
+
+            return _context9.abrupt("return", MediaLibrary.deleteAlbumsAsync(albumIds));
+
+          case 4:
+            return _context9.abrupt("return", MediaLibrary.deleteAlbumsAsync(albumIds, !!assetRemove));
+
+          case 5:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getAssetsAsync() {
+    var assetsOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var first, after, album, sortBy, mediaType, options;
+    return regeneratorRuntime.async(function getAssetsAsync$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            first = assetsOptions.first, after = assetsOptions.after, album = assetsOptions.album, sortBy = assetsOptions.sortBy, mediaType = assetsOptions.mediaType;
+            options = {
+              first: first == null ? 20 : first,
+              after: getId(after),
+              album: getId(album),
+              sortBy: arrayize(sortBy),
+              mediaType: arrayize(mediaType || [MediaType.photo])
+            };
+
+            if (!(first != null && typeof options.first !== 'number')) {
+              _context10.next = 4;
+              break;
+            }
+
+            throw new Error('Option "first" must be a number!');
+
+          case 4:
+            if (!(after != null && typeof options.after !== 'string')) {
+              _context10.next = 6;
+              break;
+            }
+
+            throw new Error('Option "after" must be a string!');
+
+          case 6:
+            if (!(album != null && typeof options.album !== 'string')) {
+              _context10.next = 8;
+              break;
+            }
+
+            throw new Error('Option "album" must be a string!');
+
+          case 8:
+            options.sortBy.forEach(checkSortBy);
+            options.mediaType.forEach(checkMediaType);
+            return _context10.abrupt("return", MediaLibrary.getAssetsAsync(options));
+
+          case 11:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function addListener(listener) {
+    var _this = this;
+
+    var subscription = eventEmitter.addListener(MediaLibrary.CHANGE_LISTENER_NAME, listener);
+
+    subscription.remove = function () {
+      return _this.removeSubscription(subscription);
+    };
+
+    return subscription;
+  }
+
+  function removeSubscription(subscription) {
+    eventEmitter.removeSubscription(subscription);
+  }
+
+  function removeAllListeners() {
+    eventEmitter.removeAllListeners('mediaLibraryDidChange');
+  }
+
+  function getMomentsAsync() {
+    return regeneratorRuntime.async(function getMomentsAsync$(_context11) {
+      while (1) {
+        switch (_context11.prev = _context11.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context11.next = 2;
+              break;
+            }
+
+            throw new Error('MediaLibrary.getMomentsAsync is not supported on Android!');
+
+          case 2:
+            return _context11.abrupt("return", MediaLibrary.getMomentsAsync());
+
+          case 3:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    }, null, this);
+  }
+});

@@ -1,0 +1,13 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  'use strict';
+
+  exports.test = function () {
+    return typeof process !== 'undefined' && !process.browser;
+  };
+
+  exports.install = function (func) {
+    return function () {
+      process.nextTick(func);
+    };
+  };
+});

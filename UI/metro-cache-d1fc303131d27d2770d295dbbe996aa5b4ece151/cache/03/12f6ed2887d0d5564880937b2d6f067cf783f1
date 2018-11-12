@@ -1,0 +1,303 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var React = _interopRequireWildcard(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class,
+      _temp,
+      _initialiseProps,
+      _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-native-tab-view/src/TabViewAnimated.js";
+
+  var _propTypes = _require(_dependencyMap[2], "prop-types");
+
+  var _propTypes2 = _interopRequireDefault(_propTypes);
+
+  var _reactNative = _require(_dependencyMap[3], "react-native");
+
+  var _TabViewPropTypes = _require(_dependencyMap[4], "./TabViewPropTypes");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    TabViewAnimated: {
+      displayName: "TabViewAnimated"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-native-tab-view/src/TabViewAnimated.js",
+    components: _components,
+    locals: [module],
+    imports: [React.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var TabViewPager = void 0;
+
+  switch (_reactNative.Platform.OS) {
+    case 'android':
+      TabViewPager = _require(_dependencyMap[5], './TabViewPagerAndroid').default;
+      break;
+
+    case 'ios':
+      TabViewPager = _require(_dependencyMap[6], './TabViewPagerScroll').default;
+      break;
+
+    default:
+      TabViewPager = _require(_dependencyMap[7], './TabViewPagerPan').default;
+      break;
+  }
+
+  var TabViewAnimated = _wrapComponent("TabViewAnimated")((_temp = _class = function (_React$Component) {
+    _inherits(TabViewAnimated, _React$Component);
+
+    function TabViewAnimated(props) {
+      _classCallCheck(this, TabViewAnimated);
+
+      var _this = _possibleConstructorReturn(this, (TabViewAnimated.__proto__ || Object.getPrototypeOf(TabViewAnimated)).call(this, props));
+
+      _initialiseProps.call(_this);
+
+      var navigationState = _this.props.navigationState;
+
+      var layout = _extends({}, _this.props.initialLayout, {
+        measured: false
+      });
+
+      var panX = new _reactNative.Animated.Value(0);
+      var offsetX = new _reactNative.Animated.Value(-navigationState.index * layout.width);
+      var layoutXY = new _reactNative.Animated.ValueXY({
+        x: layout.width || 0.001,
+        y: layout.height || 0.001
+      });
+
+      var position = _reactNative.Animated.multiply(_reactNative.Animated.divide(_reactNative.Animated.add(panX, offsetX), layoutXY.x), -1);
+
+      _this.state = {
+        layout: layout,
+        layoutXY: layoutXY,
+        panX: panX,
+        offsetX: offsetX,
+        position: position
+      };
+      return _this;
+    }
+
+    _createClass(TabViewAnimated, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._mounted = true;
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        this._mounted = false;
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this2 = this;
+
+        var _props = this.props,
+            navigationState = _props.navigationState,
+            onIndexChange = _props.onIndexChange,
+            initialLayout = _props.initialLayout,
+            renderScene = _props.renderScene,
+            renderPager = _props.renderPager,
+            renderHeader = _props.renderHeader,
+            renderFooter = _props.renderFooter,
+            rest = _objectWithoutProperties(_props, ["navigationState", "onIndexChange", "initialLayout", "renderScene", "renderPager", "renderHeader", "renderFooter"]);
+
+        var props = this._buildSceneRendererProps();
+
+        return React.createElement(
+          _reactNative.View,
+          {
+            collapsable: false,
+            style: [styles.container, this.props.style],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 209
+            }
+          },
+          renderHeader && renderHeader(props),
+          React.createElement(
+            _reactNative.View,
+            {
+              onLayout: this._handleLayout,
+              style: styles.pager,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 211
+              }
+            },
+            renderPager(_extends({}, props, rest, {
+              panX: this.state.panX,
+              offsetX: this.state.offsetX,
+              children: navigationState.routes.map(function (route, index) {
+                var scene = _this2._renderScene(_extends({}, props, {
+                  route: route,
+                  index: index,
+                  focused: index === navigationState.index
+                }));
+
+                if (scene) {
+                  return React.cloneElement(scene, {
+                    key: route.key
+                  });
+                }
+
+                return scene;
+              })
+            }))
+          ),
+          renderFooter && renderFooter(props)
+        );
+      }
+    }]);
+
+    return TabViewAnimated;
+  }(React.Component), _class.propTypes = {
+    navigationState: _TabViewPropTypes.NavigationStatePropType.isRequired,
+    onIndexChange: _propTypes2.default.func.isRequired,
+    initialLayout: _propTypes2.default.shape({
+      height: _propTypes2.default.number.isRequired,
+      width: _propTypes2.default.number.isRequired
+    }),
+    canJumpToTab: _propTypes2.default.func.isRequired,
+    renderPager: _propTypes2.default.func.isRequired,
+    renderScene: _propTypes2.default.func.isRequired,
+    renderHeader: _propTypes2.default.func,
+    renderFooter: _propTypes2.default.func
+  }, _class.defaultProps = {
+    canJumpToTab: function canJumpToTab() {
+      return true;
+    },
+    renderPager: function renderPager(props) {
+      return React.createElement(TabViewPager, _extends({}, props, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 74
+        }
+      }));
+    },
+    initialLayout: {
+      height: 0,
+      width: 0
+    },
+    useNativeDriver: false
+  }, _initialiseProps = function _initialiseProps() {
+    var _this3 = this;
+
+    this._mounted = false;
+
+    this._renderScene = function (props) {
+      return _this3.props.renderScene(props);
+    };
+
+    this._handleLayout = function (e) {
+      var _e$nativeEvent$layout = e.nativeEvent.layout,
+          height = _e$nativeEvent$layout.height,
+          width = _e$nativeEvent$layout.width;
+
+      if (_this3.state.layout.width === width && _this3.state.layout.height === height) {
+        return;
+      }
+
+      _this3.state.offsetX.setValue(-_this3.props.navigationState.index * width);
+
+      _this3.state.layoutXY.setValue({
+        x: width || 0.001,
+        y: height || 0.001
+      });
+
+      _this3.setState({
+        layout: {
+          measured: true,
+          height: height,
+          width: width
+        }
+      });
+    };
+
+    this._buildSceneRendererProps = function () {
+      return {
+        panX: _this3.state.panX,
+        offsetX: _this3.state.offsetX,
+        position: _this3.state.position,
+        layout: _this3.state.layout,
+        navigationState: _this3.props.navigationState,
+        jumpTo: _this3._jumpTo,
+        jumpToIndex: _this3._jumpToIndex,
+        useNativeDriver: _this3.props.useNativeDriver === true
+      };
+    };
+
+    this._jumpToIndex = function (index) {
+      var key = _this3.props.navigationState.routes[index].key;
+      console.warn('Method `jumpToIndex` is deprecated. Please upgrade your code to use `jumpTo` instead.', "Change your code from `jumpToIndex(" + index + ")` to `jumpTo('" + key + "').`");
+
+      _this3._jumpTo(key);
+    };
+
+    this._jumpTo = function (key) {
+      if (!_this3._mounted) {
+        return;
+      }
+
+      var _props2 = _this3.props,
+          canJumpToTab = _props2.canJumpToTab,
+          navigationState = _props2.navigationState;
+      var index = navigationState.routes.findIndex(function (route) {
+        return route.key === key;
+      });
+
+      if (!canJumpToTab(navigationState.routes[index])) {
+        return;
+      }
+
+      if (index !== navigationState.index) {
+        _this3.props.onIndexChange(index);
+      }
+    };
+  }, _temp));
+
+  exports.default = TabViewAnimated;
+
+  var styles = _reactNative.StyleSheet.create({
+    container: {
+      flex: 1,
+      overflow: 'hidden'
+    },
+    pager: {
+      flex: 1
+    }
+  });
+});

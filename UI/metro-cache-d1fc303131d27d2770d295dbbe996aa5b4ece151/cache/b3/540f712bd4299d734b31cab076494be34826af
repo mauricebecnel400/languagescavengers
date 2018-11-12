@@ -1,0 +1,23 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _createNavigationContainer = _require(_dependencyMap[0], "../createNavigationContainer");
+
+  var _createNavigationContainer2 = _interopRequireDefault(_createNavigationContainer);
+
+  var _createSwitchNavigator = _require(_dependencyMap[1], "./createSwitchNavigator");
+
+  var _createSwitchNavigator2 = _interopRequireDefault(_createSwitchNavigator);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var SwitchNavigator = function SwitchNavigator(routeConfigs) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var navigator = (0, _createSwitchNavigator2.default)(routeConfigs, config);
+    return (0, _createNavigationContainer2.default)(navigator);
+  };
+
+  exports.default = SwitchNavigator;
+});

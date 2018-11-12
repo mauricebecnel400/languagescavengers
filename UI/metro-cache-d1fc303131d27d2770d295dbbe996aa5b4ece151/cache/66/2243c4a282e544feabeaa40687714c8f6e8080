@@ -1,0 +1,20 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = diff;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _AnimatedValue = _require(_dependencyMap[1], "../core/AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function diff(v) {
+    var stash = new _AnimatedValue2.default(0);
+    var prev = new _AnimatedValue2.default();
+    return (0, _base.block)([(0, _base.set)(stash, (0, _base.cond)((0, _base.defined)(prev), (0, _base.sub)(v, prev), 0)), (0, _base.set)(prev, v), stash]);
+  }
+});

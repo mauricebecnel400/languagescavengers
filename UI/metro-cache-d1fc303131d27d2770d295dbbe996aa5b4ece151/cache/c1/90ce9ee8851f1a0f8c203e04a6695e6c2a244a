@@ -1,0 +1,138 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS = exports.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX = exports.INTERRUPTION_MODE_IOS_DUCK_OTHERS = exports.INTERRUPTION_MODE_IOS_DO_NOT_MIX = exports.INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS = undefined;
+
+  var _Recording = _require(_dependencyMap[0], "./Audio/Recording");
+
+  Object.keys(_Recording).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function get() {
+        return _Recording[key];
+      }
+    });
+  });
+
+  var _Sound = _require(_dependencyMap[1], "./Audio/Sound");
+
+  Object.keys(_Sound).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: function get() {
+        return _Sound[key];
+      }
+    });
+  });
+  exports._isAudioEnabled = _isAudioEnabled;
+  exports._throwIfAudioIsDisabled = _throwIfAudioIsDisabled;
+  exports.setIsEnabledAsync = setIsEnabledAsync;
+  exports.setAudioModeAsync = setAudioModeAsync;
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS = exports.INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS = 0;
+  var INTERRUPTION_MODE_IOS_DO_NOT_MIX = exports.INTERRUPTION_MODE_IOS_DO_NOT_MIX = 1;
+  var INTERRUPTION_MODE_IOS_DUCK_OTHERS = exports.INTERRUPTION_MODE_IOS_DUCK_OTHERS = 2;
+  var INTERRUPTION_MODE_ANDROID_DO_NOT_MIX = exports.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX = 1;
+  var INTERRUPTION_MODE_ANDROID_DUCK_OTHERS = exports.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS = 2;
+  var _enabled = true;
+
+  var _DISABLED_ERROR = new Error('Cannot complete operation because audio is not enabled.');
+
+  var _isValueValid = function _isValueValid(value, validValues) {
+    return validValues.filter(function (validValue) {
+      return validValue === value;
+    }).length > 0;
+  };
+
+  var _findMissingKeys = function _findMissingKeys(object, requiredKeys) {
+    return requiredKeys.filter(function (requiredKey) {
+      return !(requiredKey in object);
+    });
+  };
+
+  function _isAudioEnabled() {
+    return _enabled;
+  }
+
+  function _throwIfAudioIsDisabled() {
+    if (!_enabled) {
+      throw _DISABLED_ERROR;
+    }
+  }
+
+  function setIsEnabledAsync(value) {
+    return regeneratorRuntime.async(function setIsEnabledAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _enabled = value;
+            _context.next = 3;
+            return regeneratorRuntime.awrap(_reactNative.NativeModules.ExponentAV.setAudioIsEnabled(value));
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function setAudioModeAsync(mode) {
+    var missingKeys;
+    return regeneratorRuntime.async(function setAudioModeAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            missingKeys = _findMissingKeys(mode, ['allowsRecordingIOS', 'interruptionModeIOS', 'playsInSilentModeIOS', 'interruptionModeAndroid', 'shouldDuckAndroid', 'playThroughEarpieceAndroid']);
+
+            if (!(missingKeys.length > 0)) {
+              _context2.next = 3;
+              break;
+            }
+
+            throw new Error("Audio mode attempted to be set without the required keys: " + JSON.stringify(missingKeys));
+
+          case 3:
+            if (_isValueValid(mode.interruptionModeIOS, [INTERRUPTION_MODE_IOS_MIX_WITH_OTHERS, INTERRUPTION_MODE_IOS_DO_NOT_MIX, INTERRUPTION_MODE_IOS_DUCK_OTHERS])) {
+              _context2.next = 5;
+              break;
+            }
+
+            throw new Error("\"interruptionModeIOS\" was set to an invalid value.");
+
+          case 5:
+            if (_isValueValid(mode.interruptionModeAndroid, [INTERRUPTION_MODE_ANDROID_DO_NOT_MIX, INTERRUPTION_MODE_ANDROID_DUCK_OTHERS])) {
+              _context2.next = 7;
+              break;
+            }
+
+            throw new Error("\"interruptionModeAndroid\" was set to an invalid value.");
+
+          case 7:
+            if (!(typeof mode.allowsRecordingIOS !== 'boolean' || typeof mode.playsInSilentModeIOS !== 'boolean' || typeof mode.shouldDuckAndroid !== 'boolean' || typeof mode.playThroughEarpieceAndroid !== 'boolean')) {
+              _context2.next = 9;
+              break;
+            }
+
+            throw new Error('"allowsRecordingIOS", "playsInSilentModeIOS", "playThroughEarpieceAndroid", and "shouldDuckAndroid" must be booleans.');
+
+          case 9:
+            _context2.next = 11;
+            return regeneratorRuntime.awrap(_reactNative.NativeModules.ExponentAV.setAudioMode(mode));
+
+          case 11:
+            return _context2.abrupt("return", _context2.sent);
+
+          case 12:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+});

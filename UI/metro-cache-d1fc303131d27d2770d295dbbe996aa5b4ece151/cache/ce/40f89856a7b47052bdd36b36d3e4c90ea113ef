@@ -1,0 +1,335 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-native-reanimated/src/createAnimatedComponent.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  exports.default = createAnimatedComponent;
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _ReanimatedEventEmitter = _require(_dependencyMap[3], "./ReanimatedEventEmitter");
+
+  var _ReanimatedEventEmitter2 = _interopRequireDefault(_ReanimatedEventEmitter);
+
+  var _ViewStylePropTypes = _require(_dependencyMap[4], "react-native/Libraries/Components/View/ViewStylePropTypes");
+
+  var _ViewStylePropTypes2 = _interopRequireDefault(_ViewStylePropTypes);
+
+  var _AnimatedEvent = _require(_dependencyMap[5], "./core/AnimatedEvent");
+
+  var _AnimatedEvent2 = _interopRequireDefault(_AnimatedEvent);
+
+  var _AnimatedNode = _require(_dependencyMap[6], "./core/AnimatedNode");
+
+  var _AnimatedNode2 = _interopRequireDefault(_AnimatedNode);
+
+  var _AnimatedProps = _require(_dependencyMap[7], "./core/AnimatedProps");
+
+  var _invariant = _require(_dependencyMap[8], "fbjs/lib/invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    AnimatedComponent: {
+      displayName: "AnimatedComponent",
+      isInFunction: true
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-native-reanimated/src/createAnimatedComponent.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var NODE_MAPPING = new Map();
+
+  function listener(data) {
+    var component = NODE_MAPPING.get(data.viewTag);
+    component && component._updateFromNative(data.props);
+  }
+
+  function createAnimatedComponent(Component) {
+    (0, _invariant2.default)(typeof Component !== 'function' || Component.prototype && Component.prototype.isReactComponent, '`createAnimatedComponent` does not support stateless functional components; ' + 'use a class component instead.');
+
+    var AnimatedComponent = _wrapComponent("AnimatedComponent")(function (_React$Component) {
+      _inherits(AnimatedComponent, _React$Component);
+
+      function AnimatedComponent() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, AnimatedComponent);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AnimatedComponent.__proto__ || Object.getPrototypeOf(AnimatedComponent)).call.apply(_ref, [this].concat(args))), _this), _this._invokeAnimatedPropsCallbackOnMount = false, _this._refHasChanges = false, _this._animatedPropsCallback = function () {
+          if (_this._component == null) {
+            _this._invokeAnimatedPropsCallbackOnMount = true;
+          } else if (typeof _this._component.setNativeProps !== 'function') {
+            _this.forceUpdate();
+          } else {
+            _this._component.setNativeProps(_this._propsAnimated.__getValue());
+          }
+        }, _this._setComponentRef = function (c) {
+          if (c !== _this._component) {
+            _this._component = c;
+            _this._refHasChanged = true;
+          }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+      }
+
+      _createClass(AnimatedComponent, [{
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+          this._detachPropUpdater();
+
+          this._propsAnimated && this._propsAnimated.__detach();
+
+          this._detachNativeEvents();
+        }
+      }, {
+        key: "setNativeProps",
+        value: function setNativeProps(props) {
+          this._component.setNativeProps(props);
+        }
+      }, {
+        key: "componentWillMount",
+        value: function componentWillMount() {
+          this._attachProps(this.props);
+        }
+      }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+          if (this._invokeAnimatedPropsCallbackOnMount) {
+            this._invokeAnimatedPropsCallbackOnMount = false;
+
+            this._animatedPropsCallback();
+          }
+
+          this._propsAnimated.setNativeView(this._component);
+
+          this._attachNativeEvents();
+
+          this._attachPropUpdater();
+        }
+      }, {
+        key: "_getEventViewRef",
+        value: function _getEventViewRef() {
+          return this._component.getScrollableNode ? this._component.getScrollableNode() : this._component;
+        }
+      }, {
+        key: "_attachNativeEvents",
+        value: function _attachNativeEvents() {
+          var node = this._getEventViewRef();
+
+          for (var key in this.props) {
+            var prop = this.props[key];
+
+            if (prop instanceof _AnimatedEvent2.default) {
+              prop.attachEvent(node, key);
+            }
+          }
+        }
+      }, {
+        key: "_detachNativeEvents",
+        value: function _detachNativeEvents() {
+          var node = this._getEventViewRef();
+
+          for (var key in this.props) {
+            var prop = this.props[key];
+
+            if (prop instanceof _AnimatedEvent2.default) {
+              prop.detachEvent(node, key);
+            }
+          }
+        }
+      }, {
+        key: "_reattachNativeEvents",
+        value: function _reattachNativeEvents(prevProps) {
+          var node = this._getEventViewRef();
+
+          var attached = new Set();
+          var nextEvts = new Set();
+
+          for (var key in this.props) {
+            var prop = this.props[key];
+
+            if (prop instanceof _AnimatedEvent2.default) {
+              nextEvts.add(prop);
+            }
+          }
+
+          for (var _key2 in prevProps) {
+            var _prop = this.props[_key2];
+
+            if (_prop instanceof _AnimatedEvent2.default) {
+              if (!nextEvts.has(_prop)) {
+                _prop.detachEvent(node, _key2);
+              } else {
+                attached.add(_prop);
+              }
+            }
+          }
+
+          for (var _key3 in this.props) {
+            var _prop2 = this.props[_key3];
+
+            if (_prop2 instanceof _AnimatedEvent2.default && !attached.has(_prop2)) {
+              _prop2.attachEvent(node, _key3);
+            }
+          }
+        }
+      }, {
+        key: "_attachProps",
+        value: function _attachProps(nextProps) {
+          var oldPropsAnimated = this._propsAnimated;
+          this._propsAnimated = (0, _AnimatedProps.createOrReusePropsNode)(nextProps, this._animatedPropsCallback, oldPropsAnimated);
+
+          if (oldPropsAnimated !== this._propsAnimated) {
+            oldPropsAnimated && oldPropsAnimated.__detach();
+          }
+        }
+      }, {
+        key: "_updateFromNative",
+        value: function _updateFromNative(props) {
+          this._component.setNativeProps(props);
+        }
+      }, {
+        key: "_attachPropUpdater",
+        value: function _attachPropUpdater() {
+          var viewTag = (0, _reactNative.findNodeHandle)(this);
+          NODE_MAPPING.set(viewTag, this);
+
+          if (NODE_MAPPING.size === 1) {
+            _ReanimatedEventEmitter2.default.addListener('onReanimatedPropsChange', listener);
+          }
+        }
+      }, {
+        key: "_detachPropUpdater",
+        value: function _detachPropUpdater() {
+          var viewTag = (0, _reactNative.findNodeHandle)(this);
+          NODE_MAPPING.delete(viewTag);
+
+          if (NODE_MAPPING.size === 0) {
+            _ReanimatedEventEmitter2.default.removeAllListeners('onReanimatedPropsChange');
+          }
+        }
+      }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps) {
+          this._attachProps(this.props);
+
+          this._reattachNativeEvents(prevProps);
+
+          if (this._refHasChanged) {
+            this._refHasChanges = false;
+
+            this._propsAnimated.setNativeView(this._component);
+          }
+        }
+      }, {
+        key: "_filterNonAnimatedStyle",
+        value: function _filterNonAnimatedStyle(inputStyle) {
+          var style = {};
+
+          for (var key in inputStyle) {
+            var value = inputStyle[key];
+
+            if (!(value instanceof _AnimatedNode2.default) && key !== 'transform') {
+              style[key] = value;
+            }
+          }
+
+          return style;
+        }
+      }, {
+        key: "_filterNonAnimatedProps",
+        value: function _filterNonAnimatedProps(inputProps) {
+          var props = {};
+
+          for (var key in inputProps) {
+            var value = inputProps[key];
+
+            if (key === 'style') {
+              props[key] = this._filterNonAnimatedStyle(_reactNative.StyleSheet.flatten(value));
+            } else if (!(value instanceof _AnimatedNode2.default)) {
+              props[key] = value;
+            }
+          }
+
+          return props;
+        }
+      }, {
+        key: "render",
+        value: function render() {
+          var props = this._filterNonAnimatedProps(this.props);
+
+          return _react3.default.createElement(Component, _extends({}, props, {
+            ref: this._setComponentRef,
+            collapsable: false,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 222
+            }
+          }));
+        }
+      }, {
+        key: "getNode",
+        value: function getNode() {
+          return this._component;
+        }
+      }]);
+
+      return AnimatedComponent;
+    }(_react3.default.Component));
+
+    var propTypes = Component.propTypes;
+    AnimatedComponent.propTypes = {
+      style: function style(props, propName, componentName) {
+        if (!propTypes) {
+          return;
+        }
+
+        for (var key in _ViewStylePropTypes2.default) {
+          if (!propTypes[key] && props[key] !== undefined) {
+            console.warn('You are setting the style `{ ' + key + ': ... }` as a prop. You ' + 'should nest it in a style object. ' + 'E.g. `{ style: { ' + key + ': ... } }`');
+          }
+        }
+      }
+    };
+    return AnimatedComponent;
+  }
+});

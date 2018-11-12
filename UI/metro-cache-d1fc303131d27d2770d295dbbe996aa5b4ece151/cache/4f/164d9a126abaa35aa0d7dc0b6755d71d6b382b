@@ -1,0 +1,35 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.manipulate = manipulate;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var ExponentImageManipulator = _reactNative.NativeModules.ExponentImageManipulator;
+
+  function manipulate(uri) {
+    var actions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var saveOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    return regeneratorRuntime.async(function manipulate$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (typeof uri === 'string' || uri instanceof String) {
+              _context.next = 2;
+              break;
+            }
+
+            throw new Error('Invalid type provided as uri parameter.');
+
+          case 2:
+            return _context.abrupt("return", ExponentImageManipulator.manipulate(uri, actions, saveOptions));
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+});

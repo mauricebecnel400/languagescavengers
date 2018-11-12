@@ -1,0 +1,185 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _BranchEvent = _require(_dependencyMap[1], "./BranchEvent");
+
+  var _BranchEvent2 = _interopRequireDefault(_BranchEvent);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+  var RNBranch = _reactNative.NativeModules.RNBranch;
+
+  exports.default = function createBranchUniversalObject(identifier) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var contentMetadata, key, valueType, branchUniversalObject, price, _ref, ident;
+
+    return regeneratorRuntime.async(function createBranchUniversalObject$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!(typeof identifier !== 'string')) {
+              _context.next = 2;
+              break;
+            }
+
+            throw new Error('react-native-branch: identifier must be a string');
+
+          case 2:
+            contentMetadata = options.contentMetadata || {};
+
+            if (!contentMetadata.customMetadata) {
+              _context.next = 13;
+              break;
+            }
+
+            _context.t0 = regeneratorRuntime.keys(contentMetadata.customMetadata);
+
+          case 5:
+            if ((_context.t1 = _context.t0()).done) {
+              _context.next = 13;
+              break;
+            }
+
+            key = _context.t1.value;
+            valueType = typeof contentMetadata.customMetadata[key];
+
+            if (!(valueType == 'string')) {
+              _context.next = 10;
+              break;
+            }
+
+            return _context.abrupt("continue", 5);
+
+          case 10:
+            console.warn('[Branch] customMetadata values must be strings. Value for property ' + key + ' has type ' + valueType + '.');
+            _context.next = 5;
+            break;
+
+          case 13:
+            branchUniversalObject = _extends({
+              canonicalIdentifier: identifier,
+              contentMetadata: contentMetadata
+            }, options);
+            price = contentMetadata.price === undefined ? undefined : '' + contentMetadata.price;
+            branchUniversalObject.contentMetadata.price = price;
+
+            if (options.automaticallyListOnSpotlight !== undefined) {
+              console.info('[Branch] automaticallyListOnSpotlight is deprecated. Please use locallyIndex instead.');
+            }
+
+            if (options.price !== undefined) {
+              console.info('[Branch] price is deprecated. Please use contentMetadata.price instead.');
+            }
+
+            if (options.currency !== undefined) {
+              console.info('[Branch] currency is deprecated. Please use contentMetadata.price instead.');
+            }
+
+            if (options.metadata !== undefined) {
+              console.info('[Branch] metadata is deprecated. Please use contentMetadata.customMetadata instead.');
+            }
+
+            if (options.contentIndexingMode !== undefined) {
+              console.info('[Branch] contentIndexingMode is deprecated. Please use locallyIndex or publiclyIndex instead.');
+            }
+
+            _context.next = 23;
+            return regeneratorRuntime.awrap(RNBranch.createUniversalObject(branchUniversalObject));
+
+          case 23:
+            _ref = _context.sent;
+            ident = _ref.ident;
+            return _context.abrupt("return", {
+              ident: ident,
+              showShareSheet: function showShareSheet() {
+                var shareOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var linkProperties = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var controlParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+                shareOptions = _extends({
+                  title: options.title || '',
+                  text: options.contentDescription || ''
+                }, shareOptions);
+                linkProperties = _extends({
+                  feature: 'share',
+                  channel: 'RNApp'
+                }, linkProperties);
+                return this._tryFunction(RNBranch.showShareSheet, shareOptions, linkProperties, controlParams);
+              },
+              registerView: function registerView() {
+                console.info('[Branch] registerView is deprecated. Please use logEvent(BranchEvent.ViewItem) instead.');
+                return this._tryFunction(RNBranch.registerView);
+              },
+              generateShortUrl: function generateShortUrl() {
+                var linkProperties = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var controlParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                return this._tryFunction(RNBranch.generateShortUrl, linkProperties, controlParams);
+              },
+              listOnSpotlight: function listOnSpotlight() {
+                console.info('[Branch] listOnSpotlight is deprecated. Please use locallyIndex instead.');
+                if (_reactNative.Platform.OS !== 'ios') return Promise.resolve();
+                return this._tryFunction(RNBranch.listOnSpotlight);
+              },
+              userCompletedAction: function userCompletedAction(event) {
+                var state = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                console.info('[Branch] userCompletedAction is deprecated. Please use logEvent or the BranchEvent class instead.');
+
+                if (event == RNBranch.REGISTER_VIEW_EVENT) {
+                  return this.logEvent(_BranchEvent2.default.ViewItem, {
+                    customData: state
+                  });
+                }
+
+                return this._tryFunction(RNBranch.userCompletedActionOnUniversalObject, event, state);
+              },
+              logEvent: function logEvent(eventName) {
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                return new _BranchEvent2.default(eventName, this, params).logEvent();
+              },
+              release: function release() {
+                return RNBranch.releaseUniversalObject(this.ident);
+              },
+              _newIdent: function _newIdent() {
+                var _this = this;
+
+                return RNBranch.createUniversalObject(branchUniversalObject).then(function (_ref2) {
+                  var ident = _ref2.ident;
+                  _this.ident = ident;
+                  return ident;
+                });
+              },
+              _tryFunction: function _tryFunction(func) {
+                var _this2 = this;
+
+                for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                  args[_key - 1] = arguments[_key];
+                }
+
+                return func.apply(undefined, [this.ident].concat(_toConsumableArray(args))).catch(function (error) {
+                  if (error.code != 'RNBranch::Error::BUONotFound') {
+                    throw error;
+                  }
+
+                  return _this2._newIdent().then(function (ident) {
+                    return func.apply(undefined, [ident].concat(_toConsumableArray(args)));
+                  });
+                });
+              }
+            });
+
+          case 26:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  };
+});

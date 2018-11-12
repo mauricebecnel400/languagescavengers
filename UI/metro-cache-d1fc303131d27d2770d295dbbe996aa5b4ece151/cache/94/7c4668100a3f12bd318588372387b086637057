@@ -1,0 +1,14 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _reactNativeBranch = _require(_dependencyMap[0], "react-native-branch");
+
+  var _reactNativeBranch2 = _interopRequireDefault(_reactNativeBranch);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  _reactNativeBranch2.default.BranchEvent = _reactNativeBranch.BranchEvent;
+  exports.default = _reactNativeBranch2.default;
+});

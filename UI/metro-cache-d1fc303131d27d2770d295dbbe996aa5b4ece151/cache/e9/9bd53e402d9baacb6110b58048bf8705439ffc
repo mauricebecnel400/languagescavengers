@@ -1,0 +1,91 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.hasHardwareAsync = hasHardwareAsync;
+  exports.isEnrolledAsync = isEnrolledAsync;
+  exports.authenticateAsync = authenticateAsync;
+  exports.cancelAuthenticate = cancelAuthenticate;
+
+  var _invariant = _require(_dependencyMap[0], "invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  var _reactNative = _require(_dependencyMap[1], "react-native");
+
+  var _expoCore = _require(_dependencyMap[2], "expo-core");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var LocalAuthentication = _expoCore.NativeModulesProxy.ExpoLocalAuthentication;
+
+  function hasHardwareAsync() {
+    return regeneratorRuntime.async(function hasHardwareAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt("return", LocalAuthentication.hasHardwareAsync());
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function isEnrolledAsync() {
+    return regeneratorRuntime.async(function isEnrolledAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            return _context2.abrupt("return", LocalAuthentication.isEnrolledAsync());
+
+          case 1:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function authenticateAsync() {
+    var promptMessageIOS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Authenticate';
+    var result;
+    return regeneratorRuntime.async(function authenticateAsync$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context3.next = 9;
+              break;
+            }
+
+            (0, _invariant2.default)(typeof promptMessageIOS === 'string' && promptMessageIOS.length, 'Fingerprint.authenticateAsync must be called with a non-empty string on iOS');
+            _context3.next = 4;
+            return regeneratorRuntime.awrap(LocalAuthentication.authenticateAsync(promptMessageIOS));
+
+          case 4:
+            result = _context3.sent;
+
+            if (result.warning) {
+              console.warn(result.warning);
+            }
+
+            return _context3.abrupt("return", result);
+
+          case 9:
+            return _context3.abrupt("return", LocalAuthentication.authenticateAsync());
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function cancelAuthenticate() {
+    LocalAuthentication.cancelAuthenticate();
+  }
+});

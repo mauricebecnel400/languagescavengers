@@ -1,0 +1,34 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = color;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _reactNative = _require(_dependencyMap[1], "react-native");
+
+  var _AnimatedNode = _require(_dependencyMap[2], "../core/AnimatedNode");
+
+  var _AnimatedNode2 = _interopRequireDefault(_AnimatedNode);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function color(r, g, b) {
+    var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+
+    if (a instanceof _AnimatedNode2.default) {
+      a = (0, _base.round)((0, _base.multiply)(a, 255));
+    } else {
+      a = Math.round(a * 255);
+    }
+
+    var color = (0, _base.add)((0, _base.multiply)(a, 1 << 24), (0, _base.multiply)(r, 1 << 16), (0, _base.multiply)(g, 1 << 8), b);
+
+    if (_reactNative.Platform.OS === 'android') {
+      return (0, _base.cond)((0, _base.lessThan)(color, 1 << 31 >>> 0), color, (0, _base.sub)(color, Math.pow(2, 32)));
+    }
+
+    return color;
+  }
+});

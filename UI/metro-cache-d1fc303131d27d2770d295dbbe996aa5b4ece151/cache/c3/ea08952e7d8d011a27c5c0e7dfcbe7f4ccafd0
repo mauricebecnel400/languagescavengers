@@ -1,0 +1,17 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _SimpleLineIcons = _require(_dependencyMap[0], "./vendor/react-native-vector-icons/glyphmaps/SimpleLineIcons.json");
+
+  var _SimpleLineIcons2 = _interopRequireDefault(_SimpleLineIcons);
+
+  var _createIconSet = _require(_dependencyMap[1], "./createIconSet");
+
+  var _createIconSet2 = _interopRequireDefault(_createIconSet);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  exports.default = (0, _createIconSet2.default)(_SimpleLineIcons2.default, 'simple-line-icons', _require(_dependencyMap[2], './fonts/SimpleLineIcons.ttf'));
+});

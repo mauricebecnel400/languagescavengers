@@ -1,0 +1,121 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  'use strict';
+
+  var _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-native/Libraries/Components/DatePicker/DatePickerIOS.ios.js";
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var NativeMethodsMixin = _require(_dependencyMap[0], '../../Renderer/shims/NativeMethodsMixin');
+
+  var React = _require(_dependencyMap[1], "react");
+
+  var invariant = _require(_dependencyMap[2], "fbjs/lib/invariant");
+
+  var PropTypes = _require(_dependencyMap[3], "prop-types");
+
+  var StyleSheet = _require(_dependencyMap[4], '../../StyleSheet/StyleSheet');
+
+  var View = _require(_dependencyMap[5], '../View/View');
+
+  var ViewPropTypes = _require(_dependencyMap[6], '../View/ViewPropTypes');
+
+  var createReactClass = _require(_dependencyMap[7], "create-react-class");
+
+  var requireNativeComponent = _require(_dependencyMap[8], '../../ReactNative/requireNativeComponent');
+
+  var DatePickerIOS = createReactClass({
+    displayName: 'DatePickerIOS',
+    _picker: undefined,
+    mixins: [NativeMethodsMixin],
+    propTypes: _extends({}, ViewPropTypes, {
+      date: PropTypes.instanceOf(Date),
+      initialDate: PropTypes.instanceOf(Date),
+      onDateChange: PropTypes.func.isRequired,
+      maximumDate: PropTypes.instanceOf(Date),
+      minimumDate: PropTypes.instanceOf(Date),
+      mode: PropTypes.oneOf(['date', 'time', 'datetime']),
+      locale: PropTypes.string,
+      minuteInterval: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30]),
+      timeZoneOffsetInMinutes: PropTypes.number
+    }),
+    getDefaultProps: function getDefaultProps() {
+      return {
+        mode: 'datetime'
+      };
+    },
+    componentDidUpdate: function componentDidUpdate() {
+      if (this.props.date) {
+        var propsTimeStamp = this.props.date.getTime();
+
+        if (this._picker) {
+          this._picker.setNativeProps({
+            date: propsTimeStamp
+          });
+        }
+      }
+    },
+    _onChange: function _onChange(event) {
+      var nativeTimeStamp = event.nativeEvent.timestamp;
+      this.props.onDateChange && this.props.onDateChange(new Date(nativeTimeStamp));
+      this.props.onChange && this.props.onChange(event);
+    },
+    render: function render() {
+      var _this = this;
+
+      var props = this.props;
+      invariant(props.date || props.initialDate, 'A selected date or initial date should be specified.');
+      return React.createElement(
+        View,
+        {
+          style: props.style,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 143
+          }
+        },
+        React.createElement(RCTDatePickerIOS, {
+          ref: function ref(picker) {
+            _this._picker = picker;
+          },
+          style: styles.datePickerIOS,
+          date: props.date ? props.date.getTime() : props.initialDate ? props.initialDate.getTime() : undefined,
+          locale: props.locale ? props.locale : undefined,
+          maximumDate: props.maximumDate ? props.maximumDate.getTime() : undefined,
+          minimumDate: props.minimumDate ? props.minimumDate.getTime() : undefined,
+          mode: props.mode,
+          minuteInterval: props.minuteInterval,
+          timeZoneOffsetInMinutes: props.timeZoneOffsetInMinutes,
+          onChange: this._onChange,
+          onStartShouldSetResponder: function onStartShouldSetResponder() {
+            return true;
+          },
+          onResponderTerminationRequest: function onResponderTerminationRequest() {
+            return false;
+          },
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 144
+          }
+        })
+      );
+    }
+  });
+  var styles = StyleSheet.create({
+    datePickerIOS: {
+      height: 216
+    }
+  });
+  var RCTDatePickerIOS = requireNativeComponent('RCTDatePicker', {
+    propTypes: _extends({}, DatePickerIOS.propTypes, {
+      date: PropTypes.number,
+      locale: PropTypes.string,
+      minimumDate: PropTypes.number,
+      maximumDate: PropTypes.number,
+      onDateChange: function onDateChange() {
+        return null;
+      },
+      onChange: PropTypes.func
+    })
+  });
+  module.exports = DatePickerIOS;
+});

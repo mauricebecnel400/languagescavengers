@@ -1,0 +1,19 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.preventAutoHide = preventAutoHide;
+  exports.hide = hide;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var SplashScreen = _reactNative.NativeModules.ExponentSplashScreen;
+
+  function preventAutoHide() {
+    SplashScreen.preventAutoHide();
+  }
+
+  function hide() {
+    SplashScreen.hide();
+  }
+});

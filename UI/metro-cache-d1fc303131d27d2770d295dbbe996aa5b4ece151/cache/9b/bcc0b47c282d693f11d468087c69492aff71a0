@@ -1,0 +1,217 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+    function arrayDiffer(a, b) {
+        if (!a || !b) {
+            return true;
+        }
+
+        if (a.length !== b.length) {
+            return true;
+        }
+
+        for (var i = 0; i < a.length; i++) {
+            if (a[i] !== b[i]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function fontDiffer(a, b) {
+        if (a === b) {
+            return false;
+        }
+
+        return a.fontStyle !== b.fontStyle || a.fontVariant !== b.fontVariant || a.fontWeight !== b.fontWeight || a.fontStretch !== b.fontStretch || a.fontSize !== b.fontSize || a.fontFamily !== b.fontFamily || a.textAnchor !== b.textAnchor || a.textDecoration !== b.textDecoration || a.letterSpacing !== b.letterSpacing || a.wordSpacing !== b.wordSpacing || a.kerning !== b.kerning || a.fontVariantLigatures !== b.fontVariantLigatures || a.fontData !== b.fontData || a.fontFeatureSettings !== b.fontFeatureSettings;
+    }
+
+    var ViewBoxAttributes = {
+        minX: true,
+        minY: true,
+        vbWidth: true,
+        vbHeight: true,
+        align: true,
+        meetOrSlice: true
+    };
+    var NodeAttributes = {
+        name: true,
+        matrix: {
+            diff: arrayDiffer
+        },
+        scaleX: true,
+        scaleY: true,
+        opacity: true,
+        clipRule: true,
+        clipPath: true,
+        propList: {
+            diff: arrayDiffer
+        },
+        responsible: true
+    };
+    var FillAndStrokeAttributes = {
+        fill: {
+            diff: arrayDiffer
+        },
+        fillOpacity: true,
+        fillRule: true,
+        stroke: {
+            diff: arrayDiffer
+        },
+        strokeOpacity: true,
+        strokeWidth: true,
+        strokeLinecap: true,
+        strokeLinejoin: true,
+        strokeDasharray: {
+            diff: arrayDiffer
+        },
+        strokeDashoffset: true,
+        strokeMiterlimit: true
+    };
+
+    var RenderableAttributes = _extends({}, NodeAttributes, FillAndStrokeAttributes);
+
+    var GroupAttributes = _extends({}, RenderableAttributes, {
+        font: {
+            diff: fontDiffer
+        }
+    });
+
+    var UseAttributes = _extends({}, RenderableAttributes, {
+        href: true,
+        width: true,
+        height: true
+    });
+
+    var SymbolAttributes = _extends({}, ViewBoxAttributes, {
+        name: true
+    });
+
+    var PathAttributes = _extends({}, RenderableAttributes, {
+        d: true
+    });
+
+    var TextSpecificAttributes = _extends({}, RenderableAttributes, {
+        alignmentBaseline: true,
+        baselineShift: true,
+        verticalAlign: true,
+        lengthAdjust: true,
+        textLength: true
+    });
+
+    var TextAttributes = _extends({}, TextSpecificAttributes, {
+        font: {
+            diff: fontDiffer
+        },
+        deltaX: arrayDiffer,
+        deltaY: arrayDiffer,
+        rotate: arrayDiffer,
+        positionX: arrayDiffer,
+        positionY: arrayDiffer
+    });
+
+    var TextPathAttributes = _extends({}, TextSpecificAttributes, {
+        href: true,
+        startOffset: true,
+        method: true,
+        spacing: true,
+        side: true,
+        midLine: true
+    });
+
+    var TSpanAttibutes = _extends({}, TextAttributes, {
+        content: true
+    });
+
+    var ClipPathAttributes = {
+        name: true
+    };
+
+    var GradientAttributes = _extends({}, ClipPathAttributes, {
+        gradient: {
+            diff: arrayDiffer
+        },
+        gradientUnits: true,
+        gradientTransform: {
+            diff: arrayDiffer
+        }
+    });
+
+    var LinearGradientAttributes = _extends({}, GradientAttributes, {
+        x1: true,
+        y1: true,
+        x2: true,
+        y2: true
+    });
+
+    var RadialGradientAttributes = _extends({}, GradientAttributes, {
+        fx: true,
+        fy: true,
+        rx: true,
+        ry: true,
+        cx: true,
+        cy: true,
+        r: true
+    });
+
+    var CircleAttributes = _extends({}, RenderableAttributes, {
+        cx: true,
+        cy: true,
+        r: true
+    });
+
+    var EllipseAttributes = _extends({}, RenderableAttributes, {
+        cx: true,
+        cy: true,
+        rx: true,
+        ry: true
+    });
+
+    var ImageAttributes = _extends({}, RenderableAttributes, {
+        x: true,
+        y: true,
+        width: true,
+        height: true,
+        src: true,
+        align: true,
+        meetOrSlice: true
+    });
+
+    var LineAttributes = _extends({}, RenderableAttributes, {
+        x1: true,
+        y1: true,
+        x2: true,
+        y2: true
+    });
+
+    var RectAttributes = _extends({}, RenderableAttributes, {
+        x: true,
+        y: true,
+        width: true,
+        height: true,
+        rx: true,
+        ry: true
+    });
+
+    exports.PathAttributes = PathAttributes;
+    exports.TextAttributes = TextAttributes;
+    exports.TSpanAttibutes = TSpanAttibutes;
+    exports.TextPathAttributes = TextPathAttributes;
+    exports.GroupAttributes = GroupAttributes;
+    exports.ClipPathAttributes = ClipPathAttributes;
+    exports.CircleAttributes = CircleAttributes;
+    exports.EllipseAttributes = EllipseAttributes;
+    exports.ImageAttributes = ImageAttributes;
+    exports.LineAttributes = LineAttributes;
+    exports.RectAttributes = RectAttributes;
+    exports.UseAttributes = UseAttributes;
+    exports.SymbolAttributes = SymbolAttributes;
+    exports.LinearGradientAttributes = LinearGradientAttributes;
+    exports.RadialGradientAttributes = RadialGradientAttributes;
+    exports.ViewBoxAttributes = ViewBoxAttributes;
+});

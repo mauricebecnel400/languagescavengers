@@ -1,0 +1,53 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _utils = _require(_dependencyMap[0], "../utils");
+
+  var _AnimatedNode2 = _require(_dependencyMap[1], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var AnimatedDebug = function (_AnimatedNode) {
+    _inherits(AnimatedDebug, _AnimatedNode);
+
+    function AnimatedDebug(message, value) {
+      _classCallCheck(this, AnimatedDebug);
+
+      var _this = _possibleConstructorReturn(this, (AnimatedDebug.__proto__ || Object.getPrototypeOf(AnimatedDebug)).call(this, {
+        type: 'debug',
+        message: message,
+        value: value.__nodeID
+      }, [value]));
+
+      _this._message = message;
+      _this._value = value;
+      return _this;
+    }
+
+    _createClass(AnimatedDebug, [{
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        var value = (0, _utils.val)(this._value);
+        console.log(this._message, value);
+        return value;
+      }
+    }]);
+
+    return AnimatedDebug;
+  }(_AnimatedNode3.default);
+
+  exports.default = AnimatedDebug;
+});

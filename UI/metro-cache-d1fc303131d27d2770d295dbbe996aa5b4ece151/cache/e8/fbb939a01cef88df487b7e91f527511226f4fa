@@ -1,0 +1,101 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.SMS = exports.REMINDERS = exports.CALENDAR = exports.CAMERA_ROLL = exports.SYSTEM_BRIGHTNESS = exports.CONTACTS = exports.NOTIFICATIONS = exports.USER_FACING_NOTIFICATIONS = exports.LOCATION = exports.AUDIO_RECORDING = exports.CAMERA = undefined;
+  exports.getAsync = getAsync;
+  exports.askAsync = askAsync;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _expoCore = _require(_dependencyMap[1], "expo-core");
+
+  var Permissions = _expoCore.NativeModulesProxy.ExponentPermissions;
+
+  function handlePermissionsRequest(types, handlePermissions) {
+    var permissions;
+    return regeneratorRuntime.async(function handlePermissionsRequest$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (types.length) {
+              _context.next = 2;
+              break;
+            }
+
+            throw new Error('No permission requested!');
+
+          case 2:
+            _context.next = 4;
+            return regeneratorRuntime.awrap(handlePermissions(types));
+
+          case 4:
+            permissions = _context.sent;
+            return _context.abrupt("return", {
+              status: Object.keys(permissions).reduce(function (acc, key) {
+                return permissions[key].status !== 'granted' ? permissions[key].status : acc;
+              }, 'granted'),
+              expires: Object.keys(permissions).reduce(function (acc, key) {
+                return permissions[key].expires !== 'never' ? permissions[key].expires : acc;
+              }, 'never'),
+              permissions: permissions
+            });
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getAsync() {
+    for (var _len = arguments.length, types = Array(_len), _key = 0; _key < _len; _key++) {
+      types[_key] = arguments[_key];
+    }
+
+    return regeneratorRuntime.async(function getAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            return _context2.abrupt("return", handlePermissionsRequest(types, Permissions.getAsync));
+
+          case 1:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function askAsync() {
+    for (var _len2 = arguments.length, types = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      types[_key2] = arguments[_key2];
+    }
+
+    return regeneratorRuntime.async(function askAsync$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            return _context3.abrupt("return", handlePermissionsRequest(types, Permissions.askAsync));
+
+          case 1:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  var CAMERA = exports.CAMERA = 'camera';
+  var AUDIO_RECORDING = exports.AUDIO_RECORDING = 'audioRecording';
+  var LOCATION = exports.LOCATION = 'location';
+  var USER_FACING_NOTIFICATIONS = exports.USER_FACING_NOTIFICATIONS = 'userFacingNotifications';
+  var NOTIFICATIONS = exports.NOTIFICATIONS = 'notifications';
+  var CONTACTS = exports.CONTACTS = 'contacts';
+  var SYSTEM_BRIGHTNESS = exports.SYSTEM_BRIGHTNESS = 'systemBrightness';
+  var CAMERA_ROLL = exports.CAMERA_ROLL = 'cameraRoll';
+  var CALENDAR = exports.CALENDAR = 'calendar';
+  var REMINDERS = exports.REMINDERS = 'reminders';
+  var SMS = exports.SMS = 'SMS';
+});

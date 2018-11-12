@@ -1,0 +1,81 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _Animation2 = _require(_dependencyMap[0], "./Animation");
+
+  var _Animation3 = _interopRequireDefault(_Animation2);
+
+  var _decay = _require(_dependencyMap[1], "./decay");
+
+  var _decay2 = _interopRequireDefault(_decay);
+
+  var _base = _require(_dependencyMap[2], "../base");
+
+  var _AnimatedClock = _require(_dependencyMap[3], "../core/AnimatedClock");
+
+  var _AnimatedClock2 = _interopRequireDefault(_AnimatedClock);
+
+  var _AnimatedValue = _require(_dependencyMap[4], "../core/AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var DecayAnimation = function (_Animation) {
+    _inherits(DecayAnimation, _Animation);
+
+    function DecayAnimation(config) {
+      _classCallCheck(this, DecayAnimation);
+
+      var _this = _possibleConstructorReturn(this, (DecayAnimation.__proto__ || Object.getPrototypeOf(DecayAnimation)).call(this));
+
+      _this._deceleration = config.deceleration !== undefined ? config.deceleration : 0.998;
+      _this._velocity = config.velocity;
+      return _this;
+    }
+
+    _createClass(DecayAnimation, [{
+      key: "start",
+      value: function start(value) {
+        this._clock = new _AnimatedClock2.default();
+        var state = {
+          finished: new _AnimatedValue2.default(0),
+          velocity: new _AnimatedValue2.default(this._velocity),
+          position: value,
+          time: new _AnimatedValue2.default(0)
+        };
+        var config = {
+          deceleration: this._deceleration
+        };
+        return (0, _base.block)([(0, _base.cond)((0, _base.clockRunning)(this._clock), 0, [(0, _base.startClock)(this._clock)]), (0, _decay2.default)(this._clock, state, config), (0, _base.cond)(state.finished, (0, _base.stopClock)(this._clock))]);
+      }
+    }, {
+      key: "stop",
+      value: function stop() {}
+    }], [{
+      key: "getDefaultState",
+      value: function getDefaultState() {
+        return {
+          position: new _AnimatedValue2.default(0),
+          finished: new _AnimatedValue2.default(0),
+          time: new _AnimatedValue2.default(0),
+          velocity: new _AnimatedValue2.default(0)
+        };
+      }
+    }]);
+
+    return DecayAnimation;
+  }(_Animation3.default);
+
+  exports.default = DecayAnimation;
+});

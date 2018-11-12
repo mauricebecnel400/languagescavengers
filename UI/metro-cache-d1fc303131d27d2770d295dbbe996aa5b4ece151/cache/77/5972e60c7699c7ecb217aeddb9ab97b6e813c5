@@ -1,0 +1,15 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  exports.default = function (config, expoFontName, expoAssetId) {
+    return (0, _createIconSetFromFontello2.default)(config, expoFontName, expoAssetId);
+  };
+
+  var _createIconSetFromFontello = _require(_dependencyMap[0], "./vendor/react-native-vector-icons/lib/create-icon-set-from-fontello");
+
+  var _createIconSetFromFontello2 = _interopRequireDefault(_createIconSetFromFontello);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+});

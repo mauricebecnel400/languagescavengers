@@ -1,0 +1,109 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  exports.createOrReuseStyleNode = createOrReuseStyleNode;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _AnimatedNode2 = _require(_dependencyMap[1], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  var _AnimatedTransform = _require(_dependencyMap[2], "./AnimatedTransform");
+
+  var _areEqual = _require(_dependencyMap[3], "fbjs/lib/areEqual");
+
+  var _areEqual2 = _interopRequireDefault(_areEqual);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  function sanitizeStyle(inputStyle) {
+    var style = {};
+
+    for (var key in inputStyle) {
+      var value = inputStyle[key];
+
+      if (value instanceof _AnimatedNode3.default) {
+        style[key] = value.__nodeID;
+      }
+    }
+
+    return style;
+  }
+
+  function createOrReuseStyleNode(style, oldNode) {
+    style = _reactNative.StyleSheet.flatten(style) || {};
+
+    if (style.transform) {
+      style = _extends({}, style, {
+        transform: (0, _AnimatedTransform.createOrReuseTransformNode)(style.transform, oldNode && oldNode._style.transform)
+      });
+    }
+
+    var config = sanitizeStyle(style);
+
+    if (oldNode && (0, _areEqual2.default)(config, oldNode._config)) {
+      return oldNode;
+    }
+
+    return new AnimatedStyle(style, config);
+  }
+
+  var AnimatedStyle = function (_AnimatedNode) {
+    _inherits(AnimatedStyle, _AnimatedNode);
+
+    function AnimatedStyle(style, config) {
+      _classCallCheck(this, AnimatedStyle);
+
+      var _this = _possibleConstructorReturn(this, (AnimatedStyle.__proto__ || Object.getPrototypeOf(AnimatedStyle)).call(this, {
+        type: 'style',
+        style: config
+      }, Object.values(style)));
+
+      _this._config = config;
+      _this._style = style;
+      return _this;
+    }
+
+    _createClass(AnimatedStyle, [{
+      key: "_walkStyleAndGetAnimatedValues",
+      value: function _walkStyleAndGetAnimatedValues(style) {
+        var updatedStyle = {};
+
+        for (var key in style) {
+          var value = style[key];
+
+          if (value instanceof _AnimatedNode3.default) {
+            updatedStyle[key] = value.__getValue();
+          } else if (value && !Array.isArray(value) && typeof value === 'object') {
+            updatedStyle[key] = this._walkStyleAndGetAnimatedValues(value);
+          }
+        }
+
+        return updatedStyle;
+      }
+    }, {
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        return this._walkStyleAndGetAnimatedValues(this._style);
+      }
+    }]);
+
+    return AnimatedStyle;
+  }(_AnimatedNode3.default);
+
+  exports.default = AnimatedStyle;
+});

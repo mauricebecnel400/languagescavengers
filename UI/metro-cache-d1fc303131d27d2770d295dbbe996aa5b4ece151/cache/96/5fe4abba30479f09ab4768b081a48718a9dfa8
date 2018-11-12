@@ -1,0 +1,13 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = _require(_dependencyMap[0], "react-native/Libraries/Image/AssetRegistry").registerAsset({
+    "__packager_asset": true,
+    "httpServerLocation": "/assets/assets",
+    "width": 512,
+    "height": 512,
+    "scales": [1],
+    "hash": "4ff1f710e2031c8877fa8bb316e4cf3d",
+    "name": "Gear",
+    "type": "png",
+    "fileHashes": ["4ff1f710e2031c8877fa8bb316e4cf3d"]
+  });
+});

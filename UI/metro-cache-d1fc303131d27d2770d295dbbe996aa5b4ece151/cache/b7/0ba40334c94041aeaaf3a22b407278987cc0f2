@@ -1,0 +1,400 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.TrackingConfigurations = exports.TrackingStateReasons = exports.TrackingStates = exports.FrameAttributes = exports.AnchorEventTypes = exports.AnchorTypes = exports.EventTypes = exports.WorldAlignmentTypes = exports.HitTestResultTypes = exports.PlaneDetectionTypes = exports.FaceAnchorProps = exports.BlendShapes = undefined;
+  exports.getVersion = getVersion;
+  exports.isAvailable = isAvailable;
+  exports.getUnavailabilityReason = getUnavailabilityReason;
+  exports.onFrameDidUpdate = onFrameDidUpdate;
+  exports.onDidFailWithError = onDidFailWithError;
+  exports.onAnchorsDidUpdate = onAnchorsDidUpdate;
+  exports.onCameraDidChangeTrackingState = onCameraDidChangeTrackingState;
+  exports.onSessionWasInterrupted = onSessionWasInterrupted;
+  exports.onSessionInterruptionEnded = onSessionInterruptionEnded;
+  exports.removeAllListeners = removeAllListeners;
+  exports.performHitTest = performHitTest;
+  exports.setDetectionImagesAsync = setDetectionImagesAsync;
+  exports.getCurrentFrame = getCurrentFrame;
+  exports.getARMatrices = getARMatrices;
+  exports.stopAsync = stopAsync;
+  exports.startAsync = startAsync;
+  exports.reset = reset;
+  exports.resume = resume;
+  exports.pause = pause;
+  exports.setConfigurationAsync = setConfigurationAsync;
+  exports.getProvidesAudioData = getProvidesAudioData;
+  exports.setProvidesAudioData = setProvidesAudioData;
+  exports.setPlaneDetection = setPlaneDetection;
+  exports.getCameraTexture = getCameraTexture;
+  exports.getPlaneDetection = getPlaneDetection;
+  exports.setWorldOriginAsync = setWorldOriginAsync;
+  exports.setLightEstimationEnabled = setLightEstimationEnabled;
+  exports.getLightEstimationEnabled = getLightEstimationEnabled;
+  exports.setAutoFocusEnabled = setAutoFocusEnabled;
+  exports.getAutoFocusEnabled = getAutoFocusEnabled;
+  exports.setWorldAlignment = setWorldAlignment;
+  exports.getWorldAlignment = getWorldAlignment;
+  exports.isConfigurationAvailable = isConfigurationAvailable;
+  exports.getSupportedVideoFormats = getSupportedVideoFormats;
+  exports.isFrontCameraAvailable = isFrontCameraAvailable;
+  exports.isRearCameraAvailable = isRearCameraAvailable;
+
+  var _invariant = _require(_dependencyMap[0], "invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  var _react = _require(_dependencyMap[1], "react");
+
+  var React = _interopRequireWildcard(_react);
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _expoConstants = _require(_dependencyMap[3], "expo-constants");
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  var ExponentAR = _reactNative.NativeModules.ExponentAR || {};
+  var emitter = new _reactNative.NativeEventEmitter(ExponentAR);
+  var BlendShapes = exports.BlendShapes = {
+    BrowDownL: 'browDown_L',
+    BrowDownR: 'browDown_R',
+    BrowInnerUp: 'browInnerUp',
+    BrowOuterUpL: 'browOuterUp_L',
+    BrowOuterUpR: 'browOuterUp_R',
+    CheekPuff: 'cheekPuff',
+    CheekSquintL: 'cheekSquint_L',
+    CheekSquintR: 'cheekSquint_R',
+    EyeBlinkL: 'eyeBlink_L',
+    EyeBlinkR: 'eyeBlink_R',
+    EyeLookDownL: 'eyeLookDown_L',
+    EyeLookDownR: 'eyeLookDown_R',
+    EyeLookInL: 'eyeLookIn_L',
+    EyeLookInR: 'eyeLookIn_R',
+    EyeLookOutL: 'eyeLookOut_L',
+    EyeLookOutR: 'eyeLookOut_R',
+    EyeLookUpL: 'eyeLookUp_L',
+    EyeLookUpR: 'eyeLookUp_R',
+    EyeSquintL: 'eyeSquint_L',
+    EyeSquintR: 'eyeSquint_R',
+    EyeWideL: 'eyeWide_L',
+    EyeWideR: 'eyeWide_R',
+    JawForward: 'jawForward',
+    JawLeft: 'jawLeft',
+    JawOpen: 'jawOpen',
+    JawRight: 'jawRight',
+    MouthClose: 'mouthClose',
+    MouthDimpleL: 'mouthDimple_L',
+    MouthDimpleR: 'mouthDimple_R',
+    MouthFrownL: 'mouthFrown_L',
+    MouthFrownR: 'mouthFrown_R',
+    MouthFunnel: 'mouthFunnel',
+    MouthLeft: 'mouthLeft',
+    MouthLowerDownL: 'mouthLowerDown_L',
+    MouthLowerDownR: 'mouthLowerDown_R',
+    MouthPressL: 'mouthPress_L',
+    MouthPressR: 'mouthPress_R',
+    MouthPucker: 'mouthPucker',
+    MouthRight: 'mouthRight',
+    MouthRollLower: 'mouthRollLower',
+    MouthRollUpper: 'mouthRollUpper',
+    MouthShrugLower: 'mouthShrugLower',
+    MouthShrugUpper: 'mouthShrugUpper',
+    MouthSmileL: 'mouthSmile_L',
+    MouthSmileR: 'mouthSmile_R',
+    MouthStretchL: 'mouthStretch_L',
+    MouthStretchR: 'mouthStretch_R',
+    MouthUpperUpL: 'mouthUpperUp_L',
+    MouthUpperUpR: 'mouthUpperUp_R',
+    NoseSneerL: 'noseSneer_L',
+    NoseSneerR: 'noseSneer_R'
+  };
+  var FaceAnchorProps = exports.FaceAnchorProps = {
+    Geometry: 'geometry',
+    BlendShapes: 'blendShapes'
+  };
+  var PlaneDetectionTypes = exports.PlaneDetectionTypes = {
+    None: 'none',
+    Horizontal: 'horizontal',
+    Vertical: 'vertical'
+  };
+  var HitTestResultTypes = exports.HitTestResultTypes = {
+    FeaturePoint: 'featurePoint',
+    HorizontalPlane: 'horizontalPlane',
+    VerticalPlane: 'verticalPlane',
+    ExistingPlane: 'existingPlane',
+    ExistingPlaneUsingExtent: 'existingPlaneUsingExtent',
+    ExistingPlaneUsingGeometry: 'existingPlaneUsingGeometry'
+  };
+  var WorldAlignmentTypes = exports.WorldAlignmentTypes = {
+    Gravity: 'gravity',
+    GravityAndHeading: 'gravityAndHeading',
+    AlignmentCamera: 'alignmentCamera'
+  };
+  var EventTypes = exports.EventTypes = {
+    FrameDidUpdate: ExponentAR.frameDidUpdate,
+    DidFailWithError: ExponentAR.didFailWithError,
+    AnchorsDidUpdate: ExponentAR.anchorsDidUpdate,
+    CameraDidChangeTrackingState: ExponentAR.cameraDidChangeTrackingState,
+    SessionWasInterrupted: ExponentAR.sessionWasInterrupted,
+    SessionInterruptionEnded: ExponentAR.sessionInterruptionEnded
+  };
+  var AnchorTypes = exports.AnchorTypes = {
+    Face: 'ARFaceAnchor',
+    Image: 'ARImageAnchor',
+    Plane: 'ARPlaneAnchor',
+    Anchor: 'ARAnchor'
+  };
+  var AnchorEventTypes = exports.AnchorEventTypes = {
+    Add: 'add',
+    Update: 'update',
+    Remove: 'remove'
+  };
+  var FrameAttributes = exports.FrameAttributes = {
+    Anchors: 'anchors',
+    RawFeaturePoints: 'rawFeaturePoints',
+    LightEstimation: 'lightEstimation',
+    CapturedDepthData: 'capturedDepthData'
+  };
+  var TrackingStates = exports.TrackingStates = {
+    NotAvailable: 'ARTrackingStateNotAvailable',
+    Limited: 'ARTrackingStateLimited',
+    Normal: 'ARTrackingStateNormal'
+  };
+  var TrackingStateReasons = exports.TrackingStateReasons = {
+    None: 'ARTrackingStateReasonNone',
+    Initializing: 'ARTrackingStateReasonInitializing',
+    ExcessiveMotion: 'ARTrackingStateReasonExcessiveMotion',
+    InsufficientFeatures: 'ARTrackingStateReasonInsufficientFeatures',
+    Relocalizing: 'ARTrackingStateReasonRelocalizing'
+  };
+  var TrackingConfigurations = exports.TrackingConfigurations = {
+    World: 'ARWorldTrackingConfiguration',
+    Orientation: 'AROrientationTrackingConfiguration',
+    Face: 'ARFaceTrackingConfiguration'
+  };
+
+  function getVersion() {
+    return ExponentAR.ARKitVersion;
+  }
+
+  var AvailabilityErrorMessages = {
+    Simulator: "Cannot run EXGL in a simulator",
+    ANineChip: "ARKit can only run on iOS devices with A9 (2015) or greater chips! This is a",
+    ARKitOnlyOnIOS: "ARKit can only run on an iOS device! This is a"
+  };
+
+  function isAvailable() {
+    if (!_expoConstants.Constants.isDevice || _reactNative.Platform.isTVOS || _reactNative.Platform.OS !== 'ios' || _expoConstants.Constants.deviceYearClass < 2015 || !ExponentAR.isSupported || !ExponentAR.startAsync) {
+        return false;
+      }
+
+    return true;
+  }
+
+  function getUnavailabilityReason() {
+    if (!_expoConstants.Constants.isDevice) {
+      return AvailabilityErrorMessages.Simulator;
+    } else if (_reactNative.Platform.OS !== 'ios') {
+      return AvailabilityErrorMessages.ARKitOnlyOnIOS + " " + _reactNative.Platform.OS + " device";
+    } else if (_expoConstants.Constants.deviceYearClass < 2015) {
+      return AvailabilityErrorMessages.ANineChip + " " + _expoConstants.Constants.deviceYearClass + " device";
+    }
+
+    return 'Unknown Reason';
+  }
+
+  function onFrameDidUpdate(listener) {
+    return addListener(EventTypes.FrameDidUpdate, listener);
+  }
+
+  function onDidFailWithError(listener) {
+    return addListener(EventTypes.DidFailWithError, listener);
+  }
+
+  function onAnchorsDidUpdate(listener) {
+    return addListener(EventTypes.AnchorsDidUpdate, listener);
+  }
+
+  function onCameraDidChangeTrackingState(listener) {
+    return addListener(EventTypes.CameraDidChangeTrackingState, listener);
+  }
+
+  function onSessionWasInterrupted(listener) {
+    return addListener(EventTypes.SessionWasInterrupted, listener);
+  }
+
+  function onSessionInterruptionEnded(listener) {
+    return addListener(EventTypes.SessionInterruptionEnded, listener);
+  }
+
+  function removeListener(listener) {
+    if (emitter.removeSubscription) emitter.removeSubscription(listener);
+  }
+
+  function addListener(eventType, event) {
+    if (!emitter.addListener) {
+      console.warn('Expo.AR.addListener: Could not add listener for event: ', eventType);
+      return {
+        remove: function remove() {}
+      };
+    }
+
+    var listener = emitter.addListener(eventType, event);
+
+    listener.remove = function () {
+      return removeListener(listener);
+    };
+
+    return listener;
+  }
+
+  function removeAllListeners(eventType) {
+    if (emitter.removeAllListeners) emitter.removeAllListeners(eventType);
+  }
+
+  function performHitTest(point, types) {
+    if (ExponentAR.performHitTest) return ExponentAR.performHitTest(point, types);
+  }
+
+  function setDetectionImagesAsync(images) {
+    return regeneratorRuntime.async(function setDetectionImagesAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!ExponentAR.setDetectionImagesAsync) {
+              _context.next = 2;
+              break;
+            }
+
+            return _context.abrupt("return", ExponentAR.setDetectionImagesAsync(images));
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getCurrentFrame(attributes) {
+    if (ExponentAR.getCurrentFrame) return ExponentAR.getCurrentFrame(attributes);
+  }
+
+  function getARMatrices(near, far) {
+    if (ExponentAR.getARMatrices) return ExponentAR.getARMatrices(near, far);
+  }
+
+  function stopAsync() {
+    if (ExponentAR.stopAsync) return ExponentAR.stopAsync();
+  }
+
+  function startAsync(node, configuration) {
+    var handle = typeof node === 'number' ? node : _getNodeHandle(node);
+    return ExponentAR.startAsync && ExponentAR.startAsync(handle, configuration);
+  }
+
+  function _getNodeHandle(component) {
+    var handle = (0, _reactNative.findNodeHandle)(component);
+    (0, _invariant2.default)(handle != null, "Could not find the React node handle for component to snapshot: %s", component);
+    return handle;
+  }
+
+  function reset() {
+    if (ExponentAR.reset) ExponentAR.reset();
+  }
+
+  function resume() {
+    if (ExponentAR.resume) ExponentAR.resume();
+  }
+
+  function pause() {
+    if (ExponentAR.pause) ExponentAR.pause();
+  }
+
+  function setConfigurationAsync(configuration) {
+    if (ExponentAR.setConfigurationAsync) return ExponentAR.setConfigurationAsync(configuration);
+  }
+
+  function getProvidesAudioData() {
+    if (ExponentAR.getProvidesAudioData) return ExponentAR.getProvidesAudioData();
+  }
+
+  function setProvidesAudioData(providesAudioData) {
+    if (ExponentAR.setProvidesAudioData) ExponentAR.setProvidesAudioData(providesAudioData);
+  }
+
+  function setPlaneDetection(planeDetection) {
+    if (ExponentAR.setPlaneDetection) ExponentAR.setPlaneDetection(planeDetection);
+  }
+
+  function getCameraTexture() {
+    if (ExponentAR.getCameraTexture) return ExponentAR.getCameraTexture();
+  }
+
+  function getPlaneDetection() {
+    if (ExponentAR.getPlaneDetection) return ExponentAR.getPlaneDetection();
+  }
+
+  function setWorldOriginAsync(matrix_float4x4) {
+    if (ExponentAR.setWorldOriginAsync) return ExponentAR.setWorldOriginAsync(matrix_float4x4);
+  }
+
+  function setLightEstimationEnabled(isLightEstimationEnabled) {
+    if (ExponentAR.setLightEstimationEnabled) ExponentAR.setLightEstimationEnabled(isLightEstimationEnabled);
+  }
+
+  function getLightEstimationEnabled() {
+    if (ExponentAR.getLightEstimationEnabled) return ExponentAR.getLightEstimationEnabled();
+  }
+
+  function setAutoFocusEnabled(isAutoFocusEnabled) {
+    if (ExponentAR.setAutoFocusEnabled) ExponentAR.setAutoFocusEnabled(isAutoFocusEnabled);
+  }
+
+  function getAutoFocusEnabled() {
+    if (ExponentAR.getAutoFocusEnabled) return ExponentAR.getAutoFocusEnabled();
+  }
+
+  function setWorldAlignment(worldAlignment) {
+    if (ExponentAR.setWorldAlignment) ExponentAR.setWorldAlignment(worldAlignment);
+  }
+
+  function getWorldAlignment() {
+    if (ExponentAR.getWorldAlignment) return ExponentAR.getWorldAlignment();
+  }
+
+  function isConfigurationAvailable(configuration) {
+    var _Dimensions$get = _reactNative.Dimensions.get('window'),
+        width = _Dimensions$get.width,
+        height = _Dimensions$get.height;
+
+    var isX = (width === 812 || height === 812) && !_reactNative.Platform.isTVOS && !_reactNative.Platform.isPad;
+
+    if (configuration === TrackingConfigurations.Face && isX && isAvailable()) {
+      return true;
+    }
+
+    return !!ExponentAR[configuration];
+  }
+
+  function getSupportedVideoFormats(configuration) {
+    var _videoFormats;
+
+    var videoFormats = (_videoFormats = {}, _defineProperty(_videoFormats, TrackingConfigurations.World, 'WorldTrackingVideoFormats'), _defineProperty(_videoFormats, TrackingConfigurations.Orientation, 'OrientationTrackingVideoFormats'), _defineProperty(_videoFormats, TrackingConfigurations.Face, 'FaceTrackingVideoFormats'), _videoFormats);
+    var videoFormat = videoFormats[configuration];
+    return ExponentAR[videoFormat];
+  }
+
+  function isFrontCameraAvailable() {
+    return isConfigurationAvailable(TrackingConfigurations.Face);
+  }
+
+  function isRearCameraAvailable() {
+    return isConfigurationAvailable(TrackingConfigurations.World);
+  }
+});

@@ -1,0 +1,38 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  'use strict';
+
+  var NativeModules = _require(_dependencyMap[0], '../BatchedBridge/NativeModules');
+
+  var Platform = {
+    OS: 'ios',
+
+    get Version() {
+      var constants = NativeModules.PlatformConstants;
+      return constants && constants.osVersion;
+    },
+
+    get isPad() {
+      var constants = NativeModules.PlatformConstants;
+      return constants ? constants.interfaceIdiom === 'pad' : false;
+    },
+
+    get isTVOS() {
+      return Platform.isTV;
+    },
+
+    get isTV() {
+      var constants = NativeModules.PlatformConstants;
+      return constants ? constants.interfaceIdiom === 'tv' : false;
+    },
+
+    get isTesting() {
+      var constants = NativeModules.PlatformConstants;
+      return constants && constants.isTesting;
+    },
+
+    select: function select(obj) {
+      return 'ios' in obj ? obj.ios : obj.default;
+    }
+  };
+  module.exports = Platform;
+});

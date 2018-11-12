@@ -1,10 +1,14 @@
 import React from 'react';
+<<<<<<< HEAD
 import { StackNavigator } from 'react-navigation';
+=======
+>>>>>>> b78d2b4811456f1bc5898c9397779f21d8afd4aa
 import {
     View,
     Image,
     ScrollView,
     Text,
+<<<<<<< HEAD
     TouchableHighlight,
     StyleSheet,
 } from 'react-native';
@@ -66,3 +70,8 @@ const styles =  StyleSheet.create({
         padding: 5,
     }
 });
+=======
+    TouchableOpacity
+} from 'react-native';
+import { WebBrowser } from 'expo';
+>>>>>>> b78d2b4811456f1bc5898c9397779f21d8afd4aa

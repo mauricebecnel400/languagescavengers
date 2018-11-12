@@ -1,0 +1,17 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _reactNativeDrawerLayout = _require(_dependencyMap[0], "react-native-drawer-layout");
+
+  var _reactNativeDrawerLayout2 = _interopRequireDefault(_reactNativeDrawerLayout);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  exports.default = _reactNativeDrawerLayout2.default;
+});

@@ -1,0 +1,75 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var EventEmitter = function () {
+    function EventEmitter(nativeModule) {
+      _classCallCheck(this, EventEmitter);
+
+      this._listenersCount = 0;
+      this._nativeModule = nativeModule;
+      this._eventEmitter = new _reactNative.NativeEventEmitter(nativeModule);
+    }
+
+    _createClass(EventEmitter, [{
+      key: "addListener",
+      value: function addListener(eventName, listener) {
+        this._listenersCount += 1;
+
+        if (_reactNative.Platform.OS === 'android' && this._nativeModule.startObserving) {
+          if (this._listenersCount === 1) {
+            this._nativeModule.startObserving();
+          }
+        }
+
+        return this._eventEmitter.addListener(eventName, listener);
+      }
+    }, {
+      key: "removeAllListeners",
+      value: function removeAllListeners(eventName) {
+        var listenersToRemoveCount = this._eventEmitter.listeners(eventName).length;
+
+        var newListenersCount = Math.max(0, this._listenersCount - listenersToRemoveCount);
+
+        if (_reactNative.Platform.OS === 'android' && this._nativeModule.stopObserving && newListenersCount === 0) {
+          this._nativeModule.stopObserving();
+        }
+
+        this._eventEmitter.removeAllListeners(eventName);
+
+        this._listenersCount = newListenersCount;
+      }
+    }, {
+      key: "removeSubscription",
+      value: function removeSubscription(subscription) {
+        this._listenersCount -= 1;
+
+        if (_reactNative.Platform.OS === 'android' && this._nativeModule.stopObserving) {
+          if (this._listenersCount === 0) {
+            this._nativeModule.stopObserving();
+          }
+        }
+
+        this._eventEmitter.removeSubscription(subscription);
+      }
+    }, {
+      key: "emit",
+      value: function emit(eventType) {
+        var _eventEmitter;
+
+        for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          params[_key - 1] = arguments[_key];
+        }
+
+        (_eventEmitter = this._eventEmitter).emit.apply(_eventEmitter, [eventType].concat(params));
+      }
+    }]);
+
+    return EventEmitter;
+  }();
+
+  module.exports = EventEmitter;
+});

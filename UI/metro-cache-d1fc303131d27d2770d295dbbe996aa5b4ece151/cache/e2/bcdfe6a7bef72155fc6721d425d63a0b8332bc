@@ -1,0 +1,201 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _this = this;
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var ExponentLocalization = _reactNative.NativeModules.ExponentLocalization;
+
+  var isObject = function isObject(obj) {
+    return obj && obj.constructor && obj.constructor === Object;
+  };
+
+  var LocaleStore = function LocaleStore(locales) {
+    _classCallCheck(this, LocaleStore);
+
+    if (isObject(locales) === false || Object.keys(locales).length <= 1) {
+      throw new Error('Locales input must be an object and non-empty');
+    }
+
+    var copy = _extends({}, locales);
+
+    var allGivenLocales = new Set(Object.keys(copy));
+    var currentLocaleName = [].concat(_toConsumableArray(allGivenLocales))[0];
+    var defaultLocale = copy[currentLocaleName];
+    var defaultLocaleName = currentLocaleName;
+    var defaultLocalePhrases = new Set(Object.keys(defaultLocale));
+    var currentLocale = defaultLocale;
+
+    var setLocaleHelper = function setLocaleHelper(newLocaleName, cb) {
+      if (allGivenLocales.has(newLocaleName) === false) {
+        if (__DEV__) {
+          var s = newLocaleName + " is not a valid locale, known locales are " + [].concat(_toConsumableArray(allGivenLocales));
+          console.error(s);
+        }
+      }
+
+      if (newLocaleName === currentLocaleName) {
+        if (__DEV__) {
+          console.warn('New Locale is the same as last, locale not changed');
+        }
+
+        return;
+      }
+
+      currentLocale = copy[newLocaleName];
+      currentLocaleName = newLocaleName;
+      cb && cb();
+    };
+
+    var localizationValueHelper = function localizationValueHelper(name) {
+      if (defaultLocalePhrases.has(name)) {
+        var result = currentLocale[name];
+
+        if (result !== undefined) {
+          return result !== undefined ? result : defaultLocale[name];
+        } else {
+          var fallback = defaultLocale[name];
+
+          if (fallback === undefined) {
+            if (__DEV__) {
+              var s = "Fallback locale " + defaultLocaleName + " is missing a string value for " + name;
+              console.error(s);
+            }
+
+            return '';
+          }
+
+          return fallback;
+        }
+      }
+    };
+
+    if (_reactNative.Platform.OS === 'android') {
+      var _ret = function () {
+        var localizedValues = [];
+
+        for (var _iterator = Object.values(copy), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"]();;) {
+          var _ref;
+
+          if (_isArray) {
+            if (_i >= _iterator.length) break;
+            _ref = _iterator[_i++];
+          } else {
+            _i = _iterator.next();
+            if (_i.done) break;
+            _ref = _i.value;
+          }
+
+          var values = _ref;
+          Object.keys(values).forEach(function (s) {
+            return localizedValues.push(s);
+          });
+        }
+
+        localizedValues = new Set(localizedValues);
+        var proxy = {};
+        Object.defineProperty(proxy, 'setLocale', {
+          get: function get() {
+            return setLocaleHelper;
+          }
+        });
+        var methods = new Set(['setLocale']);
+
+        var _loop = function _loop(name) {
+          if (methods.has(name)) {
+            throw new Error("Cannot use " + name + " as a locale name");
+          }
+
+          Object.defineProperty(proxy, name, {
+            get: function get() {
+              return localizationValueHelper(name);
+            }
+          });
+        };
+
+        for (var _iterator2 = localizedValues.keys(), _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"]();;) {
+          var _ref2;
+
+          if (_isArray2) {
+            if (_i2 >= _iterator2.length) break;
+            _ref2 = _iterator2[_i2++];
+          } else {
+            _i2 = _iterator2.next();
+            if (_i2.done) break;
+            _ref2 = _i2.value;
+          }
+
+          var name = _ref2;
+
+          _loop(name);
+        }
+
+        return {
+          v: proxy
+        };
+      }();
+
+      if (typeof _ret === "object") return _ret.v;
+    } else if (_reactNative.Platform.OS === 'ios') {
+      var handlers = {
+        setLocale: setLocaleHelper
+      };
+      var methods = new Set(Object.keys(handlers));
+      return new Proxy(this, {
+        set: function set(target, name, value) {
+          if (__DEV__) {
+            console.warn('Setting anything directly on the localization store is a no op');
+          }
+        },
+        get: function get(target, name) {
+          if (typeof name !== 'string') {
+            return target[name];
+          } else {
+            if (defaultLocalePhrases.has(name)) {
+              return localizationValueHelper(name);
+            } else if (methods.has(name)) {
+              return handlers[name];
+            } else {
+              return target[name];
+            }
+          }
+        }
+      });
+    } else {
+      throw new Error("Unsupported platform at moment for localization: " + _reactNative.Platform.OS);
+    }
+  };
+
+  var getCurrentLocaleAsync = function getCurrentLocaleAsync() {
+    return regeneratorRuntime.async(function getCurrentLocaleAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return regeneratorRuntime.awrap(ExponentLocalization.getCurrentLocaleAsync());
+
+          case 2:
+            return _context.abrupt("return", _context.sent.replace('-', '_'));
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, _this);
+  };
+
+  exports.default = _extends({}, ExponentLocalization, {
+    getCurrentLocaleAsync: getCurrentLocaleAsync,
+    LocaleStore: LocaleStore
+  });
+});

@@ -1,0 +1,81 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation/src/views/SwitchView/SwitchView.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _SceneView = _require(_dependencyMap[2], "../SceneView");
+
+  var _SceneView2 = _interopRequireDefault(_SceneView);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    SwitchView: {
+      displayName: "SwitchView"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation/src/views/SwitchView/SwitchView.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var SwitchView = _wrapComponent("SwitchView")(function (_React$Component) {
+    _inherits(SwitchView, _React$Component);
+
+    function SwitchView() {
+      _classCallCheck(this, SwitchView);
+
+      return _possibleConstructorReturn(this, (SwitchView.__proto__ || Object.getPrototypeOf(SwitchView)).apply(this, arguments));
+    }
+
+    _createClass(SwitchView, [{
+      key: "render",
+      value: function render() {
+        var state = this.props.navigation.state;
+        var activeKey = state.routes[state.index].key;
+        var descriptor = this.props.descriptors[activeKey];
+        var ChildComponent = descriptor.getComponent();
+        return _react3.default.createElement(_SceneView2.default, {
+          component: ChildComponent,
+          navigation: descriptor.navigation,
+          screenProps: this.props.screenProps,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 12
+          }
+        });
+      }
+    }]);
+
+    return SwitchView;
+  }(_react3.default.Component));
+
+  exports.default = SwitchView;
+});

@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var PlatformAdapter = null;
+
+  try {
+    PlatformAdapter = _require(_dependencyMap[0], "expo-react-native-adapter");
+  } catch (e) {
+    console.error(e, 'expo-react-native-adapter has not been found');
+  }
+
+  module.exports = PlatformAdapter;
+});

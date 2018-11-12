@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+	module.exports = _require(_dependencyMap[0], "react-native/Libraries/Image/AssetRegistry").registerAsset({
+		"__packager_asset": true,
+		"httpServerLocation": "/assets/node_modules/@expo/vector-icons/fonts",
+		"scales": [1],
+		"hash": "5221f35630f5b71e53c3196d3ff681a1",
+		"name": "EvilIcons",
+		"type": "ttf",
+		"fileHashes": ["5221f35630f5b71e53c3196d3ff681a1"]
+	});
+});

@@ -1,0 +1,19 @@
+__d(function (global, _require2, module, exports, _dependencyMap) {
+  var NativeModulesProxy = _require2(_dependencyMap[0], './src/NativeModulesProxy');
+
+  var EventEmitter = _require2(_dependencyMap[1], './src/EventEmitter');
+
+  var NativeViewManagerAdapter = _require2(_dependencyMap[2], './src/NativeViewManagerAdapter');
+
+  var _require = _require2(_dependencyMap[3], "react-native"),
+      Platform = _require.Platform;
+
+  module.exports = {
+    Platform: {
+      OS: Platform.OS
+    },
+    NativeModulesProxy: NativeModulesProxy,
+    EventEmitter: EventEmitter,
+    requireNativeViewManager: NativeViewManagerAdapter.requireNativeViewManager
+  };
+});

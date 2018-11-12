@@ -1,0 +1,423 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _react2 = _require(_dependencyMap[0], "react");
+
+    var _react3 = _interopRequireDefault(_react2);
+
+    var _index = _require(_dependencyMap[1], "./../node_modules/react-transform-hmr/lib/index.js");
+
+    var _index2 = _interopRequireDefault(_index);
+
+    var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+    var _class,
+        _temp,
+        _jsxFileName = "/home/monopolized/github/CS470_Project/UI/screens/LanguageSelectScreen.js";
+
+    var _reactNative = _require(_dependencyMap[2], "react-native");
+
+    var _vectorIcons = _require(_dependencyMap[3], "@expo/vector-icons");
+
+    var _CardScroll = _require(_dependencyMap[4], "../components/CardScroll");
+
+    var _CardScroll2 = _interopRequireDefault(_CardScroll);
+
+    var _ButtonCamera = _require(_dependencyMap[5], "../components/ButtonCamera");
+
+    var _ButtonCamera2 = _interopRequireDefault(_ButtonCamera);
+
+    var _ButtonSkip = _require(_dependencyMap[6], "../components/ButtonSkip");
+
+    var _ButtonSkip2 = _interopRequireDefault(_ButtonSkip);
+
+    var _ExpoCamera = _require(_dependencyMap[7], "../components/ExpoCamera");
+
+    var _ExpoCamera2 = _interopRequireDefault(_ExpoCamera);
+
+    var _Card = _require(_dependencyMap[8], "../components/Card");
+
+    var _Card2 = _interopRequireDefault(_Card);
+
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+    function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+    function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+    var _components = {
+        ScavengerMode: {
+            displayName: "ScavengerMode"
+        }
+    };
+
+    var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+        filename: "/home/monopolized/github/CS470_Project/UI/screens/LanguageSelectScreen.js",
+        components: _components,
+        locals: [module],
+        imports: [_react3.default]
+    });
+
+    function _wrapComponent(id) {
+        return function (Component) {
+            return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+        };
+    }
+
+    var ScavengerMode = _wrapComponent("ScavengerMode")((_temp = _class = function (_React$Component) {
+        _inherits(ScavengerMode, _React$Component);
+
+        function ScavengerMode(props) {
+            _classCallCheck(this, ScavengerMode);
+
+            var _this = _possibleConstructorReturn(this, (ScavengerMode.__proto__ || Object.getPrototypeOf(ScavengerMode)).call(this, props));
+
+            _this.state = {
+                overallScore: 300,
+                roundScore: 10,
+                currentWord: 'Lapiz',
+                cameraEnabled: false,
+                result: false
+            };
+            _this.handleCameraClick = _this.handleCameraClick.bind(_this);
+            _this.handleSkipClick = _this.handleSkipClick.bind(_this);
+            return _this;
+        }
+
+        _createClass(ScavengerMode, [{
+            key: "handleSkipClick",
+            value: function handleSkipClick() {
+                this.setState({
+                    currentWord: 'Silla'
+                });
+            }
+        }, {
+            key: "handleCameraClick",
+            value: function handleCameraClick() {
+                if (this.state.cameraEnabled) {
+                    this.setState({
+                        cameraEnabled: false,
+                        result: true
+                    });
+                } else {
+                    this.setState({
+                        cameraEnabled: true
+                    });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var result = void 0;
+
+                var screen = _react3.default.createElement(
+                    _reactNative.ScrollView,
+                    {
+                        style: styles.container,
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 56
+                        }
+                    },
+                    _react3.default.createElement(
+                        _CardScroll2.default,
+                        {
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 57
+                            }
+                        },
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.Header,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 58
+                                }
+                            },
+                            _react3.default.createElement(_vectorIcons.FontAwesome, {
+                                name: "search",
+                                size: 30,
+                                style: styles.MagnifyingGlass,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 59
+                                }
+                            }),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.TileHeaderText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 60
+                                    }
+                                },
+                                " Scavenger Mode "
+                            )
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.SubHeader,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 62
+                                }
+                            },
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.SubText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 63
+                                    }
+                                },
+                                " Overall Score "
+                            ),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.CurrentWord,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 64
+                                    }
+                                },
+                                " ",
+                                this.state.overallScore,
+                                " points"
+                            )
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.SubHeader,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 66
+                                }
+                            },
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.SubText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 67
+                                    }
+                                },
+                                " Round Score "
+                            ),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.CurrentWord,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 68
+                                    }
+                                },
+                                " ",
+                                this.state.roundScore,
+                                " points"
+                            )
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.SubHeader,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 70
+                                }
+                            },
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.SubText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 71
+                                    }
+                                },
+                                " Current Word "
+                            ),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.CurrentWord,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 72
+                                    }
+                                },
+                                " ",
+                                this.state.currentWord,
+                                " "
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        _reactNative.View,
+                        {
+                            style: styles.Options,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 75
+                            }
+                        },
+                        _react3.default.createElement(_ButtonCamera2.default, {
+                            clickHandler: this.handleCameraClick,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 76
+                            }
+                        }),
+                        _react3.default.createElement(_ButtonSkip2.default, {
+                            clickHandler: this.handleSkipClick,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 77
+                            }
+                        })
+                    )
+                );
+
+                if (this.state.cameraEnabled === true) {
+                    screen = _react3.default.createElement(_ExpoCamera2.default, {
+                        clickHandler: this.handleCameraClick,
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 83
+                        }
+                    });
+                }
+
+                ;
+
+                if (this.state.result === true) {
+                    screen = _react3.default.createElement(
+                        _reactNative.ScrollView,
+                        {
+                            style: styles.container,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 88
+                            }
+                        },
+                        _react3.default.createElement(
+                            _Card2.default,
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 89
+                                }
+                            },
+                            _react3.default.createElement(_vectorIcons.FontAwesome, {
+                                name: "check",
+                                size: 60,
+                                style: styles.Camera,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 90
+                                }
+                            }),
+                            "Correct"
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.Options,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 93
+                                }
+                            },
+                            _react3.default.createElement(_ButtonCamera2.default, {
+                                clickHandler: this.handleCameraClick,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 94
+                                }
+                            }),
+                            _react3.default.createElement(_ButtonSkip2.default, {
+                                clickHandler: this.handleSkipClick,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 95
+                                }
+                            })
+                        )
+                    );
+                }
+
+                ;
+                return screen;
+            }
+        }]);
+
+        return ScavengerMode;
+    }(_react3.default.Component), _class.navigationOptions = {
+        headerTransparent: true
+    }, _temp));
+
+    exports.default = ScavengerMode;
+
+    var styles = _reactNative.StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: '#ADD8E6',
+            paddingTop: 65
+        },
+        Header: {
+            flex: 1,
+            flexDirection: 'row',
+            height: 100
+        },
+        TileHeaderText: {
+            fontSize: 30,
+            paddingTop: 20,
+            color: 'rgba(96,100,109, 1)',
+            lineHeight: 24,
+            textAlign: 'left',
+            fontWeight: 'bold'
+        },
+        MagnifyingGlass: {
+            padding: 10,
+            color: 'rgba(96,100,109, 1)'
+        },
+        SubHeader: {
+            flex: 1,
+            flexDirection: 'row'
+        },
+        SubText: {
+            fontSize: 20,
+            padding: 10,
+            color: 'rgba(96,100,109, 1)',
+            lineHeight: 24,
+            textAlign: 'left',
+            fontWeight: 'bold'
+        },
+        CurrentWord: {
+            fontSize: 25,
+            padding: 10,
+            color: 'rgba(96,100,109, 1)',
+            lineHeight: 24,
+            textAlign: 'left',
+            fontWeight: 'bold'
+        },
+        Options: {
+            flex: 1,
+            flexDirection: 'row',
+            alignContent: 'center',
+            justifyContent: 'center'
+        }
+    });
+});

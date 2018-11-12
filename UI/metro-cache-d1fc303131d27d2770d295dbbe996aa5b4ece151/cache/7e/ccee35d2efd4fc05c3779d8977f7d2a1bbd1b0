@@ -1,0 +1,77 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var parseUri = _require(_dependencyMap[0], "./parseUri");
+
+  function sortedQuery(query) {
+    var keys = [],
+        name,
+        i,
+        len,
+        key,
+        sorted = [];
+
+    for (name in query) {
+      for (i = 0, len = keys.length; i < len; i++) {
+        if (keys[i] >= name) break;
+      }
+
+      keys.splice(i, 0, name);
+    }
+
+    for (i = 0, len = keys.length; i < len; i++) {
+      key = keys[i];
+      sorted.push(key + "=" + query[key]);
+    }
+
+    if (sorted.length !== 0) return sorted.join("&");
+  }
+
+  ;
+
+  function isSet(value) {
+    if (value !== undefined && value !== null) return value !== '';
+    return false;
+  }
+
+  function value(value) {
+    if (value !== undefined && value !== null) return value;
+    return '';
+  }
+
+  function prefix(value, prefix) {
+    if (value !== undefined && value !== null) return prefix + value;
+    return '';
+  }
+
+  function suffix(value, suffix) {
+    if (value !== undefined && value !== null) return value + suffix;
+    return '';
+  }
+
+  function Parser(options) {
+    this.options = options;
+  }
+
+  ;
+
+  Parser.prototype.parse = function (uriStr, strictMode) {
+    if (strictMode === true) return parseUri(uriStr, "strict");
+    return parseUri(uriStr);
+  };
+
+  Parser.prototype.complete = function (obj) {
+    if (typeof obj === 'string') obj = this.parse(obj);
+    if (!isSet(obj.userInfo) && (isSet(obj.user) || isSet(obj.password))) obj.userInfo = value(obj.user) + prefix(obj.password, ':');
+    if (!isSet(obj.authority) && (isSet(obj.userInfo) || isSet(obj.host) || isSet(obj.port))) obj.authority = suffix(obj.userInfo, '@') + value(obj.host) + prefix(obj.port, ':');
+    if (!isSet(obj.query) && isSet(obj.queryKey)) obj.query = sortedQuery(obj.queryKey);
+    if (!isSet(obj.relative) && (isSet(obj.directory) || isSet(obj.file))) obj.relative = value(obj.directory) + value(obj.file);
+    if (!isSet(obj.relative) && (isSet(obj.path) || isSet(obj.query) || isSet(obj.anchor))) obj.relative = value(obj.path) + prefix(obj.query, '?') + prefix(obj.anchor, '#');
+    return obj;
+  };
+
+  Parser.prototype.format = function (obj) {
+    obj = this.complete(obj);
+    return suffix(obj.protocol, ':').toLowerCase() + prefix(obj.authority, '//') + value(obj.relative);
+  };
+
+  module.exports = exports = Parser;
+});

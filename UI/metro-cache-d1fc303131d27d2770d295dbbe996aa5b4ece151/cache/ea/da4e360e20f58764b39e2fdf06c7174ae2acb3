@@ -1,0 +1,12 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = ceil;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  function ceil(a) {
+    return (0, _base.sub)(1, (0, _base.round)((0, _base.sub)(0.5, a)));
+  }
+});

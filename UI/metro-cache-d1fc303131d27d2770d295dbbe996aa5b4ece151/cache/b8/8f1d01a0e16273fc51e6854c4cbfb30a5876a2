@@ -1,0 +1,332 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var React = _interopRequireWildcard(_react2);
+
+  var _index2 = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index3 = _interopRequireDefault(_index2);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class,
+      _temp2,
+      _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-tabs/src/navigators/createMaterialTopTabNavigator.js";
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _reactLifecyclesCompat = _require(_dependencyMap[3], "react-lifecycles-compat");
+
+  var _reactNativeTabView = _require(_dependencyMap[4], "react-native-tab-view");
+
+  var _createTabNavigator = _require(_dependencyMap[5], "../utils/createTabNavigator");
+
+  var _createTabNavigator2 = _interopRequireDefault(_createTabNavigator);
+
+  var _MaterialTopTabBar = _require(_dependencyMap[6], "../views/MaterialTopTabBar");
+
+  var _MaterialTopTabBar2 = _interopRequireDefault(_MaterialTopTabBar);
+
+  var _ResourceSavingScene = _require(_dependencyMap[7], "../views/ResourceSavingScene");
+
+  var _ResourceSavingScene2 = _interopRequireDefault(_ResourceSavingScene);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    MaterialTabView: {
+      displayName: "MaterialTabView"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index3.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-tabs/src/navigators/createMaterialTopTabNavigator.js",
+    components: _components,
+    locals: [module],
+    imports: [React.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var MaterialTabView = _wrapComponent("MaterialTabView")((_temp2 = _class = function (_React$PureComponent) {
+    _inherits(MaterialTabView, _React$PureComponent);
+
+    function MaterialTabView() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, MaterialTabView);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MaterialTabView.__proto__ || Object.getPrototypeOf(MaterialTabView)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        index: 0,
+        isSwiping: false,
+        loaded: [_this.props.navigation.state.index],
+        transitioningFromIndex: null
+      }, _this._renderIcon = function (_ref2) {
+        var focused = _ref2.focused,
+            route = _ref2.route,
+            tintColor = _ref2.tintColor;
+        var descriptors = _this.props.descriptors;
+        var descriptor = descriptors[route.key];
+        var options = descriptor.options;
+
+        if (options.tabBarIcon) {
+          return typeof options.tabBarIcon === 'function' ? options.tabBarIcon({
+            tintColor: tintColor,
+            focused: focused
+          }) : options.tabBarIcon;
+        }
+
+        return null;
+      }, _this._renderTabBar = function (props) {
+        var state = _this.props.navigation.state;
+        var route = state.routes[state.index];
+        var descriptors = _this.props.descriptors;
+        var descriptor = descriptors[route.key];
+        var options = descriptor.options;
+        var tabBarVisible = options.tabBarVisible == null ? true : options.tabBarVisible;
+        var _this$props = _this.props,
+            _this$props$tabBarCom = _this$props.tabBarComponent,
+            TabBarComponent = _this$props$tabBarCom === undefined ? _MaterialTopTabBar2.default : _this$props$tabBarCom,
+            tabBarPosition = _this$props.tabBarPosition,
+            tabBarOptions = _this$props.tabBarOptions;
+
+        if (TabBarComponent === null || !tabBarVisible) {
+          return null;
+        }
+
+        return React.createElement(TabBarComponent, _extends({}, tabBarOptions, props, {
+          tabBarPosition: tabBarPosition,
+          screenProps: _this.props.screenProps,
+          navigation: _this.props.navigation,
+          getLabelText: _this.props.getLabelText,
+          getAccessibilityLabel: _this.props.getAccessibilityLabel,
+          getTestID: _this.props.getTestID,
+          renderIcon: _this._renderIcon,
+          onTabPress: _this.props.onTabPress,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 101
+          }
+        }));
+      }, _this._renderPanPager = function (props) {
+        return React.createElement(_reactNativeTabView.PagerPan, _extends({}, props, {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 116
+          }
+        }));
+      }, _this._handleAnimationEnd = function () {
+        var lazy = _this.props.lazy;
+
+        if (lazy) {
+          _this.setState({
+            transitioningFromIndex: null,
+            isSwiping: false
+          });
+        }
+      }, _this._handleSwipeStart = function () {
+        var _this$props2 = _this.props,
+            navigation = _this$props2.navigation,
+            lazy = _this$props2.lazy;
+
+        if (lazy) {
+          _this.setState({
+            isSwiping: true,
+            loaded: [].concat(_toConsumableArray(new Set([].concat(_toConsumableArray(_this.state.loaded), [Math.max(navigation.state.index - 1, 0), Math.min(navigation.state.index + 1, navigation.state.routes.length - 1)]))))
+          });
+        }
+      }, _this._handleIndexChange = function (index) {
+        var _this$props3 = _this.props,
+            animationEnabled = _this$props3.animationEnabled,
+            navigation = _this$props3.navigation,
+            onIndexChange = _this$props3.onIndexChange,
+            lazy = _this$props3.lazy;
+
+        if (lazy && animationEnabled) {
+          _this.setState({
+            transitioningFromIndex: navigation.state.index || 0
+          });
+        }
+
+        onIndexChange(index);
+      }, _this._mustBeVisible = function (_ref3) {
+        var index = _ref3.index,
+            focused = _ref3.focused;
+        var _this$props4 = _this.props,
+            animationEnabled = _this$props4.animationEnabled,
+            navigation = _this$props4.navigation;
+        var _this$state = _this.state,
+            isSwiping = _this$state.isSwiping,
+            transitioningFromIndex = _this$state.transitioningFromIndex;
+
+        if (isSwiping) {
+          var isSibling = navigation.state.index === index - 1 || navigation.state.index === index + 1;
+
+          if (isSibling) {
+            return true;
+          }
+        }
+
+        if (animationEnabled && transitioningFromIndex === index) {
+          return true;
+        }
+
+        return focused;
+      }, _this._renderScene = function (_ref4) {
+        var route = _ref4.route;
+        var _this$props5 = _this.props,
+            renderScene = _this$props5.renderScene,
+            descriptors = _this$props5.descriptors,
+            lazy = _this$props5.lazy,
+            optimizationsEnabled = _this$props5.optimizationsEnabled;
+
+        if (lazy) {
+          var _loaded = _this.state.loaded;
+          var routes = _this.props.navigation.state.routes;
+
+          var _index = routes.findIndex(function (_ref5) {
+            var key = _ref5.key;
+            return key === route.key;
+          });
+
+          var navigation = descriptors[route.key].navigation;
+
+          var mustBeVisible = _this._mustBeVisible({
+            index: _index,
+            focused: navigation.isFocused()
+          });
+
+          if (!_loaded.includes(_index) && !mustBeVisible) {
+            return React.createElement(_reactNative.View, {
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 198
+              }
+            });
+          }
+
+          if (optimizationsEnabled) {
+            return React.createElement(
+              _ResourceSavingScene2.default,
+              {
+                isVisible: mustBeVisible,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 203
+                }
+              },
+              renderScene({
+                route: route
+              })
+            );
+          }
+        }
+
+        return renderScene({
+          route: route
+        });
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(MaterialTabView, [{
+      key: "render",
+      value: function render() {
+        var _props = this.props,
+            navigation = _props.navigation,
+            animationEnabled = _props.animationEnabled,
+            renderScene = _props.renderScene,
+            onIndexChange = _props.onIndexChange,
+            rest = _objectWithoutProperties(_props, ["navigation", "animationEnabled", "renderScene", "onIndexChange"]);
+
+        var renderPager = void 0;
+        var state = this.props.navigation.state;
+        var route = state.routes[state.index];
+        var descriptors = this.props.descriptors;
+        var descriptor = descriptors[route.key];
+        var options = descriptor.options;
+        var swipeEnabled = options.swipeEnabled == null ? this.props.swipeEnabled : options.swipeEnabled;
+
+        if (typeof swipeEnabled === 'function') {
+          swipeEnabled = swipeEnabled(state);
+        }
+
+        if (animationEnabled === false && swipeEnabled === false) {
+          renderPager = this._renderPanPager;
+        }
+
+        return React.createElement(_reactNativeTabView.TabView, _extends({}, rest, {
+          navigationState: navigation.state,
+          animationEnabled: animationEnabled,
+          swipeEnabled: swipeEnabled,
+          onAnimationEnd: this._handleAnimationEnd,
+          onIndexChange: this._handleIndexChange,
+          onSwipeStart: this._handleSwipeStart,
+          renderPager: renderPager,
+          renderTabBar: this._renderTabBar,
+          renderScene: this._renderScene,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 246
+          }
+        }));
+      }
+    }], [{
+      key: "getDerivedStateFromProps",
+      value: function getDerivedStateFromProps(nextProps, prevState) {
+        var index = nextProps.navigation.state.index;
+
+        if (prevState.index === index) {
+          return null;
+        }
+
+        return {
+          loaded: prevState.loaded.includes(index) ? prevState.loaded : [].concat(_toConsumableArray(prevState.loaded), [index]),
+          index: index
+        };
+      }
+    }]);
+
+    return MaterialTabView;
+  }(React.PureComponent), _class.defaultProps = {
+    initialLayout: _reactNative.Platform.select({
+      android: {
+        width: 1,
+        height: 0
+      }
+    }),
+    animationEnabled: true,
+    lazy: false,
+    optimizationsEnabled: false
+  }, _temp2));
+
+  (0, _reactLifecyclesCompat.polyfill)(MaterialTabView);
+  exports.default = (0, _createTabNavigator2.default)(MaterialTabView);
+});

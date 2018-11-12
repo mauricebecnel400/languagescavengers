@@ -1,0 +1,28 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    get Accelerometer() {
+      return _require(_dependencyMap[0], './sensor/Accelerometer').default;
+    },
+
+    get DeviceMotion() {
+      return _require(_dependencyMap[1], './sensor/DeviceMotion').default;
+    },
+
+    get Gyroscope() {
+      return _require(_dependencyMap[2], './sensor/Gyroscope').default;
+    },
+
+    get Magnetometer() {
+      return _require(_dependencyMap[3], './sensor/Magnetometer').default;
+    },
+
+    get MagnetometerUncalibrated() {
+      return _require(_dependencyMap[4], './sensor/MagnetometerUncalibrated').default;
+    },
+
+    get Pedometer() {
+      return _require(_dependencyMap[5], './sensor/Pedometer');
+    }
+
+  };
+});

@@ -1,0 +1,86 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Orientation = undefined;
+  exports.printAsync = printAsync;
+  exports.selectPrinterAsync = selectPrinterAsync;
+  exports.printToFileAsync = printToFileAsync;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _expoCore = _require(_dependencyMap[1], "expo-core");
+
+  var ExponentPrint = _expoCore.NativeModulesProxy.ExponentPrint;
+  var Orientation = exports.Orientation = ExponentPrint.Orientation;
+
+  function printAsync(options) {
+    return regeneratorRuntime.async(function printAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!(!options.uri && !options.html && _reactNative.Platform.OS === 'ios' && !options.markupFormatterIOS)) {
+              _context.next = 2;
+              break;
+            }
+
+            throw new Error('Must provide either `html` or `uri` to print');
+
+          case 2:
+            if (!(options.uri && options.html)) {
+              _context.next = 4;
+              break;
+            }
+
+            throw new Error('Must provide exactly one of `html` and `uri` but both were specified');
+
+          case 4:
+            return _context.abrupt("return", ExponentPrint.print(options));
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function selectPrinterAsync() {
+    return regeneratorRuntime.async(function selectPrinterAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context2.next = 4;
+              break;
+            }
+
+            return _context2.abrupt("return", ExponentPrint.selectPrinter());
+
+          case 4:
+            throw new Error('Selecting the printer in advance is not available on Android.');
+
+          case 5:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function printToFileAsync() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return regeneratorRuntime.async(function printToFileAsync$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            return _context3.abrupt("return", ExponentPrint.printToFileAsync(options));
+
+          case 1:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, this);
+  }
+});

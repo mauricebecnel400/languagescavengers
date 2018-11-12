@@ -1,0 +1,41 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  "use strict";
+
+  var arrays = _require(_dependencyMap[0], "./utils/arrays"),
+      objects = _require(_dependencyMap[1], "./utils/objects");
+
+  var peg = {
+    VERSION: "0.10.0",
+    GrammarError: _require(_dependencyMap[2], "./grammar-error"),
+    parser: _require(_dependencyMap[3], "./parser"),
+    compiler: _require(_dependencyMap[4], "./compiler"),
+    generate: function generate(grammar, options) {
+      options = options !== void 0 ? options : {};
+
+      function convertPasses(passes) {
+        var converted = {},
+            stage;
+
+        for (stage in passes) {
+          if (passes.hasOwnProperty(stage)) {
+            converted[stage] = objects.values(passes[stage]);
+          }
+        }
+
+        return converted;
+      }
+
+      options = objects.clone(options);
+      var plugins = "plugins" in options ? options.plugins : [],
+          config = {
+        parser: peg.parser,
+        passes: convertPasses(peg.compiler.passes)
+      };
+      arrays.each(plugins, function (p) {
+        p.use(config, options);
+      });
+      return peg.compiler.compile(config.parser.parse(grammar), config.passes, options);
+    }
+  };
+  module.exports = peg;
+});

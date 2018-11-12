@@ -1,0 +1,791 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class,
+      _temp2,
+      _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-stack/dist/views/Header/Header.js";
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _reactNavigation = _require(_dependencyMap[3], "react-navigation");
+
+  var _HeaderTitle = _require(_dependencyMap[4], "./HeaderTitle");
+
+  var _HeaderTitle2 = _interopRequireDefault(_HeaderTitle);
+
+  var _HeaderBackButton = _require(_dependencyMap[5], "./HeaderBackButton");
+
+  var _HeaderBackButton2 = _interopRequireDefault(_HeaderBackButton);
+
+  var _ModularHeaderBackButton = _require(_dependencyMap[6], "./ModularHeaderBackButton");
+
+  var _ModularHeaderBackButton2 = _interopRequireDefault(_ModularHeaderBackButton);
+
+  var _HeaderStyleInterpolator = _require(_dependencyMap[7], "./HeaderStyleInterpolator");
+
+  var _HeaderStyleInterpolator2 = _interopRequireDefault(_HeaderStyleInterpolator);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    Header: {
+      displayName: "Header"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-stack/dist/views/Header/Header.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var APPBAR_HEIGHT = _reactNative.Platform.OS === 'ios' ? 44 : 56;
+  var STATUSBAR_HEIGHT = _reactNative.Platform.OS === 'ios' ? 20 : 0;
+  var TITLE_OFFSET_CENTER_ALIGN = _reactNative.Platform.OS === 'ios' ? 70 : 56;
+  var TITLE_OFFSET_LEFT_ALIGN = _reactNative.Platform.OS === 'ios' ? 20 : 56;
+
+  var getTitleOffsets = function getTitleOffsets(layoutPreset, forceBackTitle, hasLeftComponent, hasRightComponent) {
+    if (layoutPreset === 'left') {
+      var style = {
+        left: TITLE_OFFSET_LEFT_ALIGN,
+        right: TITLE_OFFSET_LEFT_ALIGN
+      };
+
+      if (!hasLeftComponent) {
+        style.left = 0;
+      }
+
+      if (!hasRightComponent) {
+        style.right = 0;
+      }
+
+      return style;
+    } else if (layoutPreset === 'center') {
+      var _style = {
+        left: TITLE_OFFSET_CENTER_ALIGN,
+        right: TITLE_OFFSET_CENTER_ALIGN
+      };
+
+      if (!hasLeftComponent && !hasRightComponent) {
+        _style.left = 0;
+        _style.right = 0;
+      }
+
+      return _style;
+    }
+  };
+
+  var getAppBarHeight = function getAppBarHeight(isLandscape) {
+    return _reactNative.Platform.OS === 'ios' ? isLandscape && !_reactNative.Platform.isPad ? 32 : 44 : 56;
+  };
+
+  var Header = _wrapComponent("Header")((_temp2 = _class = function (_React$PureComponent) {
+    _inherits(Header, _React$PureComponent);
+
+    function Header() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, Header);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Header.__proto__ || Object.getPrototypeOf(Header)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        widths: {}
+      }, _this._renderTitleComponent = function (props) {
+        var layoutPreset = _this.props.layoutPreset;
+        var options = props.scene.descriptor.options;
+        var headerTitle = options.headerTitle;
+
+        if (_react3.default.isValidElement(headerTitle)) {
+          return headerTitle;
+        }
+
+        var titleString = _this._getHeaderTitleString(props.scene);
+
+        var titleStyle = options.headerTitleStyle;
+        var color = options.headerTintColor;
+        var allowFontScaling = options.headerTitleAllowFontScaling;
+        var onLayout = layoutPreset === 'center' ? function (e) {
+          _this.setState({
+            widths: _extends({}, _this.state.widths, _defineProperty({}, props.scene.key, e.nativeEvent.layout.width))
+          });
+        } : undefined;
+        var HeaderTitleComponent = headerTitle && typeof headerTitle !== 'string' ? headerTitle : _HeaderTitle2.default;
+        return _react3.default.createElement(
+          HeaderTitleComponent,
+          {
+            onLayout: onLayout,
+            allowFontScaling: allowFontScaling == null ? true : allowFontScaling,
+            style: [color ? {
+              color: color
+            } : null, layoutPreset === 'center' ? {
+              textAlign: 'center'
+            } : {
+              textAlign: 'left'
+            }, titleStyle],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 137
+            }
+          },
+          titleString
+        );
+      }, _this._renderLeftComponent = function (props) {
+        var options = props.scene.descriptor.options;
+
+        if (_react3.default.isValidElement(options.headerLeft) || options.headerLeft === null) {
+          return options.headerLeft;
+        }
+
+        if (!options.headerLeft && props.scene.index === 0) {
+          return;
+        }
+
+        var backButtonTitle = _this._getBackButtonTitleString(props.scene);
+
+        var truncatedBackButtonTitle = _this._getTruncatedBackButtonTitle(props.scene);
+
+        var width = _this.state.widths[props.scene.key] ? (_this.props.layout.initWidth - _this.state.widths[props.scene.key]) / 2 : undefined;
+        var RenderedLeftComponent = options.headerLeft || _HeaderBackButton2.default;
+
+        var goBack = function goBack() {
+          requestAnimationFrame(function () {
+            props.scene.descriptor.navigation.goBack(props.scene.descriptor.key);
+          });
+        };
+
+        return _react3.default.createElement(RenderedLeftComponent, {
+          onPress: goBack,
+          pressColorAndroid: options.headerPressColorAndroid,
+          tintColor: options.headerTintColor,
+          backImage: options.headerBackImage,
+          title: backButtonTitle,
+          truncatedTitle: truncatedBackButtonTitle,
+          backTitleVisible: _this.props.backTitleVisible,
+          titleStyle: options.headerBackTitleStyle,
+          layoutPreset: _this.props.layoutPreset,
+          width: width,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 162
+          }
+        });
+      }, _this._renderModularLeftComponent = function (props, ButtonContainerComponent, LabelContainerComponent) {
+        var _props$scene$descript = props.scene.descriptor,
+            options = _props$scene$descript.options,
+            navigation = _props$scene$descript.navigation;
+
+        var backButtonTitle = _this._getBackButtonTitleString(props.scene);
+
+        var truncatedBackButtonTitle = _this._getTruncatedBackButtonTitle(props.scene);
+
+        var width = _this.state.widths[props.scene.key] ? (_this.props.layout.initWidth - _this.state.widths[props.scene.key]) / 2 : undefined;
+
+        var goBack = function goBack() {
+          requestAnimationFrame(function () {
+            navigation.goBack(props.scene.descriptor.key);
+          });
+        };
+
+        return _react3.default.createElement(_ModularHeaderBackButton2.default, {
+          onPress: goBack,
+          ButtonContainerComponent: ButtonContainerComponent,
+          LabelContainerComponent: LabelContainerComponent,
+          pressColorAndroid: options.headerPressColorAndroid,
+          tintColor: options.headerTintColor,
+          backImage: options.headerBackImage,
+          title: backButtonTitle,
+          truncatedTitle: truncatedBackButtonTitle,
+          titleStyle: options.headerBackTitleStyle,
+          width: width,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 178
+          }
+        });
+      }, _this._renderRightComponent = function (props) {
+        var headerRight = props.scene.descriptor.options.headerRight;
+        return headerRight || null;
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Header, [{
+      key: "_getHeaderTitleString",
+      value: function _getHeaderTitleString(scene) {
+        var options = scene.descriptor.options;
+
+        if (typeof options.headerTitle === 'string') {
+          return options.headerTitle;
+        }
+
+        if (options.title && typeof options.title !== 'string' && __DEV__) {
+          throw new Error("Invalid title for route \"" + scene.route.routeName + "\" - title must be string or null, instead it was of type " + typeof options.title);
+        }
+
+        return options.title;
+      }
+    }, {
+      key: "_getLastScene",
+      value: function _getLastScene(scene) {
+        return this.props.scenes.find(function (s) {
+          return s.index === scene.index - 1;
+        });
+      }
+    }, {
+      key: "_getBackButtonTitleString",
+      value: function _getBackButtonTitleString(scene) {
+        var lastScene = this._getLastScene(scene);
+
+        if (!lastScene) {
+          return null;
+        }
+
+        var headerBackTitle = lastScene.descriptor.options.headerBackTitle;
+
+        if (headerBackTitle || headerBackTitle === null) {
+          return headerBackTitle;
+        }
+
+        return this._getHeaderTitleString(lastScene);
+      }
+    }, {
+      key: "_getTruncatedBackButtonTitle",
+      value: function _getTruncatedBackButtonTitle(scene) {
+        var lastScene = this._getLastScene(scene);
+
+        if (!lastScene) {
+          return null;
+        }
+
+        return lastScene.descriptor.options.headerTruncatedBackTitle;
+      }
+    }, {
+      key: "_renderLeft",
+      value: function _renderLeft(props) {
+        var options = props.scene.descriptor.options;
+        var transitionPreset = this.props.transitionPreset;
+        var style = props.style;
+
+        if (options.headerLeftContainerStyle) {
+          style = [style, options.headerLeftContainerStyle];
+        }
+
+        if (transitionPreset !== 'uikit' || options.headerBackImage || options.headerLeft || options.headerLeft === null) {
+          return this._renderSubView(_extends({}, props, {
+            style: style
+          }), 'left', this._renderLeftComponent, this.props.leftInterpolator);
+        } else {
+          return this._renderModularSubView(_extends({}, props, {
+            style: style
+          }), 'left', this._renderModularLeftComponent, this.props.leftLabelInterpolator, this.props.leftButtonInterpolator);
+        }
+      }
+    }, {
+      key: "_renderTitle",
+      value: function _renderTitle(props, options) {
+        var _props = this.props,
+            layoutPreset = _props.layoutPreset,
+            transitionPreset = _props.transitionPreset;
+        var style = [{
+          justifyContent: layoutPreset === 'center' ? 'center' : 'flex-start'
+        }, getTitleOffsets(layoutPreset, false, options.hasLeftComponent, options.hasRightComponent), options.headerTitleContainerStyle];
+        return this._renderSubView(_extends({}, props, {
+          style: style
+        }), 'title', this._renderTitleComponent, transitionPreset === 'uikit' ? this.props.titleFromLeftInterpolator : this.props.titleInterpolator);
+      }
+    }, {
+      key: "_renderRight",
+      value: function _renderRight(props) {
+        var options = props.scene.descriptor.options;
+        var style = props.style;
+
+        if (options.headerRightContainerStyle) {
+          style = [style, options.headerRightContainerStyle];
+        }
+
+        return this._renderSubView(_extends({}, props, {
+          style: style
+        }), 'right', this._renderRightComponent, this.props.rightInterpolator);
+      }
+    }, {
+      key: "_renderBackground",
+      value: function _renderBackground(props) {
+        var _props$scene = props.scene,
+            index = _props$scene.index,
+            options = _props$scene.descriptor.options;
+        var offset = this.props.navigation.state.index - index;
+
+        if (Math.abs(offset) > 2) {
+          return null;
+        }
+
+        return this._renderSubView(_extends({}, props, {
+          style: _reactNative.StyleSheet.absoluteFill
+        }), 'background', function () {
+          return options.headerBackground;
+        }, this.props.backgroundInterpolator);
+      }
+    }, {
+      key: "_renderModularSubView",
+      value: function _renderModularSubView(props, name, renderer, labelStyleInterpolator, buttonStyleInterpolator) {
+        var _this2 = this;
+
+        var scene = props.scene;
+        var index = scene.index,
+            isStale = scene.isStale,
+            key = scene.key;
+
+        if (index === 0) {
+          return;
+        }
+
+        var offset = this.props.navigation.state.index - index;
+
+        if (Math.abs(offset) > 2) {
+          return null;
+        }
+
+        var ButtonContainer = function ButtonContainer(_ref2) {
+          var children = _ref2.children;
+          return _react3.default.createElement(
+            _reactNative.Animated.View,
+            {
+              style: [buttonStyleInterpolator(_extends({}, _this2.props, props))],
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 257
+              }
+            },
+            children
+          );
+        };
+
+        var LabelContainer = function LabelContainer(_ref3) {
+          var children = _ref3.children;
+          return _react3.default.createElement(
+            _reactNative.Animated.View,
+            {
+              style: [labelStyleInterpolator(_extends({}, _this2.props, props))],
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 261
+              }
+            },
+            children
+          );
+        };
+
+        var subView = renderer(props, ButtonContainer, LabelContainer);
+
+        if (subView === null) {
+          return subView;
+        }
+
+        var pointerEvents = offset !== 0 || isStale ? 'none' : 'box-none';
+        return _react3.default.createElement(
+          _reactNative.View,
+          {
+            key: name + "_" + key,
+            pointerEvents: pointerEvents,
+            style: [styles.item, styles[name], props.style],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 273
+            }
+          },
+          subView
+        );
+      }
+    }, {
+      key: "_renderSubView",
+      value: function _renderSubView(props, name, renderer, styleInterpolator) {
+        var scene = props.scene;
+        var index = scene.index,
+            isStale = scene.isStale,
+            key = scene.key;
+        var offset = this.props.navigation.state.index - index;
+
+        if (Math.abs(offset) > 2) {
+          return null;
+        }
+
+        var subView = renderer(props);
+
+        if (subView == null) {
+          return null;
+        }
+
+        var pointerEvents = offset !== 0 || isStale ? 'none' : 'box-none';
+        return _react3.default.createElement(
+          _reactNative.Animated.View,
+          {
+            pointerEvents: pointerEvents,
+            key: name + "_" + key,
+            style: [styles.item, styles[name], props.style, styleInterpolator(_extends({}, this.props, props))],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 298
+            }
+          },
+          subView
+        );
+      }
+    }, {
+      key: "_renderHeader",
+      value: function _renderHeader(props) {
+        var options = props.scene.descriptor.options;
+
+        if (options.header === null) {
+          return null;
+        }
+
+        var left = this._renderLeft(props);
+
+        var right = this._renderRight(props);
+
+        var title = this._renderTitle(props, {
+          hasLeftComponent: !!left,
+          hasRightComponent: !!right,
+          headerTitleContainerStyle: options.headerTitleContainerStyle
+        });
+
+        var transitionPreset = this.props.transitionPreset;
+        var wrapperProps = {
+          style: styles.header,
+          key: "scene_" + props.scene.key
+        };
+
+        if (options.headerLeft || options.headerBackImage || _reactNative.Platform.OS !== 'ios' || transitionPreset !== 'uikit') {
+          return _react3.default.createElement(
+            _reactNative.View,
+            _extends({}, wrapperProps, {
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 327
+              }
+            }),
+            title,
+            left,
+            right
+          );
+        } else {
+          return _react3.default.createElement(
+            _reactNative.MaskedViewIOS,
+            _extends({}, wrapperProps, {
+              maskElement: _react3.default.createElement(
+                _reactNative.View,
+                {
+                  style: styles.iconMaskContainer,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 333
+                  }
+                },
+                _react3.default.createElement(_reactNative.Image, {
+                  source: _require(_dependencyMap[8], '../assets/back-icon-mask.png'),
+                  style: styles.iconMask,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 334
+                  }
+                }),
+                _react3.default.createElement(_reactNative.View, {
+                  style: styles.iconMaskFillerRect,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 335
+                  }
+                })
+              ),
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 333
+              }
+            }),
+            title,
+            left,
+            right
+          );
+        }
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this3 = this;
+
+        var appBar = void 0;
+        var background = void 0;
+        var _props2 = this.props,
+            mode = _props2.mode,
+            scene = _props2.scene,
+            isLandscape = _props2.isLandscape;
+
+        if (mode === 'float') {
+          var scenesByIndex = {};
+          this.props.scenes.forEach(function (scene) {
+            scenesByIndex[scene.index] = scene;
+          });
+          var scenesProps = Object.values(scenesByIndex).map(function (scene) {
+            return {
+              position: _this3.props.position,
+              progress: _this3.props.progress,
+              scene: scene
+            };
+          });
+          appBar = scenesProps.map(this._renderHeader, this);
+          background = scenesProps.map(this._renderBackground, this);
+        } else {
+          var headerProps = {
+            position: new _reactNative.Animated.Value(this.props.scene.index),
+            progress: new _reactNative.Animated.Value(0),
+            scene: this.props.scene
+          };
+          appBar = this._renderHeader(headerProps);
+          background = this._renderBackground(headerProps);
+        }
+
+        var options = scene.descriptor.options;
+        var _options$headerStyle = options.headerStyle,
+            headerStyle = _options$headerStyle === undefined ? {} : _options$headerStyle;
+
+        var headerStyleObj = _reactNative.StyleSheet.flatten(headerStyle);
+
+        var appBarHeight = getAppBarHeight(isLandscape);
+
+        var alignItems = headerStyleObj.alignItems,
+            justifyContent = headerStyleObj.justifyContent,
+            flex = headerStyleObj.flex,
+            flexDirection = headerStyleObj.flexDirection,
+            flexGrow = headerStyleObj.flexGrow,
+            flexShrink = headerStyleObj.flexShrink,
+            flexBasis = headerStyleObj.flexBasis,
+            flexWrap = headerStyleObj.flexWrap,
+            position = headerStyleObj.position,
+            padding = headerStyleObj.padding,
+            paddingHorizontal = headerStyleObj.paddingHorizontal,
+            paddingRight = headerStyleObj.paddingRight,
+            paddingLeft = headerStyleObj.paddingLeft,
+            top = headerStyleObj.top,
+            right = headerStyleObj.right,
+            bottom = headerStyleObj.bottom,
+            left = headerStyleObj.left,
+            safeHeaderStyle = _objectWithoutProperties(headerStyleObj, ["alignItems", "justifyContent", "flex", "flexDirection", "flexGrow", "flexShrink", "flexBasis", "flexWrap", "position", "padding", "paddingHorizontal", "paddingRight", "paddingLeft", "top", "right", "bottom", "left"]);
+
+        if (__DEV__) {
+          warnIfHeaderStyleDefined(alignItems, 'alignItems');
+          warnIfHeaderStyleDefined(justifyContent, 'justifyContent');
+          warnIfHeaderStyleDefined(flex, 'flex');
+          warnIfHeaderStyleDefined(flexDirection, 'flexDirection');
+          warnIfHeaderStyleDefined(flexGrow, 'flexGrow');
+          warnIfHeaderStyleDefined(flexShrink, 'flexShrink');
+          warnIfHeaderStyleDefined(flexBasis, 'flexBasis');
+          warnIfHeaderStyleDefined(flexWrap, 'flexWrap');
+          warnIfHeaderStyleDefined(padding, 'padding');
+          warnIfHeaderStyleDefined(position, 'position');
+          warnIfHeaderStyleDefined(paddingHorizontal, 'paddingHorizontal');
+          warnIfHeaderStyleDefined(paddingRight, 'paddingRight');
+          warnIfHeaderStyleDefined(paddingLeft, 'paddingLeft');
+          warnIfHeaderStyleDefined(top, 'top');
+          warnIfHeaderStyleDefined(right, 'right');
+          warnIfHeaderStyleDefined(bottom, 'bottom');
+          warnIfHeaderStyleDefined(left, 'left');
+        }
+
+        var containerStyles = [options.headerTransparent ? styles.transparentContainer : styles.container, {
+          height: appBarHeight
+        }, safeHeaderStyle];
+        var headerForceInset = options.headerForceInset;
+        var forceInset = headerForceInset || {
+          top: 'always',
+          bottom: 'never'
+        };
+        return _react3.default.createElement(
+          _reactNative.Animated.View,
+          {
+            style: [this.props.layoutInterpolator(this.props), _reactNative.Platform.OS === 'ios' && !options.headerTransparent ? {
+              backgroundColor: safeHeaderStyle.backgroundColor || DEFAULT_BACKGROUND_COLOR
+            } : null],
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 430
+            }
+          },
+          _react3.default.createElement(
+            _reactNavigation.SafeAreaView,
+            {
+              forceInset: forceInset,
+              style: containerStyles,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 433
+              }
+            },
+            background,
+            _react3.default.createElement(
+              _reactNative.View,
+              {
+                style: styles.flexOne,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 435
+                }
+              },
+              appBar
+            )
+          )
+        );
+      }
+    }], [{
+      key: "HEIGHT",
+      get: function get() {
+        return APPBAR_HEIGHT + STATUSBAR_HEIGHT;
+      }
+    }]);
+
+    return Header;
+  }(_react3.default.PureComponent), _class.defaultProps = {
+    layoutInterpolator: _HeaderStyleInterpolator2.default.forLayout,
+    leftInterpolator: _HeaderStyleInterpolator2.default.forLeft,
+    leftButtonInterpolator: _HeaderStyleInterpolator2.default.forLeftButton,
+    leftLabelInterpolator: _HeaderStyleInterpolator2.default.forLeftLabel,
+    titleFromLeftInterpolator: _HeaderStyleInterpolator2.default.forCenterFromLeft,
+    titleInterpolator: _HeaderStyleInterpolator2.default.forCenter,
+    rightInterpolator: _HeaderStyleInterpolator2.default.forRight,
+    backgroundInterpolator: _HeaderStyleInterpolator2.default.forBackground
+  }, _temp2));
+
+  function warnIfHeaderStyleDefined(value, styleProp) {
+    if (styleProp === 'position' && value === 'absolute') {
+      console.warn("position: 'absolute' is not supported on headerStyle. If you would like to render content under the header, use the headerTransparent navigationOption.");
+    } else if (value !== undefined) {
+      console.warn(styleProp + " was given a value of " + value + ", this has no effect on headerStyle.");
+    }
+  }
+
+  var platformContainerStyles = void 0;
+
+  if (_reactNative.Platform.OS === 'ios') {
+    platformContainerStyles = {
+      borderBottomWidth: _reactNative.StyleSheet.hairlineWidth,
+      borderBottomColor: '#A7A7AA'
+    };
+  } else {
+    platformContainerStyles = {
+      shadowColor: 'black',
+      shadowOpacity: 0.1,
+      shadowRadius: _reactNative.StyleSheet.hairlineWidth,
+      shadowOffset: {
+        height: _reactNative.StyleSheet.hairlineWidth
+      },
+      elevation: 4
+    };
+  }
+
+  var DEFAULT_BACKGROUND_COLOR = '#FFF';
+
+  var styles = _reactNative.StyleSheet.create({
+    container: _extends({
+      backgroundColor: DEFAULT_BACKGROUND_COLOR
+    }, platformContainerStyles),
+    transparentContainer: _extends({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0
+    }, platformContainerStyles, {
+      borderBottomWidth: 0,
+      borderBottomColor: 'transparent',
+      elevation: 0
+    }),
+    header: _extends({}, _reactNative.StyleSheet.absoluteFillObject, {
+      flexDirection: 'row'
+    }),
+    item: {
+      backgroundColor: 'transparent'
+    },
+    iconMaskContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center'
+    },
+    iconMaskFillerRect: {
+      flex: 1,
+      backgroundColor: '#d8d8d8',
+      marginLeft: -3
+    },
+    iconMask: {
+      height: 21,
+      width: 12,
+      marginLeft: 9,
+      marginTop: -0.5,
+      alignSelf: 'center',
+      resizeMode: 'contain',
+      transform: [{
+        scaleX: _reactNative.I18nManager.isRTL ? -1 : 1
+      }]
+    },
+    title: {
+      bottom: 0,
+      top: 0,
+      position: 'absolute',
+      alignItems: 'center',
+      flexDirection: 'row'
+    },
+    left: {
+      left: 0,
+      bottom: 0,
+      top: 0,
+      position: 'absolute',
+      alignItems: 'center',
+      flexDirection: 'row'
+    },
+    right: {
+      right: 0,
+      bottom: 0,
+      top: 0,
+      position: 'absolute',
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    flexOne: {
+      flex: 1
+    }
+  });
+
+  exports.default = (0, _reactNavigation.withOrientation)(Header);
+});

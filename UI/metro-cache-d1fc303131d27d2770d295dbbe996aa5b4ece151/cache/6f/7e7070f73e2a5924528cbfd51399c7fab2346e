@@ -1,0 +1,134 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  _require(_dependencyMap[0], "./timer/polyfillNextTick");
+
+  var _lodash = _require(_dependencyMap[1], "lodash.map");
+
+  var _lodash2 = _interopRequireDefault(_lodash);
+
+  var _lodash3 = _require(_dependencyMap[2], "lodash.zipobject");
+
+  var _lodash4 = _interopRequireDefault(_lodash3);
+
+  var _reactNative = _require(_dependencyMap[3], "react-native");
+
+  var _custom = _require(_dependencyMap[4], "@expo/websql/custom");
+
+  var _custom2 = _interopRequireDefault(_custom);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var ExponentSQLite = _reactNative.NativeModules.ExponentSQLite;
+
+  function SQLiteResult(error, insertId, rowsAffected, rows) {
+    this.error = error;
+    this.insertId = insertId;
+    this.rowsAffected = rowsAffected;
+    this.rows = rows;
+  }
+
+  function massageError(err) {
+    return typeof err === 'string' ? new Error(err) : err;
+  }
+
+  function SQLiteDatabase(name) {
+    this._name = name;
+    this._closed = false;
+  }
+
+  function dearrayifyRow(res) {
+    var rawError = res[0];
+
+    if (rawError) {
+      return new SQLiteResult(massageError(res[0]));
+    }
+
+    var insertId = res[1];
+
+    if (insertId === null) {
+      insertId = undefined;
+    }
+
+    var rowsAffected = res[2];
+    var columns = res[3];
+    var rows = res[4];
+    var zippedRows = [];
+
+    for (var i = 0, len = rows.length; i < len; i++) {
+      zippedRows.push((0, _lodash4.default)(columns, rows[i]));
+    }
+
+    return new SQLiteResult(null, insertId, rowsAffected, zippedRows);
+  }
+
+  function arrayifyQuery(query) {
+    return [query.sql, escapeForAndroid(query.args || [])];
+  }
+
+  function escapeForAndroid(args) {
+    if (_reactNative.Platform.OS === 'android') {
+      return (0, _lodash2.default)(args, escapeBlob);
+    } else {
+      return args;
+    }
+  }
+
+  function escapeBlob(data) {
+    if (typeof data === 'string') {
+      return data.replace(/\u0002/g, "\x02\x02").replace(/\u0001/g, "\x01\x02").replace(/\u0000/g, "\x01\x01");
+    } else {
+      return data;
+    }
+  }
+
+  SQLiteDatabase.prototype.exec = function exec(queries, readOnly, callback) {
+    if (this._closed) {
+      throw new Error('Database was closed.');
+    }
+
+    function onSuccess(rawResults) {
+      var results = (0, _lodash2.default)(rawResults, dearrayifyRow);
+      callback(null, results);
+    }
+
+    function onError(err) {
+      callback(massageError(err));
+    }
+
+    ExponentSQLite.exec(this._name, (0, _lodash2.default)(queries, arrayifyQuery), readOnly).then(onSuccess, onError);
+  };
+
+  SQLiteDatabase.prototype.close = function close() {
+    this._closed = true;
+    ExponentSQLite.close(this._name);
+  };
+
+  var openDB = (0, _custom2.default)(SQLiteDatabase);
+
+  function openDatabase(name, version, description, size, callback) {
+    if (!size) {
+      size = 1;
+    }
+
+    if (!description) {
+      description = name;
+    }
+
+    if (!version) {
+      version = '1.0';
+    }
+
+    if (typeof name === 'undefined') {
+      throw new Error('please be sure to call: openDatabase("myname.db")');
+    }
+
+    return openDB(name, version, description, size, callback);
+  }
+
+  exports.default = {
+    openDatabase: openDatabase
+  };
+});

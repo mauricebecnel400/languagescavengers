@@ -1,0 +1,195 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-drawer/dist/views/DrawerView.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _reactNativeDrawerLayoutPolyfill = _require(_dependencyMap[3], "react-native-drawer-layout-polyfill");
+
+  var _reactNativeDrawerLayoutPolyfill2 = _interopRequireDefault(_reactNativeDrawerLayoutPolyfill);
+
+  var _reactNavigation = _require(_dependencyMap[4], "react-navigation");
+
+  var _DrawerSidebar = _require(_dependencyMap[5], "./DrawerSidebar");
+
+  var _DrawerSidebar2 = _interopRequireDefault(_DrawerSidebar);
+
+  var _DrawerActions = _require(_dependencyMap[6], "../routers/DrawerActions");
+
+  var _DrawerActions2 = _interopRequireDefault(_DrawerActions);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    DrawerView: {
+      displayName: "DrawerView"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/CS470_Project/UI/node_modules/react-navigation-drawer/dist/views/DrawerView.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var DrawerView = _wrapComponent("DrawerView")(function (_React$PureComponent) {
+    _inherits(DrawerView, _React$PureComponent);
+
+    function DrawerView() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, DrawerView);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DrawerView.__proto__ || Object.getPrototypeOf(DrawerView)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        drawerWidth: typeof _this.props.navigationConfig.drawerWidth === 'function' ? _this.props.navigationConfig.drawerWidth() : _this.props.navigationConfig.drawerWidth
+      }, _this._handleDrawerOpen = function () {
+        _this.props.navigation.dispatch({
+          type: _DrawerActions2.default.DRAWER_OPENED,
+          key: _this.props.navigation.state.key
+        });
+      }, _this._handleDrawerClose = function () {
+        _this.props.navigation.dispatch({
+          type: _DrawerActions2.default.DRAWER_CLOSED,
+          key: _this.props.navigation.state.key
+        });
+      }, _this._updateWidth = function () {
+        var drawerWidth = typeof _this.props.navigationConfig.drawerWidth === 'function' ? _this.props.navigationConfig.drawerWidth() : _this.props.navigationConfig.drawerWidth;
+
+        if (_this.state.drawerWidth !== drawerWidth) {
+          _this.setState({
+            drawerWidth: drawerWidth
+          });
+        }
+      }, _this._renderNavigationView = function () {
+        return _react3.default.createElement(_DrawerSidebar2.default, _extends({
+          screenProps: _this.props.screenProps,
+          navigation: _this.props.navigation,
+          descriptors: _this.props.descriptors,
+          contentComponent: _this.props.navigationConfig.contentComponent,
+          contentOptions: _this.props.navigationConfig.contentOptions,
+          drawerPosition: _this.props.navigationConfig.drawerPosition,
+          style: _this.props.navigationConfig.style
+        }, _this.props.navigationConfig, {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 74
+          }
+        }));
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(DrawerView, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        _reactNative.Dimensions.addEventListener('change', this._updateWidth);
+      }
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate(prevProps) {
+        var _props$navigation$sta = this.props.navigation.state,
+            openId = _props$navigation$sta.openId,
+            closeId = _props$navigation$sta.closeId,
+            toggleId = _props$navigation$sta.toggleId,
+            isDrawerOpen = _props$navigation$sta.isDrawerOpen;
+        var _prevProps$navigation = prevProps.navigation.state,
+            prevOpenId = _prevProps$navigation.openId,
+            prevCloseId = _prevProps$navigation.closeId,
+            prevToggleId = _prevProps$navigation.toggleId;
+
+        if (openId !== prevOpenId) {
+          this._drawer.openDrawer();
+        } else if (closeId !== prevCloseId) {
+          this._drawer.closeDrawer();
+        } else if (toggleId !== prevToggleId) {
+          if (isDrawerOpen) {
+            this._drawer.closeDrawer();
+          } else {
+            this._drawer.openDrawer();
+          }
+        }
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        _reactNative.Dimensions.removeEventListener('change', this._updateWidth);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this2 = this;
+
+        var state = this.props.navigation.state;
+        var activeKey = state.routes[state.index].key;
+        var descriptor = this.props.descriptors[activeKey];
+        var drawerLockMode = descriptor.options.drawerLockMode;
+        return _react3.default.createElement(
+          _reactNativeDrawerLayoutPolyfill2.default,
+          {
+            ref: function ref(c) {
+              _this2._drawer = c;
+            },
+            drawerLockMode: drawerLockMode || this.props.screenProps && this.props.screenProps.drawerLockMode || this.props.navigationConfig.drawerLockMode,
+            drawerBackgroundColor: this.props.navigationConfig.drawerBackgroundColor,
+            drawerWidth: this.state.drawerWidth,
+            onDrawerOpen: this._handleDrawerOpen,
+            onDrawerClose: this._handleDrawerClose,
+            useNativeAnimations: this.props.navigationConfig.useNativeAnimations,
+            renderNavigationView: this._renderNavigationView,
+            drawerPosition: this.props.navigationConfig.drawerPosition === 'right' ? _reactNativeDrawerLayoutPolyfill2.default.positions.Right : _reactNativeDrawerLayoutPolyfill2.default.positions.Left,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 84
+            }
+          },
+          _react3.default.createElement(_reactNavigation.SceneView, {
+            navigation: descriptor.navigation,
+            screenProps: this.props.screenProps,
+            component: descriptor.getComponent(),
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 87
+            }
+          })
+        );
+      }
+    }]);
+
+    return DrawerView;
+  }(_react3.default.PureComponent));
+
+  exports.default = DrawerView;
+});

@@ -1,0 +1,36 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _RemoteConsole = _require(_dependencyMap[0], "./RemoteConsole");
+
+  var _RemoteConsole2 = _interopRequireDefault(_RemoteConsole);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _originalConsole = void 0;
+
+  function enableXDELogging() {
+    if (_originalConsole) {
+      return;
+    }
+
+    _originalConsole = global.console;
+    global.console = _RemoteConsole2.default.createRemoteConsole(global.console);
+  }
+
+  function disableXDELogging() {
+    if (!_originalConsole) {
+      return;
+    }
+
+    global.console = _originalConsole;
+    _originalConsole = null;
+  }
+
+  exports.default = {
+    enableXDELogging: enableXDELogging,
+    disableXDELogging: disableXDELogging
+  };
+});

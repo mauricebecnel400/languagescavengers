@@ -1,0 +1,109 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = backwardsCompatibleAnimWrapper;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _AnimatedClock = _require(_dependencyMap[1], "../core/AnimatedClock");
+
+  var _AnimatedClock2 = _interopRequireDefault(_AnimatedClock);
+
+  var _evaluateOnce = _require(_dependencyMap[2], "../derived/evaluateOnce");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function createOldAnimationObject(node, AnimationClass, value, config) {
+    var newClock = new _AnimatedClock2.default();
+    var currentState = AnimationClass.getDefaultState();
+    var alwaysNode = void 0;
+    var isStarted = false;
+    var isDone = false;
+    var wasStopped = false;
+    var animationCallback = void 0;
+    var animation = {
+      start: function start(currentAnimationCallback) {
+        animationCallback = currentAnimationCallback;
+
+        if (isStarted) {
+          animationCallback && animationCallback({
+            finished: false
+          });
+          return;
+        }
+
+        if (isDone) {
+          console.warn('Animation has been finished before');
+          return;
+        }
+
+        if (!value.isNativelyInitialized()) {
+          return;
+        }
+
+        isStarted = true;
+        (0, _evaluateOnce.evaluateOnce)((0, _base.set)(currentState.position, value), currentState.position, function () {
+          alwaysNode = (0, _base.always)((0, _base.set)(value, (0, _base.block)([(0, _base.cond)((0, _base.clockRunning)(newClock), 0, (0, _base.startClock)(newClock)), node(newClock, currentState, config), (0, _base.cond)(currentState.finished, [(0, _base.call)([], function () {
+            isStarted = false;
+
+            if (!wasStopped) {
+              isDone = true;
+            }
+
+            value.__detachAnimation(animation);
+
+            isDone = true;
+
+            if (!wasStopped) {
+              wasStopped = false;
+            }
+          }), (0, _base.stopClock)(newClock)]), currentState.position])));
+
+          value.__attachAnimation(animation);
+
+          alwaysNode.__addChild(value);
+        });
+      },
+      __detach: function __detach() {
+        animationCallback && animationCallback({
+          finished: isDone
+        });
+        animationCallback = null;
+
+        alwaysNode.__removeChild(value);
+      },
+      stop: function stop() {
+        if (isDone) {
+          console.warn('Calling stop has no effect as the animation has already completed');
+          return;
+        }
+
+        if (!isStarted) {
+          console.warn("Calling stop has no effect as the animation hasn't been started");
+          return;
+        }
+
+        wasStopped = true;
+        (0, _evaluateOnce.evaluateOnce)((0, _base.set)(currentState.finished, 1), currentState.finished);
+      },
+      __stopImmediately_testOnly: function __stopImmediately_testOnly(result) {
+        animation.stop();
+        isDone = result;
+
+        value.__detachAnimation(animation);
+      }
+    };
+    return animation;
+  }
+
+  function backwardsCompatibleAnimWrapper(node, AnimationClass) {
+    return function (clock, state, config) {
+      if (config !== undefined) {
+        return node(clock, state, config);
+      }
+
+      return createOldAnimationObject(node, AnimationClass, clock, state);
+    };
+  }
+});

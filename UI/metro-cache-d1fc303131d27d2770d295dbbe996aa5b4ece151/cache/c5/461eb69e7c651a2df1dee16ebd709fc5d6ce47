@@ -1,0 +1,153 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _AnimatedNode2 = _require(_dependencyMap[0], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  var _utils = _require(_dependencyMap[1], "../utils");
+
+  var _invariant = _require(_dependencyMap[2], "fbjs/lib/invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  function reduce(fn) {
+    return function (input) {
+      return input.reduce(function (a, b) {
+        return fn((0, _utils.val)(a), (0, _utils.val)(b));
+      });
+    };
+  }
+
+  function reduceFrom(fn, initialValue) {
+    return function (input) {
+      return input.reduce(function (a, b) {
+        return fn((0, _utils.val)(a), (0, _utils.val)(b));
+      }, initialValue);
+    };
+  }
+
+  function infix(fn) {
+    return function (input) {
+      return fn((0, _utils.val)(input[0]), (0, _utils.val)(input[1]));
+    };
+  }
+
+  function single(fn) {
+    return function (input) {
+      return fn((0, _utils.val)(input[0]));
+    };
+  }
+
+  var OPERATIONS = {
+    add: reduce(function (a, b) {
+      return a + b;
+    }),
+    sub: reduce(function (a, b) {
+      return a - b;
+    }),
+    multiply: reduce(function (a, b) {
+      return a * b;
+    }),
+    divide: reduce(function (a, b) {
+      return a / b;
+    }),
+    pow: reduce(function (a, b) {
+      return Math.pow(a, b);
+    }),
+    modulo: reduce(function (a, b) {
+      return (a % b + b) % b;
+    }),
+    sqrt: single(function (a) {
+      return Math.sqrt(a);
+    }),
+    sin: single(function (a) {
+      return Math.sin(a);
+    }),
+    cos: single(function (a) {
+      return Math.cos(a);
+    }),
+    exp: single(function (a) {
+      return Math.exp(a);
+    }),
+    and: reduceFrom(function (a, b) {
+      return a && b;
+    }, true),
+    or: reduceFrom(function (a, b) {
+      return a || b;
+    }, false),
+    not: single(function (a) {
+      return !a;
+    }),
+    defined: single(function (a) {
+      return a !== null && a !== undefined && !isNaN(a);
+    }),
+    lessThan: infix(function (a, b) {
+      return a < b;
+    }),
+    eq: infix(function (a, b) {
+      return a == b;
+    }),
+    greaterThan: infix(function (a, b) {
+      return a > b;
+    }),
+    lessOrEq: infix(function (a, b) {
+      return a <= b;
+    }),
+    greaterOrEq: infix(function (a, b) {
+      return a >= b;
+    }),
+    neq: infix(function (a, b) {
+      return a != b;
+    })
+  };
+
+  var AnimatedOperator = function (_AnimatedNode) {
+    _inherits(AnimatedOperator, _AnimatedNode);
+
+    function AnimatedOperator(operator, input) {
+      _classCallCheck(this, AnimatedOperator);
+
+      var _this = _possibleConstructorReturn(this, (AnimatedOperator.__proto__ || Object.getPrototypeOf(AnimatedOperator)).call(this, {
+        type: 'op',
+        op: operator,
+        input: input.map(function (n) {
+          return n.__nodeID;
+        })
+      }, input));
+
+      _this._op = operator;
+      _this._input = input;
+      return _this;
+    }
+
+    _createClass(AnimatedOperator, [{
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        if (!this._operation) {
+          this._operation = OPERATIONS[this._op];
+          (0, _invariant2.default)(this._operation, "Illegal operator '%s'", this._op);
+        }
+
+        return this._operation(this._input);
+      }
+    }]);
+
+    return AnimatedOperator;
+  }(_AnimatedNode3.default);
+
+  exports.default = AnimatedOperator;
+});

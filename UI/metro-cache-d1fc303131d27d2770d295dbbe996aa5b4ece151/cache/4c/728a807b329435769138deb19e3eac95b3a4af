@@ -1,0 +1,94 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.OverlayAnimated = exports.MarkerAnimated = exports.PROVIDER_DEFAULT = exports.PROVIDER_GOOGLE = exports.ProviderPropType = exports.MAP_TYPES = exports.Animated = exports.Overlay = exports.Marker = exports.AnimatedRegion = exports.Callout = exports.LocalTile = exports.UrlTile = exports.Circle = exports.Polygon = exports.Polyline = undefined;
+
+  var _MapPolyline = _require(_dependencyMap[0], "./lib/components/MapPolyline.js");
+
+  Object.defineProperty(exports, "Polyline", {
+    enumerable: true,
+    get: function get() {
+      return _interopRequireDefault(_MapPolyline).default;
+    }
+  });
+
+  var _MapPolygon = _require(_dependencyMap[1], "./lib/components/MapPolygon.js");
+
+  Object.defineProperty(exports, "Polygon", {
+    enumerable: true,
+    get: function get() {
+      return _interopRequireDefault(_MapPolygon).default;
+    }
+  });
+
+  var _MapCircle = _require(_dependencyMap[2], "./lib/components/MapCircle.js");
+
+  Object.defineProperty(exports, "Circle", {
+    enumerable: true,
+    get: function get() {
+      return _interopRequireDefault(_MapCircle).default;
+    }
+  });
+
+  var _MapUrlTile = _require(_dependencyMap[3], "./lib/components/MapUrlTile.js");
+
+  Object.defineProperty(exports, "UrlTile", {
+    enumerable: true,
+    get: function get() {
+      return _interopRequireDefault(_MapUrlTile).default;
+    }
+  });
+
+  var _MapLocalTile = _require(_dependencyMap[4], "./lib/components/MapLocalTile.js");
+
+  Object.defineProperty(exports, "LocalTile", {
+    enumerable: true,
+    get: function get() {
+      return _interopRequireDefault(_MapLocalTile).default;
+    }
+  });
+
+  var _MapCallout = _require(_dependencyMap[5], "./lib/components/MapCallout.js");
+
+  Object.defineProperty(exports, "Callout", {
+    enumerable: true,
+    get: function get() {
+      return _interopRequireDefault(_MapCallout).default;
+    }
+  });
+
+  var _AnimatedRegion = _require(_dependencyMap[6], "./lib/components/AnimatedRegion.js");
+
+  Object.defineProperty(exports, "AnimatedRegion", {
+    enumerable: true,
+    get: function get() {
+      return _interopRequireDefault(_AnimatedRegion).default;
+    }
+  });
+
+  var _MapView = _require(_dependencyMap[7], "./lib/components/MapView");
+
+  var _MapView2 = _interopRequireDefault(_MapView);
+
+  var _MapMarker = _require(_dependencyMap[8], "./lib/components/MapMarker.js");
+
+  var _MapMarker2 = _interopRequireDefault(_MapMarker);
+
+  var _MapOverlay = _require(_dependencyMap[9], "./lib/components/MapOverlay.js");
+
+  var _MapOverlay2 = _interopRequireDefault(_MapOverlay);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  exports.Marker = _MapMarker2.default;
+  exports.Overlay = _MapOverlay2.default;
+  exports.Animated = _MapView.Animated;
+  exports.MAP_TYPES = _MapView.MAP_TYPES;
+  exports.ProviderPropType = _MapView.ProviderPropType;
+  var PROVIDER_GOOGLE = exports.PROVIDER_GOOGLE = _MapView2.default.PROVIDER_GOOGLE;
+  var PROVIDER_DEFAULT = exports.PROVIDER_DEFAULT = _MapView2.default.PROVIDER_DEFAULT;
+  var MarkerAnimated = exports.MarkerAnimated = _MapMarker2.default.Animated;
+  var OverlayAnimated = exports.OverlayAnimated = _MapOverlay2.default.Animated;
+  exports.default = _MapView2.default;
+});

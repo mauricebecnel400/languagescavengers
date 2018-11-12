@@ -1,0 +1,208 @@
+__d(function (global, _require3, module, exports, _dependencyMap) {
+  'use strict';
+
+  var _require = _require3(_dependencyMap[0], '../Utilities/PolyfillFunctions'),
+      polyfillObjectProperty = _require.polyfillObjectProperty,
+      polyfillGlobal = _require.polyfillGlobal;
+
+  if (global.GLOBAL === undefined) {
+    global.GLOBAL = global;
+  }
+
+  if (global.window === undefined) {
+    global.window = global;
+  }
+
+  var _shouldPolyfillCollection = _require3(_dependencyMap[1], '../vendor/core/_shouldPolyfillES6Collection');
+
+  if (_shouldPolyfillCollection('Map')) {
+    polyfillGlobal('Map', function () {
+      return _require3(_dependencyMap[2], '../vendor/core/Map');
+    });
+  }
+
+  if (_shouldPolyfillCollection('Set')) {
+    polyfillGlobal('Set', function () {
+      return _require3(_dependencyMap[3], '../vendor/core/Set');
+    });
+  }
+
+  global.process = global.process || {};
+  global.process.env = global.process.env || {};
+
+  if (!global.process.env.NODE_ENV) {
+    global.process.env.NODE_ENV = __DEV__ ? 'development' : 'production';
+  }
+
+  if (global.__RCTProfileIsProfiling) {
+    var Systrace = _require3(_dependencyMap[4], '../Performance/Systrace');
+
+    Systrace.installReactHook();
+    Systrace.setEnabled(true);
+  }
+
+  var ExceptionsManager = _require3(_dependencyMap[5], './ExceptionsManager');
+
+  ExceptionsManager.installConsoleErrorReporter();
+
+  if (!global.__fbDisableExceptionsManager) {
+    var handleError = function handleError(e, isFatal) {
+      try {
+        ExceptionsManager.handleException(e, isFatal);
+      } catch (ee) {
+        console.log('Failed to print error: ', ee.message);
+        throw e;
+      }
+    };
+
+    var ErrorUtils = _require3(_dependencyMap[6], '../vendor/core/ErrorUtils');
+
+    ErrorUtils.setGlobalHandler(handleError);
+  }
+
+  var ReactNativeVersionCheck = _require3(_dependencyMap[7], './ReactNativeVersionCheck');
+
+  ReactNativeVersionCheck.checkVersions();
+  polyfillGlobal('Promise', function () {
+    return _require3(_dependencyMap[8], '../Promise');
+  });
+  polyfillGlobal('regeneratorRuntime', function () {
+    delete global.regeneratorRuntime;
+
+    _require3(_dependencyMap[9], "regenerator-runtime/runtime");
+
+    return global.regeneratorRuntime;
+  });
+
+  var defineLazyTimer = function defineLazyTimer(name) {
+    polyfillGlobal(name, function () {
+      return _require3(_dependencyMap[10], './Timers/JSTimers')[name];
+    });
+  };
+
+  defineLazyTimer('setTimeout');
+  defineLazyTimer('setInterval');
+  defineLazyTimer('setImmediate');
+  defineLazyTimer('clearTimeout');
+  defineLazyTimer('clearInterval');
+  defineLazyTimer('clearImmediate');
+  defineLazyTimer('requestAnimationFrame');
+  defineLazyTimer('cancelAnimationFrame');
+  defineLazyTimer('requestIdleCallback');
+  defineLazyTimer('cancelIdleCallback');
+  polyfillGlobal('XMLHttpRequest', function () {
+    return _require3(_dependencyMap[11], '../Network/XMLHttpRequest');
+  });
+  polyfillGlobal('FormData', function () {
+    return _require3(_dependencyMap[12], '../Network/FormData');
+  });
+  polyfillGlobal('fetch', function () {
+    return _require3(_dependencyMap[13], '../Network/fetch').fetch;
+  });
+  polyfillGlobal('Headers', function () {
+    return _require3(_dependencyMap[13], '../Network/fetch').Headers;
+  });
+  polyfillGlobal('Request', function () {
+    return _require3(_dependencyMap[13], '../Network/fetch').Request;
+  });
+  polyfillGlobal('Response', function () {
+    return _require3(_dependencyMap[13], '../Network/fetch').Response;
+  });
+  polyfillGlobal('WebSocket', function () {
+    return _require3(_dependencyMap[14], '../WebSocket/WebSocket');
+  });
+  polyfillGlobal('Blob', function () {
+    return _require3(_dependencyMap[15], '../Blob/Blob');
+  });
+  polyfillGlobal('File', function () {
+    return _require3(_dependencyMap[16], '../Blob/File');
+  });
+  polyfillGlobal('FileReader', function () {
+    return _require3(_dependencyMap[17], '../Blob/FileReader');
+  });
+  polyfillGlobal('URL', function () {
+    return _require3(_dependencyMap[18], '../Blob/URL');
+  });
+
+  if (!global.alert) {
+    global.alert = function (text) {
+      _require3(_dependencyMap[19], '../Alert/Alert').alert('Alert', '' + text);
+    };
+  }
+
+  var navigator = global.navigator;
+
+  if (navigator === undefined) {
+    global.navigator = navigator = {};
+  }
+
+  polyfillObjectProperty(navigator, 'product', function () {
+    return 'ReactNative';
+  });
+  polyfillObjectProperty(navigator, 'geolocation', function () {
+    return _require3(_dependencyMap[20], '../Geolocation/Geolocation');
+  });
+
+  var BatchedBridge = _require3(_dependencyMap[21], '../BatchedBridge/BatchedBridge');
+
+  BatchedBridge.registerLazyCallableModule('Systrace', function () {
+    return _require3(_dependencyMap[4], '../Performance/Systrace');
+  });
+  BatchedBridge.registerLazyCallableModule('JSTimers', function () {
+    return _require3(_dependencyMap[10], './Timers/JSTimers');
+  });
+  BatchedBridge.registerLazyCallableModule('HeapCapture', function () {
+    return _require3(_dependencyMap[22], '../Utilities/HeapCapture');
+  });
+  BatchedBridge.registerLazyCallableModule('SamplingProfiler', function () {
+    return _require3(_dependencyMap[23], '../Performance/SamplingProfiler');
+  });
+  BatchedBridge.registerLazyCallableModule('RCTLog', function () {
+    return _require3(_dependencyMap[24], '../Utilities/RCTLog');
+  });
+  BatchedBridge.registerLazyCallableModule('RCTDeviceEventEmitter', function () {
+    return _require3(_dependencyMap[25], '../EventEmitter/RCTDeviceEventEmitter');
+  });
+  BatchedBridge.registerLazyCallableModule('RCTNativeAppEventEmitter', function () {
+    return _require3(_dependencyMap[26], '../EventEmitter/RCTNativeAppEventEmitter');
+  });
+  BatchedBridge.registerLazyCallableModule('PerformanceLogger', function () {
+    return _require3(_dependencyMap[27], '../Utilities/PerformanceLogger');
+  });
+  BatchedBridge.registerLazyCallableModule('JSDevSupportModule', function () {
+    return _require3(_dependencyMap[28], '../Utilities/JSDevSupportModule');
+  });
+
+  global.__fetchSegment = function (segmentId, callback) {
+    var _require2 = _require3(_dependencyMap[29], '../BatchedBridge/NativeModules'),
+        SegmentFetcher = _require2.SegmentFetcher;
+
+    if (!SegmentFetcher) {
+      throw new Error('SegmentFetcher is missing. Please ensure that it is ' + 'included as a NativeModule.');
+    }
+
+    SegmentFetcher.fetchSegment(segmentId, function (errorObject) {
+      if (errorObject) {
+        var error = new Error(errorObject.message);
+        error.code = errorObject.code;
+        callback(error);
+      }
+
+      callback(null);
+    });
+  };
+
+  if (__DEV__) {
+    if (!global.__RCTProfileIsProfiling) {
+      BatchedBridge.registerCallableModule('HMRClient', _require3(_dependencyMap[30], '../Utilities/HMRClient'));
+
+      if (!window.document) {
+        _require3(_dependencyMap[31], './Devtools/setupDevtools');
+      }
+
+      var JSInspector = _require3(_dependencyMap[32], '../JSInspector/JSInspector');
+
+      JSInspector.registerAgent(_require3(_dependencyMap[33], '../JSInspector/NetworkAgent'));
+    }
+  }
+});

@@ -1,0 +1,57 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _reactNavigation = _require(_dependencyMap[0], "react-navigation");
+
+  var _HomeScreen = _require(_dependencyMap[1], "../screens/HomeScreen");
+
+  var _HomeScreen2 = _interopRequireDefault(_HomeScreen);
+
+  var _ScavengerModeScreen = _require(_dependencyMap[2], "../screens/ScavengerModeScreen");
+
+  var _ScavengerModeScreen2 = _interopRequireDefault(_ScavengerModeScreen);
+
+  var _WordBookScreen = _require(_dependencyMap[3], "../screens/WordBookScreen");
+
+  var _WordBookScreen2 = _interopRequireDefault(_WordBookScreen);
+
+  var _SettingScreen = _require(_dependencyMap[4], "../screens/SettingScreen");
+
+  var _SettingScreen2 = _interopRequireDefault(_SettingScreen);
+
+  var _LanguageSelectScreen = _require(_dependencyMap[5], "../screens/LanguageSelectScreen");
+
+  var _LanguageSelectScreen2 = _interopRequireDefault(_LanguageSelectScreen);
+
+  var _VolumeScreen = _require(_dependencyMap[6], "../screens/VolumeScreen");
+
+  var _VolumeScreen2 = _interopRequireDefault(_VolumeScreen);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var AppNavigator = (0, _reactNavigation.createStackNavigator)({
+    Home: {
+      screen: _HomeScreen2.default
+    },
+    ScavengerMode: {
+      screen: _ScavengerModeScreen2.default
+    },
+    WordBookMode: {
+      screen: _WordBookScreen2.default
+    },
+    SettingMode: {
+      screen: _SettingScreen2.default
+    },
+    LanguageSelectMode: {
+      screen: _LanguageSelectScreen2.default
+    },
+    VolumeMode: {
+      screen: _VolumeScreen2.default
+    }
+  }, {
+    initialRouteName: 'Home'
+  });
+  exports.default = AppNavigator;
+});

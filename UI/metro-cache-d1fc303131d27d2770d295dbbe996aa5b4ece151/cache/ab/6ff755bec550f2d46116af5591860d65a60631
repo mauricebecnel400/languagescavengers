@@ -1,0 +1,335 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  _require(_dependencyMap[0], "./environment/validate");
+
+  _require(_dependencyMap[1], "./environment/logging");
+
+  _require(_dependencyMap[2], "expo-location/src/Location");
+
+  _require(_dependencyMap[3], "expo-asset/src/Asset");
+
+  var _expoConstants = _require(_dependencyMap[4], "expo-constants");
+
+  var _reactNative = _require(_dependencyMap[5], "react-native");
+
+  _reactNative.YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
+
+  if (typeof _expoConstants.Constants.manifest.env === 'object') {
+    _extends(process.env, _expoConstants.Constants.manifest.env);
+  }
+
+  global.__old_console_warn = global.__old_console_warn || console.warn;
+
+  global.console.warn = function () {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var tst = (args[0] || '') + '';
+
+    if (tst.startsWith('Warning: isMounted(...) is deprecated')) {
+      return;
+    }
+
+    return global.__old_console_warn.apply(console, args);
+  };
+
+  module.exports = {
+    get Crypto() {
+      return _reactNative.NativeModules.ExponentCrypto;
+    },
+
+    get Fabric() {
+      return _reactNative.NativeModules.ExponentFabric;
+    },
+
+    get ImageCropper() {
+      return _reactNative.NativeModules.ExponentImageCropper;
+    },
+
+    get apisAreAvailable() {
+      return _require(_dependencyMap[6], './apisAreAvailable').default;
+    },
+
+    get registerRootComponent() {
+      return _require(_dependencyMap[7], './launch/registerRootComponent').default;
+    },
+
+    get takeSnapshotAsync() {
+      return _require(_dependencyMap[8], './takeSnapshotAsync').default;
+    },
+
+    get Accelerometer() {
+      return _require(_dependencyMap[9], "expo-sensors").Accelerometer;
+    },
+
+    get Asset() {
+      return _require(_dependencyMap[10], "expo-asset").Asset;
+    },
+
+    get AuthSession() {
+      return _require(_dependencyMap[11], './AuthSession').default;
+    },
+
+    get ErrorRecovery() {
+      return _require(_dependencyMap[12], './ErrorRecovery').default;
+    },
+
+    get GLView() {
+      return _require(_dependencyMap[13], "expo-gl").GLView;
+    },
+
+    get Gyroscope() {
+      return _require(_dependencyMap[9], "expo-sensors").Gyroscope;
+    },
+
+    get Magnetometer() {
+      return _require(_dependencyMap[9], "expo-sensors").Magnetometer;
+    },
+
+    get MagnetometerUncalibrated() {
+      return _require(_dependencyMap[9], "expo-sensors").MagnetometerUncalibrated;
+    },
+
+    get Notifications() {
+      return _require(_dependencyMap[14], './Notifications').default;
+    },
+
+    get SQLite() {
+      return _require(_dependencyMap[15], './SQLite').default;
+    },
+
+    get AdMobBanner() {
+      return _require(_dependencyMap[16], "expo-ads-admob").AdMobBanner;
+    },
+
+    get PublisherBanner() {
+      return _require(_dependencyMap[16], "expo-ads-admob").PublisherBanner;
+    },
+
+    get AdMobInterstitial() {
+      return _require(_dependencyMap[16], "expo-ads-admob").AdMobInterstitial;
+    },
+
+    get AdMobRewarded() {
+      return _require(_dependencyMap[16], "expo-ads-admob").AdMobRewarded;
+    },
+
+    get AppLoading() {
+      return _require(_dependencyMap[17], './launch/AppLoading').default;
+    },
+
+    get BarCodeScanner() {
+      return _require(_dependencyMap[18], "expo-barcode-scanner").BarCodeScanner;
+    },
+
+    get BlurView() {
+      return _require(_dependencyMap[19], './effects/BlurView').default;
+    },
+
+    get Camera() {
+      return _require(_dependencyMap[20], "expo-camera").Camera;
+    },
+
+    get FaceDetector() {
+      return _require(_dependencyMap[21], "expo-face-detector").FaceDetector;
+    },
+
+    get GestureHandler() {
+      return _require(_dependencyMap[22], "react-native-gesture-handler");
+    },
+
+    get KeepAwake() {
+      return _require(_dependencyMap[23], './KeepAwake').default;
+    },
+
+    get LinearGradient() {
+      return _require(_dependencyMap[24], './effects/LinearGradient').default;
+    },
+
+    get MapView() {
+      return _require(_dependencyMap[25], "react-native-maps").default;
+    },
+
+    get Modal() {
+      console.error('The undocumented Modal API has been removed.');
+    },
+
+    get Video() {
+      return _require(_dependencyMap[26], './av/Video').default;
+    },
+
+    get WebBrowser() {
+      return _require(_dependencyMap[27], './WebBrowser').default;
+    },
+
+    get Svg() {
+      return _require(_dependencyMap[28], './Svg').default;
+    },
+
+    get Fingerprint() {
+      console.warn('Expo.Fingerprint has been renamed to Expo.LocalAuthentication. The old name might be removed in the future releases.');
+      return this.LocalAuthentication;
+    },
+
+    get LocalAuthentication() {
+      return _require(_dependencyMap[29], "expo-local-authentication").LocalAuthentication;
+    },
+
+    get Amplitude() {
+      return _require(_dependencyMap[30], './Amplitude').default;
+    },
+
+    get AR() {
+      return _require(_dependencyMap[31], './AR');
+    },
+
+    get Audio() {
+      return _require(_dependencyMap[32], './av/Audio');
+    },
+
+    get Brightness() {
+      return _require(_dependencyMap[33], './Brightness');
+    },
+
+    get Calendar() {
+      return _require(_dependencyMap[34], './Calendar');
+    },
+
+    get Constants() {
+      return _require(_dependencyMap[4], "expo-constants").Constants;
+    },
+
+    get Contacts() {
+      return _require(_dependencyMap[35], "expo-contacts").Contacts;
+    },
+
+    get DangerZone() {
+      return _require(_dependencyMap[36], './DangerZone');
+    },
+
+    get DocumentPicker() {
+      return _require(_dependencyMap[37], './DocumentPicker');
+    },
+
+    get FileSystem() {
+      return _require(_dependencyMap[38], "expo-file-system").FileSystem;
+    },
+
+    get Font() {
+      return _require(_dependencyMap[39], "expo-font").Font;
+    },
+
+    get Google() {
+      return _require(_dependencyMap[40], './Google');
+    },
+
+    get Haptic() {
+      return _require(_dependencyMap[41], './Haptic');
+    },
+
+    get Icon() {
+      return _require(_dependencyMap[42], './Icon').default;
+    },
+
+    get ImageManipulator() {
+      return _require(_dependencyMap[43], './ImageManipulator');
+    },
+
+    get ImagePicker() {
+      return _require(_dependencyMap[44], './ImagePicker');
+    },
+
+    get Linking() {
+      return _require(_dependencyMap[45], './Linking').default;
+    },
+
+    get Location() {
+      return _require(_dependencyMap[46], "expo-location").Location;
+    },
+
+    get Logs() {
+      return _require(_dependencyMap[47], './logs/Logs').default;
+    },
+
+    get MailComposer() {
+      return _require(_dependencyMap[48], './MailComposer');
+    },
+
+    get MediaLibrary() {
+      return _require(_dependencyMap[49], "expo-media-library").MediaLibrary;
+    },
+
+    get Pedometer() {
+      if (_reactNative.Platform.OS === 'android') {
+        return _require(_dependencyMap[50], './Pedometer');
+      } else {
+        return _require(_dependencyMap[9], "expo-sensors").Pedometer;
+      }
+    },
+
+    get Permissions() {
+      return _require(_dependencyMap[51], "expo-permissions").Permissions;
+    },
+
+    get Print() {
+      return _require(_dependencyMap[52], "expo-print").Print;
+    },
+
+    get Facebook() {
+      return _require(_dependencyMap[53], './Facebook').default;
+    },
+
+    get FacebookAds() {
+      return _require(_dependencyMap[54], './facebook-ads');
+    },
+
+    get IntentLauncherAndroid() {
+      return _require(_dependencyMap[55], './IntentLauncherAndroid');
+    },
+
+    get ScreenOrientation() {
+      return _require(_dependencyMap[56], './ScreenOrientation');
+    },
+
+    get SecureStore() {
+      return _require(_dependencyMap[57], './SecureStore');
+    },
+
+    get Segment() {
+      return _require(_dependencyMap[58], "expo-analytics-segment").Segment;
+    },
+
+    get SMS() {
+      return _require(_dependencyMap[59], "expo-sms").SMS;
+    },
+
+    get Speech() {
+      return _require(_dependencyMap[60], './Speech');
+    },
+
+    get SplashScreen() {
+      return _require(_dependencyMap[61], './launch/SplashScreen');
+    },
+
+    get StoreReview() {
+      return _require(_dependencyMap[62], './StoreReview');
+    },
+
+    get Updates() {
+      return _require(_dependencyMap[63], './Updates');
+    },
+
+    get Util() {
+      return _require(_dependencyMap[64], './Util');
+    }
+
+  };
+
+  if (global) {
+    global.__exponent = module.exports;
+    global.__expo = module.exports;
+    global.Expo = module.exports;
+  }
+});

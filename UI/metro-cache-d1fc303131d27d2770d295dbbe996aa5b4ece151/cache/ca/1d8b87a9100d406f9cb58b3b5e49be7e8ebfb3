@@ -1,0 +1,15 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _ReanimatedModule = _require(_dependencyMap[0], "./ReanimatedModule");
+
+  var _ReanimatedModule2 = _interopRequireDefault(_ReanimatedModule);
+
+  var _reactNative = _require(_dependencyMap[1], "react-native");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  exports.default = new _reactNative.NativeEventEmitter(_ReanimatedModule2.default);
+});

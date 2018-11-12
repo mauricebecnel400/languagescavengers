@@ -1,0 +1,19 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = acc;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _AnimatedValue = _require(_dependencyMap[1], "../core/AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function acc(v) {
+    var acc = new _AnimatedValue2.default(0);
+    return (0, _base.set)(acc, (0, _base.add)(acc, v));
+  }
+});

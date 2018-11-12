@@ -1,0 +1,25 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  "use strict";
+
+  var GrammarError = _require(_dependencyMap[0], "../../grammar-error"),
+      asts = _require(_dependencyMap[1], "../asts"),
+      visitor = _require(_dependencyMap[2], "../visitor");
+
+  function reportInfiniteRepetition(ast) {
+    var check = visitor.build({
+      zero_or_more: function zero_or_more(node) {
+        if (!asts.alwaysConsumesOnSuccess(ast, node.expression)) {
+          throw new GrammarError("Possible infinite loop when parsing (repetition used with an expression that may not consume any input).", node.location);
+        }
+      },
+      one_or_more: function one_or_more(node) {
+        if (!asts.alwaysConsumesOnSuccess(ast, node.expression)) {
+          throw new GrammarError("Possible infinite loop when parsing (repetition used with an expression that may not consume any input).", node.location);
+        }
+      }
+    });
+    check(ast);
+  }
+
+  module.exports = reportInfiniteRepetition;
+});

@@ -1,0 +1,109 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  exports.createOrReuseTransformNode = createOrReuseTransformNode;
+
+  var _AnimatedNode2 = _require(_dependencyMap[0], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  var _areEqual = _require(_dependencyMap[1], "fbjs/lib/areEqual");
+
+  var _areEqual2 = _interopRequireDefault(_areEqual);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  function sanitizeTransform(inputTransform) {
+    var outputTransform = [];
+    inputTransform.forEach(function (transform) {
+      for (var key in transform) {
+        var value = transform[key];
+
+        if (value instanceof _AnimatedNode3.default) {
+          outputTransform.push({
+            property: key,
+            nodeID: value.__nodeID
+          });
+        } else {
+          outputTransform.push({
+            property: key,
+            value: value
+          });
+        }
+      }
+    });
+    return outputTransform;
+  }
+
+  function extractAnimatedParentNodes(transform) {
+    var parents = [];
+    transform.forEach(function (transform) {
+      for (var key in transform) {
+        var value = transform[key];
+
+        if (value instanceof _AnimatedNode3.default) {
+          parents.push(value);
+        }
+      }
+    });
+    return parents;
+  }
+
+  function createOrReuseTransformNode(transform, oldNode) {
+    var config = sanitizeTransform(transform);
+
+    if (oldNode && (0, _areEqual2.default)(config, oldNode._config)) {
+      return oldNode;
+    }
+
+    return new AnimatedTransform(transform, config);
+  }
+
+  var AnimatedTransform = function (_AnimatedNode) {
+    _inherits(AnimatedTransform, _AnimatedNode);
+
+    function AnimatedTransform(transform, config) {
+      _classCallCheck(this, AnimatedTransform);
+
+      var _this = _possibleConstructorReturn(this, (AnimatedTransform.__proto__ || Object.getPrototypeOf(AnimatedTransform)).call(this, {
+        type: 'transform',
+        transform: config
+      }, extractAnimatedParentNodes(transform)));
+
+      _this._config = config;
+      _this._transform = transform;
+      return _this;
+    }
+
+    _createClass(AnimatedTransform, [{
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        return this._transform.map(function (transform) {
+          var result = {};
+
+          for (var key in transform) {
+            var value = transform[key];
+
+            if (value instanceof _AnimatedNode3.default) {
+              result[key] = value.__getValue();
+            }
+          }
+
+          return result;
+        });
+      }
+    }]);
+
+    return AnimatedTransform;
+  }(_AnimatedNode3.default);
+});

@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _expoConstants = _require(_dependencyMap[1], "expo-constants");
+
+  _reactNative.findNodeHandle;
+
+  if (!_expoConstants.Constants || !_expoConstants.Constants.expoVersion) {
+    throw new Error("The Expo SDK requires Expo to run. It appears the native Expo modules are unavailable and this code is not running on Expo. Visit https://docs.expo.io to learn more about developing an Expo project.");
+  }
+});

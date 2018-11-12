@@ -1,0 +1,91 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Easing = undefined;
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _Easing = _require(_dependencyMap[1], "./Easing");
+
+  var _Easing2 = _interopRequireDefault(_Easing);
+
+  var _AnimatedClock = _require(_dependencyMap[2], "./core/AnimatedClock");
+
+  var _AnimatedClock2 = _interopRequireDefault(_AnimatedClock);
+
+  var _AnimatedValue = _require(_dependencyMap[3], "./core/AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  var _AnimatedNode = _require(_dependencyMap[4], "./core/AnimatedNode");
+
+  var _AnimatedNode2 = _interopRequireDefault(_AnimatedNode);
+
+  var _base = _require(_dependencyMap[5], "./base");
+
+  var base = _interopRequireWildcard(_base);
+
+  var _derived = _require(_dependencyMap[6], "./derived");
+
+  var derived = _interopRequireWildcard(_derived);
+
+  var _createAnimatedComponent = _require(_dependencyMap[7], "./createAnimatedComponent");
+
+  var _createAnimatedComponent2 = _interopRequireDefault(_createAnimatedComponent);
+
+  var _decay = _require(_dependencyMap[8], "./animations/decay");
+
+  var _decay2 = _interopRequireDefault(_decay);
+
+  var _timing = _require(_dependencyMap[9], "./animations/timing");
+
+  var _timing2 = _interopRequireDefault(_timing);
+
+  var _spring = _require(_dependencyMap[10], "./animations/spring");
+
+  var _spring2 = _interopRequireDefault(_spring);
+
+  var _TimingAnimation = _require(_dependencyMap[11], "./animations/TimingAnimation");
+
+  var _TimingAnimation2 = _interopRequireDefault(_TimingAnimation);
+
+  var _SpringAnimation = _require(_dependencyMap[12], "./animations/SpringAnimation");
+
+  var _SpringAnimation2 = _interopRequireDefault(_SpringAnimation);
+
+  var _DecayAnimation = _require(_dependencyMap[13], "./animations/DecayAnimation");
+
+  var _DecayAnimation2 = _interopRequireDefault(_DecayAnimation);
+
+  var _ConfigHelper = _require(_dependencyMap[14], "./ConfigHelper");
+
+  var _backwardCompatibleAnimWrapper = _require(_dependencyMap[15], "./animations/backwardCompatibleAnimWrapper");
+
+  var _backwardCompatibleAnimWrapper2 = _interopRequireDefault(_backwardCompatibleAnimWrapper);
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var Animated = _extends({
+    View: (0, _createAnimatedComponent2.default)(_reactNative.View),
+    Text: (0, _createAnimatedComponent2.default)(_reactNative.Text),
+    Image: (0, _createAnimatedComponent2.default)(_reactNative.Image),
+    ScrollView: (0, _createAnimatedComponent2.default)(_reactNative.ScrollView),
+    Clock: _AnimatedClock2.default,
+    Value: _AnimatedValue2.default,
+    Node: _AnimatedNode2.default
+  }, base, derived, {
+    decay: (0, _backwardCompatibleAnimWrapper2.default)(_decay2.default, _DecayAnimation2.default),
+    timing: (0, _backwardCompatibleAnimWrapper2.default)(_timing2.default, _TimingAnimation2.default),
+    spring: (0, _backwardCompatibleAnimWrapper2.default)(_spring2.default, _SpringAnimation2.default),
+    addWhitelistedNativeProps: _ConfigHelper.addWhitelistedNativeProps,
+    addWhitelistedUIProps: _ConfigHelper.addWhitelistedUIProps
+  });
+
+  exports.default = Animated;
+  exports.Easing = _Easing2.default;
+});

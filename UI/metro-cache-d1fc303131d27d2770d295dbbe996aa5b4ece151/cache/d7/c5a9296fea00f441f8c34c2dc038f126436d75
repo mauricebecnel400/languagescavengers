@@ -1,0 +1,12 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = apisAreAvailable;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  function apisAreAvailable() {
+    return !!_reactNative.NativeModules.ExponentConstants;
+  }
+});

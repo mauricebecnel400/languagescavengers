@@ -1,0 +1,20 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = timing;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  function timing(clock, state, config) {
+    var lastTime = (0, _base.cond)(state.time, state.time, clock);
+    var frameTime = (0, _base.add)(state.frameTime, (0, _base.sub)(clock, lastTime));
+    var progress = config.easing((0, _base.divide)(state.frameTime, config.duration));
+    var distanceLeft = (0, _base.sub)(config.toValue, state.position);
+    var fullDistance = (0, _base.divide)(distanceLeft, (0, _base.sub)(1, progress));
+    var startPosition = (0, _base.sub)(config.toValue, fullDistance);
+    var nextProgress = config.easing((0, _base.divide)(frameTime, config.duration));
+    var nextPosition = (0, _base.add)(startPosition, (0, _base.multiply)(fullDistance, nextProgress));
+    return (0, _base.block)([(0, _base.cond)((0, _base.greaterOrEq)(frameTime, config.duration), [(0, _base.set)(state.position, config.toValue), (0, _base.set)(state.finished, 1)], (0, _base.set)(state.position, nextPosition)), (0, _base.set)(state.frameTime, frameTime), (0, _base.set)(state.time, clock)]);
+  }
+});

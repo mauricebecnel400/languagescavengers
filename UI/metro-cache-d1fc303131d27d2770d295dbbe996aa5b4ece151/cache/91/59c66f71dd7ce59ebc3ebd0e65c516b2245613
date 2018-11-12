@@ -1,0 +1,490 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _invariant = _require(_dependencyMap[0], "invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  var _expoCore = _require(_dependencyMap[1], "expo-core");
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var Location = _expoCore.NativeModulesProxy.ExpoLocation;
+  var LocationEventEmitter = new _expoCore.EventEmitter(Location);
+  var nextWatchId = 0;
+  var headingId = void 0;
+
+  function _getNextWatchId() {
+    nextWatchId++;
+    return nextWatchId;
+  }
+
+  function _getCurrentWatchId() {
+    return nextWatchId;
+  }
+
+  var watchCallbacks = {};
+  var deviceEventSubscription = void 0;
+  var headingEventSub = void 0;
+  var googleApiKey = void 0;
+  var googleApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+
+  function getProviderStatusAsync() {
+    return Location.getProviderStatusAsync();
+  }
+
+  function getCurrentPositionAsync() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return regeneratorRuntime.async(function getCurrentPositionAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt("return", Location.getCurrentPositionAsync(options));
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getHeadingAsync() {
+    var _this = this;
+
+    return regeneratorRuntime.async(function getHeadingAsync$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            return _context3.abrupt("return", new Promise(function _callee(resolve, reject) {
+              var tries, headingSub, done, subscription, _tries;
+
+              return regeneratorRuntime.async(function _callee$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      _context2.prev = 0;
+
+                      if (!headingEventSub) {
+                        _context2.next = 6;
+                        break;
+                      }
+
+                      tries = 0;
+                      headingSub = LocationEventEmitter.addListener('Exponent.headingChanged', function (_ref) {
+                        var watchId = _ref.watchId,
+                            heading = _ref.heading;
+
+                        if (heading.accuracy > 1 || tries > 5) {
+                          resolve(heading);
+                          LocationEventEmitter.removeSubscription(headingSub);
+                        } else {
+                          tries += 1;
+                        }
+                      });
+                      _context2.next = 13;
+                      break;
+
+                    case 6:
+                      done = false;
+                      subscription = void 0;
+                      _tries = 0;
+                      _context2.next = 11;
+                      return regeneratorRuntime.awrap(watchHeadingAsync(function (heading) {
+                        if (!done) {
+                          if (heading.accuracy > 1 || _tries > 5) {
+                            subscription.remove();
+                            resolve(heading);
+                            done = true;
+                          } else {
+                            _tries += 1;
+                          }
+                        } else {
+                          subscription.remove();
+                        }
+                      }));
+
+                    case 11:
+                      subscription = _context2.sent;
+
+                      if (done) {
+                        subscription.remove();
+                      }
+
+                    case 13:
+                      _context2.next = 18;
+                      break;
+
+                    case 15:
+                      _context2.prev = 15;
+                      _context2.t0 = _context2["catch"](0);
+                      reject(_context2.t0);
+
+                    case 18:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, null, _this, [[0, 15]]);
+            }));
+
+          case 1:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function watchHeadingAsync(callback) {
+    return regeneratorRuntime.async(function watchHeadingAsync$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            if (headingEventSub) {
+              _removeHeadingWatcher(headingId);
+            }
+
+            headingEventSub = LocationEventEmitter.addListener('Exponent.headingChanged', function (_ref2) {
+              var watchId = _ref2.watchId,
+                  heading = _ref2.heading;
+              var callback = watchCallbacks[watchId];
+
+              if (callback) {
+                callback(heading);
+              } else {
+                Location.removeWatchAsync(watchId);
+              }
+            });
+            headingId = _getNextWatchId();
+            watchCallbacks[headingId] = callback;
+            _context4.next = 6;
+            return regeneratorRuntime.awrap(Location.watchDeviceHeading(headingId));
+
+          case 6:
+            return _context4.abrupt("return", {
+              remove: function remove() {
+                _removeHeadingWatcher(headingId);
+              }
+            });
+
+          case 7:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function _removeHeadingWatcher(watchId) {
+    if (!watchCallbacks[watchId]) {
+      return;
+    }
+
+    delete watchCallbacks[watchId];
+    Location.removeWatchAsync(watchId);
+    LocationEventEmitter.removeSubscription(headingEventSub);
+    headingEventSub = null;
+  }
+
+  function _maybeInitializeEmitterSubscription() {
+    if (!deviceEventSubscription) {
+      deviceEventSubscription = LocationEventEmitter.addListener('Exponent.locationChanged', function (_ref3) {
+        var watchId = _ref3.watchId,
+            location = _ref3.location;
+        var callback = watchCallbacks[watchId];
+
+        if (callback) {
+          callback(location);
+        } else {
+          Location.removeWatchAsync(watchId);
+        }
+      });
+    }
+  }
+
+  function geocodeAsync(address) {
+    return regeneratorRuntime.async(function geocodeAsync$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            return _context5.abrupt("return", Location.geocodeAsync(address).catch(function (error) {
+              if (_reactNative.Platform.OS === 'android' && error.code === 'E_NO_GEOCODER') {
+                if (!googleApiKey) {
+                  throw new Error(error.message + ' Please set a Google API Key to use geocoding.');
+                }
+
+                return _googleGeocodeAsync(address);
+              }
+
+              throw error;
+            }));
+
+          case 1:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function reverseGeocodeAsync(location) {
+    return regeneratorRuntime.async(function reverseGeocodeAsync$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            if (!(typeof location.latitude !== 'number' || typeof location.longitude !== 'number')) {
+              _context6.next = 2;
+              break;
+            }
+
+            throw new TypeError('Location should be an object with number properties `latitude` and `longitude`.');
+
+          case 2:
+            return _context6.abrupt("return", Location.reverseGeocodeAsync(location).catch(function (error) {
+              if (_reactNative.Platform.OS === 'android' && error.code === 'E_NO_GEOCODER') {
+                if (!googleApiKey) {
+                  throw new Error(error.message + ' Please set a Google API Key to use geocoding.');
+                }
+
+                return _googleReverseGeocodeAsync(location);
+              }
+
+              throw error;
+            }));
+
+          case 3:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function setApiKey(apiKey) {
+    googleApiKey = apiKey;
+  }
+
+  function _googleGeocodeAsync(address) {
+    var result, resultObject;
+    return regeneratorRuntime.async(function _googleGeocodeAsync$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.next = 2;
+            return regeneratorRuntime.awrap(fetch(googleApiUrl + "?key=" + googleApiKey + "&address=" + encodeURI(address)));
+
+          case 2:
+            result = _context7.sent;
+            _context7.next = 5;
+            return regeneratorRuntime.awrap(result.json());
+
+          case 5:
+            resultObject = _context7.sent;
+
+            if (!(resultObject.status !== 'OK')) {
+              _context7.next = 8;
+              break;
+            }
+
+            throw new Error('An error occurred during geocoding.');
+
+          case 8:
+            return _context7.abrupt("return", resultObject.results.map(function (result) {
+              var location = result.geometry.location;
+              return {
+                latitude: location.lat,
+                longitude: location.lng
+              };
+            }));
+
+          case 9:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function _googleReverseGeocodeAsync(options) {
+    var result, resultObject;
+    return regeneratorRuntime.async(function _googleReverseGeocodeAsync$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.next = 2;
+            return regeneratorRuntime.awrap(fetch(googleApiUrl + "?key=" + googleApiKey + "&latlng=" + options.latitude + "," + options.longitude));
+
+          case 2:
+            result = _context8.sent;
+            _context8.next = 5;
+            return regeneratorRuntime.awrap(result.json());
+
+          case 5:
+            resultObject = _context8.sent;
+
+            if (!(resultObject.status !== 'OK')) {
+              _context8.next = 8;
+              break;
+            }
+
+            throw new Error('An error occurred during geocoding.');
+
+          case 8:
+            return _context8.abrupt("return", resultObject.results.map(function (result) {
+              var address = {};
+              result.address_components.forEach(function (component) {
+                if (component.types.includes('locality')) {
+                  address.city = component.long_name;
+                } else if (component.types.includes('street_address')) {
+                  address.street = component.long_name;
+                } else if (component.types.includes('administrative_area_level_1')) {
+                  address.region = component.long_name;
+                } else if (component.types.includes('country')) {
+                  address.country = component.long_name;
+                } else if (component.types.includes('postal_code')) {
+                  address.postalCode = component.long_name;
+                } else if (component.types.includes('point_of_interest')) {
+                  address.name = component.long_name;
+                }
+              });
+              return address;
+            }));
+
+          case 9:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function watchPosition(success, error, options) {
+    _maybeInitializeEmitterSubscription();
+
+    var watchId = _getNextWatchId();
+
+    watchCallbacks[watchId] = success;
+    Location.watchPositionImplAsync(watchId, options).catch(function (err) {
+      _removeWatcher(watchId);
+
+      error({
+        watchId: watchId,
+        message: err.message,
+        code: err.code
+      });
+    });
+    return watchId;
+  }
+
+  function watchPositionAsync(options, callback) {
+    var watchId;
+    return regeneratorRuntime.async(function watchPositionAsync$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _maybeInitializeEmitterSubscription();
+
+            watchId = _getNextWatchId();
+            watchCallbacks[watchId] = callback;
+            _context9.next = 5;
+            return regeneratorRuntime.awrap(Location.watchPositionImplAsync(watchId, options));
+
+          case 5:
+            return _context9.abrupt("return", {
+              remove: function remove() {
+                _removeWatcher(watchId);
+              }
+            });
+
+          case 6:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function clearWatch(watchId) {
+    _removeWatcher(watchId);
+  }
+
+  function _removeWatcher(watchId) {
+    if (!watchCallbacks[watchId]) {
+      return;
+    }
+
+    Location.removeWatchAsync(watchId);
+    delete watchCallbacks[watchId];
+
+    if (Object.keys(watchCallbacks).length === 0) {
+      LocationEventEmitter.removeSubscription(deviceEventSubscription);
+      deviceEventSubscription = null;
+    }
+  }
+
+  function getCurrentPosition(success) {
+    var error = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    (0, _invariant2.default)(typeof success === 'function', 'Must provide a valid success callback.');
+    (0, _invariant2.default)(typeof options === 'object', 'options must be an object.');
+
+    _getCurrentPositionAsyncWrapper(success, error, options);
+  }
+
+  function _getCurrentPositionAsyncWrapper(success, error, options) {
+    var result;
+    return regeneratorRuntime.async(function _getCurrentPositionAsyncWrapper$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.prev = 0;
+            _context10.next = 3;
+            return regeneratorRuntime.awrap(Location.requestPermissionsAsync());
+
+          case 3:
+            _context10.next = 5;
+            return regeneratorRuntime.awrap(getCurrentPositionAsync(options));
+
+          case 5:
+            result = _context10.sent;
+            success(result);
+            _context10.next = 12;
+            break;
+
+          case 9:
+            _context10.prev = 9;
+            _context10.t0 = _context10["catch"](0);
+            error(_context10.t0);
+
+          case 12:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, null, this, [[0, 9]]);
+  }
+
+  window.navigator.geolocation = {
+    getCurrentPosition: getCurrentPosition,
+    watchPosition: watchPosition,
+    clearWatch: clearWatch,
+    stopObserving: function stopObserving() {}
+  };
+  exports.default = {
+    getProviderStatusAsync: getProviderStatusAsync,
+    getCurrentPositionAsync: getCurrentPositionAsync,
+    watchPositionAsync: watchPositionAsync,
+    getHeadingAsync: getHeadingAsync,
+    watchHeadingAsync: watchHeadingAsync,
+    geocodeAsync: geocodeAsync,
+    reverseGeocodeAsync: reverseGeocodeAsync,
+    setApiKey: setApiKey,
+    EventEmitter: LocationEventEmitter,
+    _getCurrentWatchId: _getCurrentWatchId
+  };
+});

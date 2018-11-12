@@ -1,0 +1,23 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = decay;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _derived = _require(_dependencyMap[1], "../derived");
+
+  var VELOCITY_EPS = 5;
+
+  function decay(clock, state, config) {
+    var lastTime = (0, _base.cond)(state.time, state.time, clock);
+    var deltaTime = (0, _base.sub)(clock, lastTime);
+    var kv = (0, _base.pow)(config.deceleration, deltaTime);
+    var kx = (0, _base.divide)((0, _base.multiply)(config.deceleration, (0, _base.sub)(1, kv)), (0, _base.sub)(1, config.deceleration));
+    var v0 = (0, _base.divide)(state.velocity, 1000);
+    var v = (0, _base.multiply)(v0, kv, 1000);
+    var x = (0, _base.add)(state.position, (0, _base.multiply)(v0, kx));
+    return (0, _base.block)([(0, _base.set)(state.position, x), (0, _base.set)(state.velocity, v), (0, _base.set)(state.time, clock), (0, _base.cond)((0, _base.lessThan)((0, _derived.abs)(v), VELOCITY_EPS), (0, _base.set)(state.finished, 1))]);
+  }
+});
