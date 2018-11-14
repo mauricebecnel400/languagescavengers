@@ -1,0 +1,193 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.ScreenContainer = exports.Screen = exports.NativeScreenContainer = exports.NativeScreen = undefined;
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/react-native-screens/src/screens.native.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  exports.useScreens = useScreens;
+  exports.screensEnabled = screensEnabled;
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    Screen: {
+      displayName: "Screen"
+    },
+    ScreenContainer: {
+      displayName: "ScreenContainer"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/react-native-screens/src/screens.native.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var USE_SCREENS = false;
+
+  var getViewManagerConfigCompat = function getViewManagerConfigCompat(name) {
+    return typeof _reactNative.UIManager.getViewManagerConfig !== 'undefined' ? _reactNative.UIManager.getViewManagerConfig(name) : _reactNative.UIManager[name];
+  };
+
+  function useScreens() {
+    var shouldUseScreens = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+    USE_SCREENS = shouldUseScreens;
+
+    if (USE_SCREENS && !getViewManagerConfigCompat('RNSScreen')) {
+      console.error("Screen native module hasn't been linked. Please check the react-native-screens README for more details");
+    }
+  }
+
+  function screensEnabled() {
+    return USE_SCREENS;
+  }
+
+  var NativeScreen = exports.NativeScreen = (0, _reactNative.requireNativeComponent)('RNSScreen', null);
+
+  var AnimatedNativeScreen = _reactNative.Animated.createAnimatedComponent(NativeScreen);
+
+  var NativeScreenContainer = exports.NativeScreenContainer = (0, _reactNative.requireNativeComponent)('RNSScreenContainer', null);
+
+  var Screen = _wrapComponent("Screen")(function (_React$Component) {
+    _inherits(Screen, _React$Component);
+
+    function Screen() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, Screen);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Screen.__proto__ || Object.getPrototypeOf(Screen)).call.apply(_ref, [this].concat(args))), _this), _this.setRef = function (ref) {
+        _this._ref = ref;
+        _this.props.onComponentRef && _this.props.onComponentRef(ref);
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Screen, [{
+      key: "setNativeProps",
+      value: function setNativeProps(props) {
+        this._ref.setNativeProps(props);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        if (!USE_SCREENS) {
+          var _props = this.props,
+              active = _props.active,
+              onComponentRef = _props.onComponentRef,
+              props = _objectWithoutProperties(_props, ["active", "onComponentRef"]);
+
+          return _react3.default.createElement(_reactNative.Animated.View, _extends({}, props, {
+            ref: this.setRef,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 58
+            }
+          }));
+        } else {
+          var _props2 = this.props,
+              style = _props2.style,
+              children = _props2.children,
+              rest = _objectWithoutProperties(_props2, ["style", "children"]);
+
+          return _react3.default.createElement(
+            AnimatedNativeScreen,
+            _extends({}, rest, {
+              ref: this.setRef,
+              style: _reactNative.StyleSheet.absoluteFill,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 62
+              }
+            }),
+            _react3.default.createElement(
+              _reactNative.Animated.View,
+              {
+                style: style,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 73
+                }
+              },
+              children
+            )
+          );
+        }
+      }
+    }]);
+
+    return Screen;
+  }(_react3.default.Component));
+
+  exports.Screen = Screen;
+
+  var ScreenContainer = exports.ScreenContainer = _wrapComponent("ScreenContainer")(function (_React$Component2) {
+    _inherits(ScreenContainer, _React$Component2);
+
+    function ScreenContainer() {
+      _classCallCheck(this, ScreenContainer);
+
+      return _possibleConstructorReturn(this, (ScreenContainer.__proto__ || Object.getPrototypeOf(ScreenContainer)).apply(this, arguments));
+    }
+
+    _createClass(ScreenContainer, [{
+      key: "render",
+      value: function render() {
+        if (!USE_SCREENS) {
+          return _react3.default.createElement(_reactNative.View, _extends({}, this.props, {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 83
+            }
+          }));
+        } else {
+          return _react3.default.createElement(NativeScreenContainer, _extends({}, this.props, {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 85
+            }
+          }));
+        }
+      }
+    }]);
+
+    return ScreenContainer;
+  }(_react3.default.Component));
+});

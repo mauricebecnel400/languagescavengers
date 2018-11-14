@@ -1,0 +1,175 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _qs = _require(_dependencyMap[1], "qs");
+
+  var _qs2 = _interopRequireDefault(_qs);
+
+  var _expoConstants = _require(_dependencyMap[2], "expo-constants");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var manifest = _expoConstants.Constants.manifest;
+  var USES_CUSTOM_SCHEME = _expoConstants.Constants.appOwnership === 'standalone' && manifest.scheme;
+  var HOST_URI = manifest.hostUri;
+
+  if (!HOST_URI && !USES_CUSTOM_SCHEME) {
+    HOST_URI = _removeScheme(_expoConstants.Constants.linkingUri).replace(/\/--($|\/.*$)/, '');
+  }
+
+  var IS_EXPO_HOSTED = HOST_URI && (/^(.*\.)?(expo\.io|exp\.host|exp\.direct|expo\.test)(:.*)?(\/.*)?$/.test(HOST_URI) || manifest.developer);
+
+  function _removeScheme(url) {
+    return url.replace(/^[a-zA-Z0-9+.-]+:\/\//, '');
+  }
+
+  function _removePort(url) {
+    return url.replace(/(?=([a-zA-Z0-9+.-]+:\/\/)?[^/]):\d+/, '');
+  }
+
+  function _removeLeadingSlash(url) {
+    return url.replace(/^\//, '');
+  }
+
+  function _removeTrailingSlash(url) {
+    return url.replace(/\/$/, '');
+  }
+
+  function _removeTrailingSlashAndQueryString(url) {
+    return url.replace(/\/?\?.*$/, '');
+  }
+
+  function makeUrl(path) {
+    var queryParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var scheme = 'exp';
+
+    if (_expoConstants.Constants.appOwnership === 'standalone') {
+      scheme = manifest.scheme || manifest.detach && manifest.detach.scheme;
+    }
+
+    if (!scheme) {
+      throw new Error('Cannot make a deep link into a standalone app with no custom scheme defined');
+    }
+
+    var hostUri = HOST_URI || '';
+
+    if (USES_CUSTOM_SCHEME && IS_EXPO_HOSTED) {
+      hostUri = '';
+    }
+
+    if (path) {
+      if (IS_EXPO_HOSTED && hostUri) {
+        path = "/--/" + _removeLeadingSlash(path);
+      }
+
+      if (!path.startsWith('/') && hostUri) {
+        path = "/" + path;
+      } else if (path.startsWith('/') && !hostUri) {
+        path = path.substr(1);
+      }
+    } else {
+      path = '';
+    }
+
+    var queryString = '';
+    var queryStringMatchResult = hostUri.match(/(.*)\?(.+)/);
+
+    if (queryStringMatchResult) {
+      hostUri = queryStringMatchResult[1];
+      queryString = queryStringMatchResult[2];
+      var paramsFromHostUri = {};
+
+      try {
+        var parsedParams = _qs2.default.parse(queryString);
+
+        if (typeof parsedParams === 'object') {
+          paramsFromHostUri = parsedParams;
+        }
+      } catch (e) {}
+
+      queryParams = _extends({}, queryParams, paramsFromHostUri);
+    }
+
+    queryString = _qs2.default.stringify(queryParams);
+
+    if (queryString) {
+      queryString = "?" + queryString;
+    }
+
+    hostUri = _removeTrailingSlash(hostUri);
+    return encodeURI(scheme + "://" + hostUri + path + queryString);
+  }
+
+  function parse(url) {
+    if (!url) {
+      throw new Error('parse cannot be called with a null value');
+    }
+
+    var decodedUrl = _removePort(decodeURI(url));
+
+    var path = null;
+    var queryParams = {};
+    var queryStringMatchResult = decodedUrl.match(/(.*)\?(.+)/);
+
+    if (queryStringMatchResult) {
+      decodedUrl = queryStringMatchResult[1];
+      queryParams = _qs2.default.parse(queryStringMatchResult[2]);
+    }
+
+    var hostUri = HOST_URI || '';
+
+    var hostUriStripped = _removePort(_removeTrailingSlashAndQueryString(hostUri));
+
+    if (hostUriStripped && decodedUrl.indexOf(hostUriStripped) > -1) {
+      path = decodedUrl.substr(decodedUrl.indexOf(hostUriStripped) + hostUriStripped.length);
+    } else {
+      path = _removeScheme(decodedUrl);
+    }
+
+    path = _removeLeadingSlash(path);
+
+    if (IS_EXPO_HOSTED && !USES_CUSTOM_SCHEME && path.startsWith('--/')) {
+      path = path.substr(3);
+    } else if (path.indexOf('+') > -1) {
+      path = path.substr(path.indexOf('+') + 1);
+    }
+
+    return {
+      path: path,
+      queryParams: queryParams
+    };
+  }
+
+  function parseInitialURLAsync() {
+    var initialUrl;
+    return regeneratorRuntime.async(function parseInitialURLAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return regeneratorRuntime.awrap(_reactNative.Linking.getInitialURL());
+
+          case 2:
+            initialUrl = _context.sent;
+            return _context.abrupt("return", parse(initialUrl));
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  var newLinking = new _reactNative.Linking.constructor();
+  newLinking.makeUrl = makeUrl;
+  newLinking.parse = parse;
+  newLinking.parseInitialURLAsync = parseInitialURLAsync;
+  exports.default = newLinking;
+});

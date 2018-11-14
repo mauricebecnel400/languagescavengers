@@ -1,0 +1,157 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.BranchEvent = exports.Branch = exports.ShareInitiatedEvent = exports.ShareCompletedEvent = exports.RegisterViewEvent = exports.PurchaseInitiatedEvent = exports.PurchasedEvent = exports.AddToWishlistEvent = exports.AddToCartEvent = exports.VERSION = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class, _temp, _initialiseProps;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _branchUniversalObject = _require(_dependencyMap[1], "./branchUniversalObject");
+
+  var _branchUniversalObject2 = _interopRequireDefault(_branchUniversalObject);
+
+  var _BranchEvent = _require(_dependencyMap[2], "./BranchEvent");
+
+  var _BranchEvent2 = _interopRequireDefault(_BranchEvent);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var RNBranch = _reactNative.NativeModules.RNBranch,
+      RNBranchEventEmitter = _reactNative.NativeModules.RNBranchEventEmitter;
+
+  var packageFile = _require(_dependencyMap[3], './../package.json');
+
+  var VERSION = exports.VERSION = packageFile.version;
+  var AddToCartEvent = exports.AddToCartEvent = RNBranch.ADD_TO_CART_EVENT;
+  var AddToWishlistEvent = exports.AddToWishlistEvent = RNBranch.ADD_TO_WISHLIST_EVENT;
+  var PurchasedEvent = exports.PurchasedEvent = RNBranch.PURCHASED_EVENT;
+  var PurchaseInitiatedEvent = exports.PurchaseInitiatedEvent = RNBranch.PURCHASE_INITIATED_EVENT;
+  var RegisterViewEvent = exports.RegisterViewEvent = RNBranch.REGISTER_VIEW_EVENT;
+  var ShareCompletedEvent = exports.ShareCompletedEvent = RNBranch.SHARE_COMPLETED_EVENT;
+  var ShareInitiatedEvent = exports.ShareInitiatedEvent = RNBranch.SHARE_INITIATED_EVENT;
+  var Branch = (_temp = _class = function () {
+    function Branch() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      _classCallCheck(this, Branch);
+
+      _initialiseProps.call(this);
+
+      if (options.debug) this._debug = true;
+      console.info('Initializing react-native-branch v. ' + VERSION);
+    }
+
+    _createClass(Branch, [{
+      key: "subscribe",
+      value: function subscribe(listener) {
+        var _this = this;
+
+        if (this._checkCachedEvents) {
+          this._checkCachedEvents = false;
+          RNBranch.redeemInitSessionResult().then(function (result) {
+            if (result) {
+              if ('params' in result) {
+                result['params']['cached_initial_event'] = true;
+              }
+
+              listener(result);
+            }
+
+            _this._addListener(listener);
+          });
+        } else {
+          this._addListener(listener);
+        }
+
+        var unsubscribe = function unsubscribe() {
+          _this._removeListener(listener);
+        };
+
+        return unsubscribe;
+      }
+    }, {
+      key: "skipCachedEvents",
+      value: function skipCachedEvents() {
+        this._checkCachedEvents = false;
+      }
+    }, {
+      key: "_addListener",
+      value: function _addListener(listener) {
+        this.nativeEventEmitter.addListener(RNBranch.INIT_SESSION_SUCCESS, listener);
+        this.nativeEventEmitter.addListener(RNBranch.INIT_SESSION_ERROR, listener);
+      }
+    }, {
+      key: "_removeListener",
+      value: function _removeListener(listener) {
+        this.nativeEventEmitter.removeListener(RNBranch.INIT_SESSION_SUCCESS, listener);
+        this.nativeEventEmitter.removeListener(RNBranch.INIT_SESSION_ERROR, listener);
+      }
+    }]);
+
+    return Branch;
+  }(), _initialiseProps = function _initialiseProps() {
+    this.nativeEventEmitter = _reactNative.Platform.select({
+      android: _reactNative.DeviceEventEmitter,
+      ios: new _reactNative.NativeEventEmitter(RNBranchEventEmitter)
+    });
+    this._checkCachedEvents = true;
+    this._debug = false;
+
+    this.setDebug = function () {
+      throw 'setDebug() is not supported in the RN SDK. For other solutions, please see https://rnbranch.app.link/setDebug';
+    };
+
+    this.getLatestReferringParams = RNBranch.getLatestReferringParams;
+    this.getFirstReferringParams = RNBranch.getFirstReferringParams;
+
+    this.setIdentity = function (identity) {
+      return RNBranch.setIdentity(identity);
+    };
+
+    this.logout = RNBranch.logout;
+
+    this.userCompletedAction = function (event) {
+      var state = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return RNBranch.userCompletedAction(event, state);
+    };
+
+    this.getShortUrl = RNBranch.getShortUrl;
+
+    this.sendCommerceEvent = function (revenue, metadata) {
+      console.info('[Branch] sendCommerceEvent is deprecated. Please use the BranchEvent class instead.');
+      return RNBranch.sendCommerceEvent('' + revenue, metadata);
+    };
+
+    this.openURL = function (url) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return _reactNative.Platform.select({
+        android: function android() {
+          return RNBranch.openURL(url, options);
+        },
+        ios: function ios() {
+          return RNBranch.openURL(url);
+        }
+      })();
+    };
+
+    this.redeemRewards = function (amount, bucket) {
+      return RNBranch.redeemRewards(amount, bucket);
+    };
+
+    this.loadRewards = function (bucket) {
+      return RNBranch.loadRewards(bucket);
+    };
+
+    this.getCreditHistory = RNBranch.getCreditHistory;
+    this.createBranchUniversalObject = _branchUniversalObject2.default;
+  }, _temp);
+  exports.Branch = Branch;
+  exports.BranchEvent = _BranchEvent2.default;
+  exports.default = new Branch();
+});

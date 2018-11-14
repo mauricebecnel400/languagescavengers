@@ -1,0 +1,91 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _ReanimatedModule = _require(_dependencyMap[1], "../ReanimatedModule");
+
+  var _ReanimatedModule2 = _interopRequireDefault(_ReanimatedModule);
+
+  var _AnimatedNode2 = _require(_dependencyMap[2], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  var _AnimatedValue = _require(_dependencyMap[3], "./AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  var _invariant = _require(_dependencyMap[4], "fbjs/lib/invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  function sanitizeArgMapping(argMapping) {
+    var eventMappings = [];
+
+    var traverse = function traverse(value, path) {
+      if (value instanceof _AnimatedValue2.default) {
+        eventMappings.push(path.concat(value.__nodeID));
+      } else if (typeof value === 'object') {
+        for (var key in value) {
+          traverse(value[key], path.concat(key));
+        }
+      }
+    };
+
+    (0, _invariant2.default)(argMapping[0] && argMapping[0].nativeEvent, 'Native driven events only support animated values contained inside `nativeEvent`.');
+    traverse(argMapping[0].nativeEvent, []);
+    return eventMappings;
+  }
+
+  var AnimatedEvent = function (_AnimatedNode) {
+    _inherits(AnimatedEvent, _AnimatedNode);
+
+    function AnimatedEvent(argMapping) {
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      _classCallCheck(this, AnimatedEvent);
+
+      return _possibleConstructorReturn(this, (AnimatedEvent.__proto__ || Object.getPrototypeOf(AnimatedEvent)).call(this, {
+        type: 'event',
+        argMapping: sanitizeArgMapping(argMapping)
+      }));
+    }
+
+    _createClass(AnimatedEvent, [{
+      key: "attachEvent",
+      value: function attachEvent(viewRef, eventName) {
+        this.__attach();
+
+        var viewTag = (0, _reactNative.findNodeHandle)(viewRef);
+
+        _ReanimatedModule2.default.attachEvent(viewTag, eventName, this.__nodeID);
+      }
+    }, {
+      key: "detachEvent",
+      value: function detachEvent(viewRef, eventName) {
+        var viewTag = (0, _reactNative.findNodeHandle)(viewRef);
+
+        _ReanimatedModule2.default.detachEvent(viewTag, eventName, this.__nodeID);
+
+        this.__detach();
+      }
+    }]);
+
+    return AnimatedEvent;
+  }(_AnimatedNode3.default);
+
+  exports.default = AnimatedEvent;
+});

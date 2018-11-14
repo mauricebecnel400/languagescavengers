@@ -1,0 +1,70 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  'use strict';
+
+  var _expoCore = _require(_dependencyMap[0], "expo-core");
+
+  var _reactNative = _require(_dependencyMap[1], "react-native");
+
+  var AdMobRewardedVideoAdManager = _expoCore.NativeModulesProxy.ExpoAdsAdMobRewardedVideoAdManager;
+  var adMobRewardedEventEmitter = new _expoCore.EventEmitter(AdMobRewardedVideoAdManager);
+  var eventNames = ['rewardedVideoDidRewardUser', 'rewardedVideoDidLoad', 'rewardedVideoDidFailToLoad', 'rewardedVideoDidOpen', 'rewardedVideoDidStart', 'rewardedVideoDidClose', 'rewardedVideoWillLeaveApplication'];
+  var eventHandlers = {};
+  eventNames.forEach(function (eventName) {
+    eventHandlers[eventName] = new Map();
+  });
+
+  var addEventListener = function addEventListener(type, handler) {
+    if (eventNames.includes(type)) {
+      eventHandlers[type].set(handler, adMobRewardedEventEmitter.addListener(type, handler));
+    } else {
+      console.log("Event with type " + type + " does not exist.");
+    }
+  };
+
+  var removeEventListener = function removeEventListener(type, handler) {
+    var eventSubscription = eventHandlers[type].get(handler);
+
+    if (!eventHandlers[type].has(handler) || !eventSubscription) {
+      return;
+    }
+
+    eventSubscription.remove();
+    eventHandlers[type].delete(handler);
+  };
+
+  var removeAllListeners = function removeAllListeners() {
+    return eventNames.forEach(function (eventName) {
+      return adMobRewardedEventEmitter.removeAllListeners(eventName);
+    });
+  };
+
+  module.exports = {
+    setAdUnitID: function setAdUnitID(id) {
+      return AdMobRewardedVideoAdManager.setAdUnitID(id);
+    },
+    setTestDeviceID: function setTestDeviceID(id) {
+      return AdMobRewardedVideoAdManager.setTestDeviceID(id);
+    },
+    requestAdAsync: function requestAdAsync() {
+      return AdMobRewardedVideoAdManager.requestAd();
+    },
+    showAdAsync: function showAdAsync() {
+      return AdMobRewardedVideoAdManager.showAd();
+    },
+    dismissAdAsync: function dismissAdAsync() {
+      return new Promise(function (resolve, reject) {
+        if (_reactNative.Platform.OS === 'ios') {
+          AdMobRewardedVideoAdManager.dismissAd().then(resolve).catch(reject);
+        } else {
+          reject(new Error('Dismissing ads programmatically is supported only on iOS.'));
+        }
+      });
+    },
+    getIsReadyAsync: function getIsReadyAsync() {
+      return AdMobRewardedVideoAdManager.getIsReady();
+    },
+    addEventListener: addEventListener,
+    removeEventListener: removeEventListener,
+    removeAllListeners: removeAllListeners
+  };
+});

@@ -1,0 +1,21 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _reactNavigation = _require(_dependencyMap[0], "react-navigation");
+
+  var _createStackNavigator = _require(_dependencyMap[1], "./createStackNavigator");
+
+  var _createStackNavigator2 = _interopRequireDefault(_createStackNavigator);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var createContainedStackNavigator = function createContainedStackNavigator(routeConfigs) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var navigator = (0, _createStackNavigator2.default)(routeConfigs, config);
+    return (0, _reactNavigation.createNavigationContainer)(navigator);
+  };
+
+  exports.default = createContainedStackNavigator;
+});

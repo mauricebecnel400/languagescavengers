@@ -1,0 +1,62 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _react = _require(_dependencyMap[0], "react");
+
+  var _react2 = _interopRequireDefault(_react);
+
+  var _reactNative = _require(_dependencyMap[1], "react-native");
+
+  var _reactNavigation = _require(_dependencyMap[2], "react-navigation");
+
+  var _TabView = _require(_dependencyMap[3], "./views/TabView");
+
+  var _TabView2 = _interopRequireDefault(_TabView);
+
+  var _TabBarTop = _require(_dependencyMap[4], "./views/TabBarTop");
+
+  var _TabBarTop2 = _interopRequireDefault(_TabBarTop);
+
+  var _TabBarBottom = _require(_dependencyMap[5], "./views/TabBarBottom");
+
+  var _TabBarBottom2 = _interopRequireDefault(_TabBarBottom);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var createTabNavigator = function createTabNavigator(routeConfigs) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var tabsConfig = _extends({}, createTabNavigator.Presets.Default, config);
+
+    var router = (0, _reactNavigation.TabRouter)(routeConfigs, tabsConfig);
+    var navigator = (0, _reactNavigation.createNavigator)(_TabView2.default, router, tabsConfig);
+    return (0, _reactNavigation.createNavigationContainer)(navigator);
+  };
+
+  var Presets = {
+    iOSBottomTabs: {
+      tabBarComponent: _TabBarBottom2.default,
+      tabBarPosition: 'bottom',
+      swipeEnabled: false,
+      animationEnabled: false,
+      initialLayout: undefined
+    },
+    AndroidTopTabs: {
+      tabBarComponent: _TabBarTop2.default,
+      tabBarPosition: 'top',
+      swipeEnabled: true,
+      animationEnabled: true,
+      initialLayout: undefined
+    }
+  };
+  createTabNavigator.Presets = {
+    iOSBottomTabs: Presets.iOSBottomTabs,
+    AndroidTopTabs: Presets.AndroidTopTabs,
+    Default: _reactNative.Platform.OS === 'ios' ? Presets.iOSBottomTabs : Presets.AndroidTopTabs
+  };
+  exports.default = createTabNavigator;
+});

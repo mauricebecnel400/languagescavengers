@@ -1,0 +1,42 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var OPEN_DRAWER = 'Navigation/OPEN_DRAWER';
+  var CLOSE_DRAWER = 'Navigation/CLOSE_DRAWER';
+  var TOGGLE_DRAWER = 'Navigation/TOGGLE_DRAWER';
+  var DRAWER_OPENED = 'Navigation/DRAWER_OPENED';
+  var DRAWER_CLOSED = 'Navigation/DRAWER_CLOSED';
+
+  var openDrawer = function openDrawer(payload) {
+    return _extends({
+      type: OPEN_DRAWER
+    }, payload);
+  };
+
+  var closeDrawer = function closeDrawer(payload) {
+    return _extends({
+      type: CLOSE_DRAWER
+    }, payload);
+  };
+
+  var toggleDrawer = function toggleDrawer(payload) {
+    return _extends({
+      type: TOGGLE_DRAWER
+    }, payload);
+  };
+
+  exports.default = {
+    OPEN_DRAWER: OPEN_DRAWER,
+    CLOSE_DRAWER: CLOSE_DRAWER,
+    TOGGLE_DRAWER: TOGGLE_DRAWER,
+    DRAWER_OPENED: DRAWER_OPENED,
+    DRAWER_CLOSED: DRAWER_CLOSED,
+    openDrawer: openDrawer,
+    closeDrawer: closeDrawer,
+    toggleDrawer: toggleDrawer
+  };
+});

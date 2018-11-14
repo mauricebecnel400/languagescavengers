@@ -1,0 +1,69 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    exports.default = function (props, styleProperties) {
+        strokeKeys.forEach(function (name) {
+            if (props.hasOwnProperty(name)) {
+                styleProperties.push(name);
+            }
+        });
+        var stroke = props.stroke;
+        var strokeWidth = props.strokeWidth,
+            strokeDasharray = props.strokeDasharray;
+
+        if (!strokeDasharray || strokeDasharray === 'none') {
+            strokeDasharray = null;
+        } else {
+            strokeDasharray = (0, _extractLengthList2.default)(strokeDasharray);
+
+            if (strokeDasharray && strokeDasharray.length % 2 === 1) {
+                strokeDasharray = strokeDasharray.concat(strokeDasharray);
+            }
+        }
+
+        if (!strokeWidth || typeof strokeWidth !== 'string') {
+            strokeWidth = "" + (strokeWidth || 1);
+        }
+
+        return {
+            stroke: (0, _extractBrush2.default)(stroke),
+            strokeOpacity: (0, _extractOpacity2.default)(props.strokeOpacity),
+            strokeLinecap: caps[props.strokeLinecap] || 0,
+            strokeLinejoin: joins[props.strokeLinejoin] || 0,
+            strokeDasharray: strokeDasharray,
+            strokeWidth: strokeWidth,
+            strokeDashoffset: strokeDasharray ? +props.strokeDashoffset || 0 : null,
+            strokeMiterlimit: props.strokeMiterlimit || 4
+        };
+    };
+
+    var _extractBrush = _require(_dependencyMap[0], "./extractBrush");
+
+    var _extractBrush2 = _interopRequireDefault(_extractBrush);
+
+    var _extractOpacity = _require(_dependencyMap[1], "./extractOpacity");
+
+    var _extractOpacity2 = _interopRequireDefault(_extractOpacity);
+
+    var _props = _require(_dependencyMap[2], "../props");
+
+    var _extractLengthList = _require(_dependencyMap[3], "./extractLengthList");
+
+    var _extractLengthList2 = _interopRequireDefault(_extractLengthList);
+
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+    var caps = {
+        butt: 0,
+        square: 2,
+        round: 1
+    };
+    var joins = {
+        miter: 0,
+        bevel: 2,
+        round: 1
+    };
+    var strokeKeys = Object.keys(_props.strokeProps);
+});

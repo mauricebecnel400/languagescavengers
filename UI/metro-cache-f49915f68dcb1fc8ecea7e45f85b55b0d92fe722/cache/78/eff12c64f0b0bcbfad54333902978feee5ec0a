@@ -1,0 +1,118 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _expoCore = _require(_dependencyMap[0], "expo-core");
+
+  var _processTheme = _require(_dependencyMap[1], "./utils/processTheme");
+
+  var _processTheme2 = _interopRequireDefault(_processTheme);
+
+  var _checkArgs = _require(_dependencyMap[2], "./utils/checkArgs");
+
+  var _checkArgs2 = _interopRequireDefault(_checkArgs);
+
+  var _checkInit = _require(_dependencyMap[3], "./utils/checkInit");
+
+  var _checkInit2 = _interopRequireDefault(_checkInit);
+
+  var _types = _require(_dependencyMap[4], "./utils/types");
+
+  var types = _interopRequireWildcard(_types);
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var TPSStripeManager = _expoCore.NativeModulesProxy.TPSStripeManager;
+
+  var Stripe = function Stripe() {
+    var _this = this;
+
+    _classCallCheck(this, Stripe);
+
+    this.stripeInitialized = false;
+
+    this.setOptionsAsync = function () {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      (0, _checkArgs2.default)(types.setOptionsOptionsPropTypes, options, 'options', 'Stripe.setOptions');
+      _this.stripeInitialized = true;
+      return TPSStripeManager.init(options);
+    };
+
+    this.deviceSupportsApplePayAsync = function () {
+      return TPSStripeManager.deviceSupportsApplePay();
+    };
+
+    this.canMakeApplePayPaymentsAsync = function () {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      (0, _checkArgs2.default)(types.canMakeApplePayPaymentsOptionsPropTypes, options, 'options', 'Stripe.canMakeApplePayPayments');
+      return TPSStripeManager.canMakeApplePayPayments(options);
+    };
+
+    this.paymentRequestWithApplePayAsync = function () {
+      var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      (0, _checkInit2.default)(_this);
+      return TPSStripeManager.paymentRequestWithApplePay(items, options);
+    };
+
+    this.completeApplePayRequestAsync = function () {
+      (0, _checkInit2.default)(_this);
+      return TPSStripeManager.completeApplePayRequest();
+    };
+
+    this.cancelApplePayRequestAsync = function () {
+      (0, _checkInit2.default)(_this);
+      return TPSStripeManager.cancelApplePayRequest();
+    };
+
+    this.openApplePaySetupAsync = function () {
+      return TPSStripeManager.openApplePaySetup();
+    };
+
+    this.paymentRequestWithCardFormAsync = function () {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      (0, _checkInit2.default)(_this);
+      (0, _checkArgs2.default)(types.paymentRequestWithCardFormOptionsPropTypes, options, 'options', 'Stripe.paymentRequestWithCardForm');
+      return TPSStripeManager.paymentRequestWithCardForm(_extends({}, options, {
+        theme: (0, _processTheme2.default)(options.theme)
+      }));
+    };
+
+    this.createTokenWithCardAsync = function () {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      (0, _checkInit2.default)(_this);
+      (0, _checkArgs2.default)(types.createTokenWithCardParamsPropTypes, params, 'params', 'Stripe.createTokenWithCard');
+      return TPSStripeManager.createTokenWithCard(params);
+    };
+
+    this.createTokenWithBankAccountAsync = function () {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      (0, _checkInit2.default)(_this);
+      (0, _checkArgs2.default)(types.createTokenWithBankAccountParamsPropTypes, params, 'params', 'Stripe.createTokenWithBankAccount');
+      return TPSStripeManager.createTokenWithBankAccount(params);
+    };
+
+    this.createSourceWithParamsAsync = function () {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      (0, _checkInit2.default)(_this);
+      (0, _checkArgs2.default)(types.createSourceWithParamsPropType, params, 'params', 'Stripe.createSourceWithParams');
+      return TPSStripeManager.createSourceWithParams(params);
+    };
+
+    if (TPSStripeManager) {
+      this.TPSErrorDomain = TPSStripeManager.TPSErrorDomain;
+      this.TPSErrorCodeApplePayNotConfigured = TPSStripeManager.TPSErrorCodeApplePayNotConfigured;
+      this.TPSErrorCodePreviousRequestNotCompleted = TPSStripeManager.TPSErrorCodePreviousRequestNotCompleted;
+      this.TPSErrorCodeUserCancel = TPSStripeManager.TPSErrorCodeUserCancel;
+    }
+  };
+
+  exports.default = new Stripe();
+});

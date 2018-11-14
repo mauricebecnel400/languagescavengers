@@ -1,0 +1,31 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = diffClamp;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _AnimatedValue = _require(_dependencyMap[1], "../core/AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  var _min = _require(_dependencyMap[2], "./min");
+
+  var _min2 = _interopRequireDefault(_min);
+
+  var _max = _require(_dependencyMap[3], "./max");
+
+  var _max2 = _interopRequireDefault(_max);
+
+  var _diff = _require(_dependencyMap[4], "./diff");
+
+  var _diff2 = _interopRequireDefault(_diff);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function diffClamp(a, minVal, maxVal) {
+    var value = new _AnimatedValue2.default();
+    return (0, _base.set)(value, (0, _min2.default)((0, _max2.default)((0, _base.add)((0, _base.cond)((0, _base.defined)(value), value, a), (0, _diff2.default)(a)), minVal), maxVal));
+  }
+});

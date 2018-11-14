@@ -1,0 +1,16 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, '__esModule', {
+    value: true
+  });
+  exports.default = dismissKeyboard;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var TextInputState = _reactNative.TextInput.State;
+
+  function dismissKeyboard() {
+    TextInputState.blurTextInput(TextInputState.currentlyFocusedField());
+  }
+
+  module.exports = exports.default;
+});

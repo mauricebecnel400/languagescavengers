@@ -1,0 +1,89 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+  var _ReanimatedEventEmitter = _require(_dependencyMap[0], "../ReanimatedEventEmitter");
+
+  var _ReanimatedEventEmitter2 = _interopRequireDefault(_ReanimatedEventEmitter);
+
+  var _utils = _require(_dependencyMap[1], "../utils");
+
+  var _AnimatedNode2 = _require(_dependencyMap[2], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var NODE_MAPPING = new Map();
+
+  function listener(data) {
+    var node = NODE_MAPPING.get(data.id);
+    node && node._callback(data.args);
+  }
+
+  var AnimatedCall = function (_AnimatedNode) {
+    _inherits(AnimatedCall, _AnimatedNode);
+
+    function AnimatedCall(args, jsFunction) {
+      _classCallCheck(this, AnimatedCall);
+
+      var _this = _possibleConstructorReturn(this, (AnimatedCall.__proto__ || Object.getPrototypeOf(AnimatedCall)).call(this, {
+        type: 'call',
+        input: args.map(function (n) {
+          return n.__nodeID;
+        })
+      }, args));
+
+      _this._callback = jsFunction;
+      _this._args = args;
+      return _this;
+    }
+
+    _createClass(AnimatedCall, [{
+      key: "__attach",
+      value: function __attach() {
+        _get(AnimatedCall.prototype.__proto__ || Object.getPrototypeOf(AnimatedCall.prototype), "__attach", this).call(this);
+
+        NODE_MAPPING.set(this.__nodeID, this);
+
+        if (NODE_MAPPING.size === 1) {
+          _ReanimatedEventEmitter2.default.addListener('onReanimatedCall', listener);
+        }
+      }
+    }, {
+      key: "__detach",
+      value: function __detach() {
+        NODE_MAPPING.delete(this.__nodeID);
+
+        if (NODE_MAPPING.size === 0) {
+          _ReanimatedEventEmitter2.default.removeAllListeners('onReanimatedCall');
+        }
+
+        _get(AnimatedCall.prototype.__proto__ || Object.getPrototypeOf(AnimatedCall.prototype), "__detach", this).call(this);
+      }
+    }, {
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        this._callback(this._args.map(_utils.val));
+
+        return 0;
+      }
+    }]);
+
+    return AnimatedCall;
+  }(_AnimatedNode3.default);
+
+  exports.default = AnimatedCall;
+});

@@ -1,0 +1,42 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _reactNavigation = _require(_dependencyMap[0], "react-navigation");
+
+  var _StackView = _require(_dependencyMap[1], "../views/StackView/StackView");
+
+  var _StackView2 = _interopRequireDefault(_StackView);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function createStackNavigator(routeConfigMap) {
+    var stackConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var initialRouteKey = stackConfig.initialRouteKey,
+        initialRouteName = stackConfig.initialRouteName,
+        initialRouteParams = stackConfig.initialRouteParams,
+        paths = stackConfig.paths,
+        navigationOptions = stackConfig.navigationOptions,
+        disableKeyboardHandling = stackConfig.disableKeyboardHandling,
+        getCustomActionCreators = stackConfig.getCustomActionCreators;
+    var stackRouterConfig = {
+      initialRouteKey: initialRouteKey,
+      initialRouteName: initialRouteName,
+      initialRouteParams: initialRouteParams,
+      paths: paths,
+      navigationOptions: navigationOptions,
+      getCustomActionCreators: getCustomActionCreators
+    };
+    var router = (0, _reactNavigation.StackRouter)(routeConfigMap, stackRouterConfig);
+    var Navigator = (0, _reactNavigation.createNavigator)(_StackView2.default, router, stackConfig);
+
+    if (!disableKeyboardHandling) {
+      Navigator = (0, _reactNavigation.createKeyboardAwareNavigator)(Navigator, stackConfig);
+    }
+
+    return Navigator;
+  }
+
+  exports.default = createStackNavigator;
+});

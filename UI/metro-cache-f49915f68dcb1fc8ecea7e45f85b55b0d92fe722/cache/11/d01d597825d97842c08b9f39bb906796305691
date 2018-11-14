@@ -1,0 +1,20 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  "use strict";
+
+  var GrammarError = _require(_dependencyMap[0], "../../grammar-error"),
+      asts = _require(_dependencyMap[1], "../asts"),
+      visitor = _require(_dependencyMap[2], "../visitor");
+
+  function reportUndefinedRules(ast) {
+    var check = visitor.build({
+      rule_ref: function rule_ref(node) {
+        if (!asts.findRule(ast, node.name)) {
+          throw new GrammarError("Rule \"" + node.name + "\" is not defined.", node.location);
+        }
+      }
+    });
+    check(ast);
+  }
+
+  module.exports = reportUndefinedRules;
+});

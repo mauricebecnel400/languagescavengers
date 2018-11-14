@@ -1,0 +1,142 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.NativeMediaView = undefined;
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var React = _interopRequireWildcard(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/expo/src/facebook-ads/MediaViewManager.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _withNativeAd = _require(_dependencyMap[3], "./withNativeAd");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    MediaViewChild: {
+      displayName: "MediaViewChild"
+    },
+    MediaView: {
+      displayName: "MediaView"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/expo/src/facebook-ads/MediaViewManager.js",
+    components: _components,
+    locals: [module],
+    imports: [React.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var NativeMediaView = exports.NativeMediaView = (0, _reactNative.requireNativeComponent)('MediaView', null, {});
+
+  var MediaViewChild = _wrapComponent("MediaViewChild")(function (_React$Component) {
+    _inherits(MediaViewChild, _React$Component);
+
+    function MediaViewChild() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, MediaViewChild);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MediaViewChild.__proto__ || Object.getPrototypeOf(MediaViewChild)).call.apply(_ref, [this].concat(args))), _this), _this._handleMediaViewMount = function (ref) {
+        if (_this._mediaView) {
+          _this.props.unregister(_this._mediaView);
+
+          _this._mediaView = null;
+        }
+
+        if (ref) {
+          _this.props.register(ref);
+
+          _this._mediaView = ref;
+        }
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(MediaViewChild, [{
+      key: "render",
+      value: function render() {
+        return React.createElement(NativeMediaView, _extends({}, this.props, {
+          ref: this._handleMediaViewMount,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 27
+          }
+        }));
+      }
+    }]);
+
+    return MediaViewChild;
+  }(React.Component));
+
+  var MediaView = _wrapComponent("MediaView")(function (_React$Component2) {
+    _inherits(MediaView, _React$Component2);
+
+    function MediaView() {
+      _classCallCheck(this, MediaView);
+
+      return _possibleConstructorReturn(this, (MediaView.__proto__ || Object.getPrototypeOf(MediaView)).apply(this, arguments));
+    }
+
+    _createClass(MediaView, [{
+      key: "render",
+      value: function render() {
+        var _this3 = this;
+
+        return React.createElement(
+          _withNativeAd.MediaViewContext.Consumer,
+          {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 34
+            }
+          },
+          function (contextValue) {
+            return React.createElement(MediaViewChild, _extends({}, _this3.props, contextValue, {
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 36
+              }
+            }));
+          }
+        );
+      }
+    }]);
+
+    return MediaView;
+  }(React.Component));
+
+  exports.default = MediaView;
+});

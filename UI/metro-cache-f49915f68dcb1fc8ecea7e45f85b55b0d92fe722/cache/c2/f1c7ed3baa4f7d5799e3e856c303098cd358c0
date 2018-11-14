@@ -1,0 +1,122 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation/src/views/withNavigationFocus.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  exports.default = withNavigationFocus;
+
+  var _hoistNonReactStatics = _require(_dependencyMap[2], "hoist-non-react-statics");
+
+  var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
+
+  var _invariant = _require(_dependencyMap[3], "../utils/invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  var _withNavigation = _require(_dependencyMap[4], "./withNavigation");
+
+  var _withNavigation2 = _interopRequireDefault(_withNavigation);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    ComponentWithNavigationFocus: {
+      displayName: "ComponentWithNavigationFocus",
+      isInFunction: true
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation/src/views/withNavigationFocus.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  function withNavigationFocus(Component) {
+    var _class, _temp;
+
+    var ComponentWithNavigationFocus = _wrapComponent("ComponentWithNavigationFocus")((_temp = _class = function (_React$Component) {
+      _inherits(ComponentWithNavigationFocus, _React$Component);
+
+      function ComponentWithNavigationFocus(props) {
+        _classCallCheck(this, ComponentWithNavigationFocus);
+
+        var _this = _possibleConstructorReturn(this, (ComponentWithNavigationFocus.__proto__ || Object.getPrototypeOf(ComponentWithNavigationFocus)).call(this, props));
+
+        _this.state = {
+          isFocused: props.navigation ? props.navigation.isFocused() : false
+        };
+        return _this;
+      }
+
+      _createClass(ComponentWithNavigationFocus, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+          var _this2 = this;
+
+          var navigation = this.props.navigation;
+          (0, _invariant2.default)(!!navigation, 'withNavigationFocus can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
+          this.subscriptions = [navigation.addListener('didFocus', function () {
+            return _this2.setState({
+              isFocused: true
+            });
+          }), navigation.addListener('willBlur', function () {
+            return _this2.setState({
+              isFocused: false
+            });
+          })];
+        }
+      }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+          this.subscriptions.forEach(function (sub) {
+            return sub.remove();
+          });
+        }
+      }, {
+        key: "render",
+        value: function render() {
+          return _react3.default.createElement(Component, _extends({}, this.props, {
+            isFocused: this.state.isFocused,
+            ref: this.props.onRef,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 42
+            }
+          }));
+        }
+      }]);
+
+      return ComponentWithNavigationFocus;
+    }(_react3.default.Component), _class.displayName = "withNavigationFocus(" + (Component.displayName || Component.name) + ")", _temp));
+
+    return (0, _hoistNonReactStatics2.default)((0, _withNavigation2.default)(ComponentWithNavigationFocus), Component);
+  }
+});

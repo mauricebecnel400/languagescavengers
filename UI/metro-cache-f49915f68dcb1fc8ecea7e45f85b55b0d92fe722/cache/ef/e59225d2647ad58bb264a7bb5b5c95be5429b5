@@ -1,0 +1,16 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _expoCore = _require(_dependencyMap[0], "expo-core");
+
+  var _ThreeAxisSensor = _require(_dependencyMap[1], "./ThreeAxisSensor");
+
+  var _ThreeAxisSensor2 = _interopRequireDefault(_ThreeAxisSensor);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var ExponentGyroscope = _expoCore.NativeModulesProxy.ExponentGyroscope;
+  exports.default = new _ThreeAxisSensor2.default(ExponentGyroscope, 'gyroscopeDidUpdate');
+});

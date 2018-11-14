@@ -1,0 +1,160 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var RNBranch = _reactNative.NativeModules.RNBranch;
+
+  var BranchEvent = function () {
+    function BranchEvent(name) {
+      var contentItems = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+      _classCallCheck(this, BranchEvent);
+
+      this.name = null;
+      this.contentItems = [];
+      this.transactionID = null;
+      this.currency = null;
+      this.revenue = null;
+      this.shipping = null;
+      this.tax = null;
+      this.coupon = null;
+      this.affiliation = null;
+      this.description = null;
+      this.searchQuery = null;
+      this.customData = null;
+      this.name = name;
+
+      if (Array.isArray(contentItems)) {
+        this.contentItems = contentItems;
+      } else if (contentItems) {
+        this.contentItems = [contentItems];
+      }
+
+      if (params.transactionID) this.transactionID = params.transactionID;
+      if (params.currency) this.currency = params.currency;
+      if (params.revenue) this.revenue = params.revenue;
+      if (params.shipping) this.shipping = params.shipping;
+      if (params.tax) this.tax = params.tax;
+      if (params.coupon) this.coupon = params.coupon;
+      if (params.affiliation) this.affiliation = params.affiliation;
+      if (params.description) this.description = params.description;
+      if (params.searchQuery) this.searchQuery = params.searchQuery;
+      if (params.customData) this.customData = params.customData;
+    }
+
+    _createClass(BranchEvent, [{
+      key: "logEvent",
+      value: function logEvent() {
+        var idents, ident, buo;
+        return regeneratorRuntime.async(function logEvent$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                idents = this.contentItems.map(function (b) {
+                  return b.ident;
+                });
+                _context.prev = 1;
+                _context.next = 4;
+                return regeneratorRuntime.awrap(RNBranch.logEvent(idents, this.name, this._convertParams()));
+
+              case 4:
+                return _context.abrupt("return", _context.sent);
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](1);
+
+                if (!(_context.t0.code != 'RNBranch::Error::BUONotFound')) {
+                  _context.next = 11;
+                  break;
+                }
+
+                throw _context.t0;
+
+              case 11:
+                ident = this._identFromMessage(_context.t0.message);
+                buo = this.contentItems.find(function (b) {
+                  return b.ident == ident;
+                });
+                _context.next = 15;
+                return regeneratorRuntime.awrap(buo._newIdent());
+
+              case 15:
+                _context.next = 17;
+                return regeneratorRuntime.awrap(this.logEvent());
+
+              case 17:
+                return _context.abrupt("return", _context.sent);
+
+              case 18:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, null, this, [[1, 7]]);
+      }
+    }, {
+      key: "_identFromMessage",
+      value: function _identFromMessage(message) {
+        var match = /^.*ident\s([A-Fa-f0-9-]+).*$/.exec(message);
+        if (match) return match[1];
+        return null;
+      }
+    }, {
+      key: "_convertParams",
+      value: function _convertParams() {
+        var params = {};
+        if (this.transactionID) params.transactionID = this.transactionID;
+        if (this.currency) params.currency = this.currency;
+        if (this.revenue) params.revenue = '' + this.revenue;
+        if (this.shipping) params.shipping = '' + this.shipping;
+        if (this.tax) params.tax = '' + this.tax;
+        if (this.coupon) params.coupon = this.coupon;
+        if (this.affiliation) params.affiliation = this.affiliation;
+        if (this.description) params.description = this.description;
+        if (this.searchQuery) params.searchQuery = this.searchQuery;
+
+        if (this.customData) {
+          params.customData = this.customData;
+
+          for (var key in params.customData) {
+            var valueType = typeof params.customData[key];
+            if (valueType == 'string') continue;
+            console.warn('[Branch] customMetadata values must be strings. Value for property ' + key + ' has type ' + valueType + '.');
+          }
+        }
+
+        return params;
+      }
+    }]);
+
+    return BranchEvent;
+  }();
+
+  exports.default = BranchEvent;
+  BranchEvent.AddToCart = RNBranch.STANDARD_EVENT_ADD_TO_CART;
+  BranchEvent.AddToWishlist = RNBranch.STANDARD_EVENT_ADD_TO_WISHLIST;
+  BranchEvent.ViewCart = RNBranch.STANDARD_EVENT_VIEW_CART;
+  BranchEvent.InitiatePurchase = RNBranch.STANDARD_EVENT_INITIATE_PURCHASE;
+  BranchEvent.AddPaymentInfo = RNBranch.STANDARD_EVENT_ADD_PAYMENT_INFO;
+  BranchEvent.Purchase = RNBranch.STANDARD_EVENT_PURCHASE;
+  BranchEvent.SpendCredits = RNBranch.STANDARD_EVENT_SPEND_CREDITS;
+  BranchEvent.Search = RNBranch.STANDARD_EVENT_SEARCH;
+  BranchEvent.ViewItem = RNBranch.STANDARD_EVENT_VIEW_ITEM;
+  BranchEvent.ViewItems = RNBranch.STANDARD_EVENT_VIEW_ITEMS;
+  BranchEvent.Rate = RNBranch.STANDARD_EVENT_RATE;
+  BranchEvent.Share = RNBranch.STANDARD_EVENT_SHARE;
+  BranchEvent.CompleteRegistration = RNBranch.STANDARD_EVENT_COMPLETE_REGISTRATION;
+  BranchEvent.CompleteTutorial = RNBranch.STANDARD_EVENT_COMPLETE_TUTORIAL;
+  BranchEvent.AchieveLevel = RNBranch.STANDARD_EVENT_ACHIEVE_LEVEL;
+  BranchEvent.UnlockAchievement = RNBranch.STANDARD_EVENT_UNLOCK_ACHIEVEMENT;
+});

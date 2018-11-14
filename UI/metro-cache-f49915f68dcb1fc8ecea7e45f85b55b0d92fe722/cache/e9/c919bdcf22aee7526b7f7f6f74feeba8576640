@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+	module.exports = _require(_dependencyMap[0], "react-native/Libraries/Image/AssetRegistry").registerAsset({
+		"__packager_asset": true,
+		"httpServerLocation": "/assets/node_modules/@expo/vector-icons/fonts",
+		"scales": [1],
+		"hash": "d2285965fe34b05465047401b8595dd0",
+		"name": "SimpleLineIcons",
+		"type": "ttf",
+		"fileHashes": ["d2285965fe34b05465047401b8595dd0"]
+	});
+});

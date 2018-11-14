@@ -1,0 +1,405 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  'use strict';
+
+  var invariant = _require(_dependencyMap[0], "fbjs/lib/invariant");
+
+  var ReactNative = {
+    get AccessibilityInfo() {
+      return _require(_dependencyMap[1], '../Components/AccessibilityInfo/AccessibilityInfo');
+    },
+
+    get ActivityIndicator() {
+      return _require(_dependencyMap[2], '../Components/ActivityIndicator/ActivityIndicator');
+    },
+
+    get ART() {
+      return _require(_dependencyMap[3], '../ART/ReactNativeART');
+    },
+
+    get Button() {
+      return _require(_dependencyMap[4], '../Components/Button');
+    },
+
+    get CheckBox() {
+      return _require(_dependencyMap[5], '../Components/CheckBox/CheckBox');
+    },
+
+    get DatePickerIOS() {
+      return _require(_dependencyMap[6], '../Components/DatePicker/DatePickerIOS');
+    },
+
+    get DrawerLayoutAndroid() {
+      return _require(_dependencyMap[7], '../Components/DrawerAndroid/DrawerLayoutAndroid');
+    },
+
+    get FlatList() {
+      return _require(_dependencyMap[8], '../Lists/FlatList');
+    },
+
+    get Image() {
+      return _require(_dependencyMap[9], '../Image/Image');
+    },
+
+    get ImageBackground() {
+      return _require(_dependencyMap[10], '../Image/ImageBackground');
+    },
+
+    get ImageEditor() {
+      return _require(_dependencyMap[11], '../Image/ImageEditor');
+    },
+
+    get ImageStore() {
+      return _require(_dependencyMap[12], '../Image/ImageStore');
+    },
+
+    get InputAccessoryView() {
+      return _require(_dependencyMap[13], '../Components/TextInput/InputAccessoryView');
+    },
+
+    get KeyboardAvoidingView() {
+      return _require(_dependencyMap[14], '../Components/Keyboard/KeyboardAvoidingView');
+    },
+
+    get ListView() {
+      return _require(_dependencyMap[15], '../Lists/ListView/ListView');
+    },
+
+    get MaskedViewIOS() {
+      return _require(_dependencyMap[16], '../Components/MaskedView/MaskedViewIOS');
+    },
+
+    get Modal() {
+      return _require(_dependencyMap[17], '../Modal/Modal');
+    },
+
+    get NavigatorIOS() {
+      return _require(_dependencyMap[18], '../Components/Navigation/NavigatorIOS');
+    },
+
+    get Picker() {
+      return _require(_dependencyMap[19], '../Components/Picker/Picker');
+    },
+
+    get PickerIOS() {
+      return _require(_dependencyMap[20], '../Components/Picker/PickerIOS');
+    },
+
+    get ProgressBarAndroid() {
+      return _require(_dependencyMap[21], '../Components/ProgressBarAndroid/ProgressBarAndroid');
+    },
+
+    get ProgressViewIOS() {
+      return _require(_dependencyMap[22], '../Components/ProgressViewIOS/ProgressViewIOS');
+    },
+
+    get SafeAreaView() {
+      return _require(_dependencyMap[23], '../Components/SafeAreaView/SafeAreaView');
+    },
+
+    get ScrollView() {
+      return _require(_dependencyMap[24], '../Components/ScrollView/ScrollView');
+    },
+
+    get SectionList() {
+      return _require(_dependencyMap[25], '../Lists/SectionList');
+    },
+
+    get SegmentedControlIOS() {
+      return _require(_dependencyMap[26], '../Components/SegmentedControlIOS/SegmentedControlIOS');
+    },
+
+    get Slider() {
+      return _require(_dependencyMap[27], '../Components/Slider/Slider');
+    },
+
+    get SnapshotViewIOS() {
+      return _require(_dependencyMap[28], '../RCTTest/SnapshotViewIOS');
+    },
+
+    get Switch() {
+      return _require(_dependencyMap[29], '../Components/Switch/Switch');
+    },
+
+    get RefreshControl() {
+      return _require(_dependencyMap[30], '../Components/RefreshControl/RefreshControl');
+    },
+
+    get StatusBar() {
+      return _require(_dependencyMap[31], '../Components/StatusBar/StatusBar');
+    },
+
+    get SwipeableFlatList() {
+      return _require(_dependencyMap[32], '../Experimental/SwipeableRow/SwipeableFlatList');
+    },
+
+    get SwipeableListView() {
+      return _require(_dependencyMap[33], '../Experimental/SwipeableRow/SwipeableListView');
+    },
+
+    get TabBarIOS() {
+      return _require(_dependencyMap[34], '../Components/TabBarIOS/TabBarIOS');
+    },
+
+    get Text() {
+      return _require(_dependencyMap[35], '../Text/Text');
+    },
+
+    get TextInput() {
+      return _require(_dependencyMap[36], '../Components/TextInput/TextInput');
+    },
+
+    get ToastAndroid() {
+      return _require(_dependencyMap[37], '../Components/ToastAndroid/ToastAndroid');
+    },
+
+    get ToolbarAndroid() {
+      return _require(_dependencyMap[38], '../Components/ToolbarAndroid/ToolbarAndroid');
+    },
+
+    get Touchable() {
+      return _require(_dependencyMap[39], '../Components/Touchable/Touchable');
+    },
+
+    get TouchableHighlight() {
+      return _require(_dependencyMap[40], '../Components/Touchable/TouchableHighlight');
+    },
+
+    get TouchableNativeFeedback() {
+      return _require(_dependencyMap[41], '../Components/Touchable/TouchableNativeFeedback');
+    },
+
+    get TouchableOpacity() {
+      return _require(_dependencyMap[42], '../Components/Touchable/TouchableOpacity');
+    },
+
+    get TouchableWithoutFeedback() {
+      return _require(_dependencyMap[43], '../Components/Touchable/TouchableWithoutFeedback');
+    },
+
+    get View() {
+      return _require(_dependencyMap[44], '../Components/View/View');
+    },
+
+    get ViewPagerAndroid() {
+      return _require(_dependencyMap[45], '../Components/ViewPager/ViewPagerAndroid');
+    },
+
+    get VirtualizedList() {
+      return _require(_dependencyMap[46], '../Lists/VirtualizedList');
+    },
+
+    get WebView() {
+      return _require(_dependencyMap[47], '../Components/WebView/WebView');
+    },
+
+    get ActionSheetIOS() {
+      return _require(_dependencyMap[48], '../ActionSheetIOS/ActionSheetIOS');
+    },
+
+    get Alert() {
+      return _require(_dependencyMap[49], '../Alert/Alert');
+    },
+
+    get AlertIOS() {
+      return _require(_dependencyMap[50], '../Alert/AlertIOS');
+    },
+
+    get Animated() {
+      return _require(_dependencyMap[51], '../Animated/src/Animated');
+    },
+
+    get AppRegistry() {
+      return _require(_dependencyMap[52], '../ReactNative/AppRegistry');
+    },
+
+    get AppState() {
+      return _require(_dependencyMap[53], '../AppState/AppState');
+    },
+
+    get AsyncStorage() {
+      return _require(_dependencyMap[54], '../Storage/AsyncStorage');
+    },
+
+    get BackAndroid() {
+      return _require(_dependencyMap[55], '../Utilities/BackAndroid');
+    },
+
+    get BackHandler() {
+      return _require(_dependencyMap[56], '../Utilities/BackHandler');
+    },
+
+    get CameraRoll() {
+      return _require(_dependencyMap[57], '../CameraRoll/CameraRoll');
+    },
+
+    get Clipboard() {
+      return _require(_dependencyMap[58], '../Components/Clipboard/Clipboard');
+    },
+
+    get DatePickerAndroid() {
+      return _require(_dependencyMap[59], '../Components/DatePickerAndroid/DatePickerAndroid');
+    },
+
+    get DeviceInfo() {
+      return _require(_dependencyMap[60], '../Utilities/DeviceInfo');
+    },
+
+    get Dimensions() {
+      return _require(_dependencyMap[61], '../Utilities/Dimensions');
+    },
+
+    get Easing() {
+      return _require(_dependencyMap[62], '../Animated/src/Easing');
+    },
+
+    get findNodeHandle() {
+      return _require(_dependencyMap[63], '../Renderer/shims/ReactNative').findNodeHandle;
+    },
+
+    get I18nManager() {
+      return _require(_dependencyMap[64], '../ReactNative/I18nManager');
+    },
+
+    get ImagePickerIOS() {
+      return _require(_dependencyMap[65], '../CameraRoll/ImagePickerIOS');
+    },
+
+    get InteractionManager() {
+      return _require(_dependencyMap[66], '../Interaction/InteractionManager');
+    },
+
+    get Keyboard() {
+      return _require(_dependencyMap[67], '../Components/Keyboard/Keyboard');
+    },
+
+    get LayoutAnimation() {
+      return _require(_dependencyMap[68], '../LayoutAnimation/LayoutAnimation');
+    },
+
+    get Linking() {
+      return _require(_dependencyMap[69], '../Linking/Linking');
+    },
+
+    get NativeEventEmitter() {
+      return _require(_dependencyMap[70], '../EventEmitter/NativeEventEmitter');
+    },
+
+    get NetInfo() {
+      return _require(_dependencyMap[71], '../Network/NetInfo');
+    },
+
+    get PanResponder() {
+      return _require(_dependencyMap[72], '../Interaction/PanResponder');
+    },
+
+    get PermissionsAndroid() {
+      return _require(_dependencyMap[73], '../PermissionsAndroid/PermissionsAndroid');
+    },
+
+    get PixelRatio() {
+      return _require(_dependencyMap[74], '../Utilities/PixelRatio');
+    },
+
+    get PushNotificationIOS() {
+      return _require(_dependencyMap[75], '../PushNotificationIOS/PushNotificationIOS');
+    },
+
+    get Settings() {
+      return _require(_dependencyMap[76], '../Settings/Settings');
+    },
+
+    get Share() {
+      return _require(_dependencyMap[77], '../Share/Share');
+    },
+
+    get StatusBarIOS() {
+      return _require(_dependencyMap[78], '../Components/StatusBar/StatusBarIOS');
+    },
+
+    get StyleSheet() {
+      return _require(_dependencyMap[79], '../StyleSheet/StyleSheet');
+    },
+
+    get Systrace() {
+      return _require(_dependencyMap[80], '../Performance/Systrace');
+    },
+
+    get TimePickerAndroid() {
+      return _require(_dependencyMap[81], '../Components/TimePickerAndroid/TimePickerAndroid');
+    },
+
+    get TVEventHandler() {
+      return _require(_dependencyMap[82], '../Components/AppleTV/TVEventHandler');
+    },
+
+    get UIManager() {
+      return _require(_dependencyMap[83], '../ReactNative/UIManager');
+    },
+
+    get unstable_batchedUpdates() {
+      return _require(_dependencyMap[63], '../Renderer/shims/ReactNative').unstable_batchedUpdates;
+    },
+
+    get Vibration() {
+      return _require(_dependencyMap[84], '../Vibration/Vibration');
+    },
+
+    get VibrationIOS() {
+      return _require(_dependencyMap[85], '../Vibration/VibrationIOS');
+    },
+
+    get YellowBox() {
+      return _require(_dependencyMap[86], '../ReactNative/YellowBox');
+    },
+
+    get DeviceEventEmitter() {
+      return _require(_dependencyMap[87], '../EventEmitter/RCTDeviceEventEmitter');
+    },
+
+    get NativeAppEventEmitter() {
+      return _require(_dependencyMap[88], '../EventEmitter/RCTNativeAppEventEmitter');
+    },
+
+    get NativeModules() {
+      return _require(_dependencyMap[89], '../BatchedBridge/NativeModules');
+    },
+
+    get Platform() {
+      return _require(_dependencyMap[90], '../Utilities/Platform');
+    },
+
+    get processColor() {
+      return _require(_dependencyMap[91], '../StyleSheet/processColor');
+    },
+
+    get requireNativeComponent() {
+      return _require(_dependencyMap[92], '../ReactNative/requireNativeComponent');
+    },
+
+    get takeSnapshot() {
+      return _require(_dependencyMap[93], '../Renderer/shims/takeSnapshot');
+    },
+
+    get ColorPropType() {
+      return _require(_dependencyMap[94], '../StyleSheet/ColorPropType');
+    },
+
+    get EdgeInsetsPropType() {
+      return _require(_dependencyMap[95], '../StyleSheet/EdgeInsetsPropType');
+    },
+
+    get PointPropType() {
+      return _require(_dependencyMap[96], '../StyleSheet/PointPropType');
+    },
+
+    get ViewPropTypes() {
+      return _require(_dependencyMap[97], '../Components/View/ViewPropTypes');
+    },
+
+    get Navigator() {
+      invariant(false, 'Navigator is deprecated and has been removed from this package. It can now be installed ' + 'and imported from `react-native-deprecated-custom-components` instead of `react-native`. ' + 'Learn about alternative navigation solutions at http://facebook.github.io/react-native/docs/navigation.html');
+    }
+
+  };
+  module.exports = ReactNative;
+});

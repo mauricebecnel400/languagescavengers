@@ -1,0 +1,134 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.event = exports.clockRunning = exports.stopClock = exports.concat = exports.always = exports.startClock = exports.debug = exports.call = exports.block = exports.cond = exports.set = exports.not = exports.defined = exports.or = exports.and = exports.neq = exports.greaterOrEq = exports.lessOrEq = exports.greaterThan = exports.eq = exports.lessThan = exports.round = exports.exp = exports.cos = exports.sin = exports.sqrt = exports.modulo = exports.pow = exports.divide = exports.multiply = exports.sub = exports.add = undefined;
+
+  var _AnimatedCond = _require(_dependencyMap[0], "./core/AnimatedCond");
+
+  var _AnimatedCond2 = _interopRequireDefault(_AnimatedCond);
+
+  var _AnimatedSet = _require(_dependencyMap[1], "./core/AnimatedSet");
+
+  var _AnimatedSet2 = _interopRequireDefault(_AnimatedSet);
+
+  var _AnimatedOperator = _require(_dependencyMap[2], "./core/AnimatedOperator");
+
+  var _AnimatedOperator2 = _interopRequireDefault(_AnimatedOperator);
+
+  var _AnimatedStartClock = _require(_dependencyMap[3], "./core/AnimatedStartClock");
+
+  var _AnimatedStartClock2 = _interopRequireDefault(_AnimatedStartClock);
+
+  var _AnimatedStopClock = _require(_dependencyMap[4], "./core/AnimatedStopClock");
+
+  var _AnimatedStopClock2 = _interopRequireDefault(_AnimatedStopClock);
+
+  var _AnimatedClockTest = _require(_dependencyMap[5], "./core/AnimatedClockTest");
+
+  var _AnimatedClockTest2 = _interopRequireDefault(_AnimatedClockTest);
+
+  var _AnimatedDebug = _require(_dependencyMap[6], "./core/AnimatedDebug");
+
+  var _AnimatedDebug2 = _interopRequireDefault(_AnimatedDebug);
+
+  var _AnimatedCall = _require(_dependencyMap[7], "./core/AnimatedCall");
+
+  var _AnimatedCall2 = _interopRequireDefault(_AnimatedCall);
+
+  var _AnimatedEvent = _require(_dependencyMap[8], "./core/AnimatedEvent");
+
+  var _AnimatedEvent2 = _interopRequireDefault(_AnimatedEvent);
+
+  var _AnimatedAlways = _require(_dependencyMap[9], "./core/AnimatedAlways");
+
+  var _AnimatedAlways2 = _interopRequireDefault(_AnimatedAlways);
+
+  var _AnimatedConcat = _require(_dependencyMap[10], "./core/AnimatedConcat");
+
+  var _AnimatedConcat2 = _interopRequireDefault(_AnimatedConcat);
+
+  var _utils = _require(_dependencyMap[11], "./utils");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function operator(name) {
+    return function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return new _AnimatedOperator2.default(name, args.map(_utils.adapt));
+    };
+  }
+
+  var add = exports.add = operator('add');
+  var sub = exports.sub = operator('sub');
+  var multiply = exports.multiply = operator('multiply');
+  var divide = exports.divide = operator('divide');
+  var pow = exports.pow = operator('pow');
+  var modulo = exports.modulo = operator('modulo');
+  var sqrt = exports.sqrt = operator('sqrt');
+  var sin = exports.sin = operator('sin');
+  var cos = exports.cos = operator('cos');
+  var exp = exports.exp = operator('exp');
+  var round = exports.round = operator('round');
+  var lessThan = exports.lessThan = operator('lessThan');
+  var eq = exports.eq = operator('eq');
+  var greaterThan = exports.greaterThan = operator('greaterThan');
+  var lessOrEq = exports.lessOrEq = operator('lessOrEq');
+  var greaterOrEq = exports.greaterOrEq = operator('greaterOrEq');
+  var neq = exports.neq = operator('neq');
+  var and = exports.and = operator('and');
+  var or = exports.or = operator('or');
+  var defined = exports.defined = operator('defined');
+  var not = exports.not = operator('not');
+
+  var set = exports.set = function set(what, value) {
+    return new _AnimatedSet2.default(what, (0, _utils.adapt)(value));
+  };
+
+  var cond = exports.cond = function cond(_cond, ifBlock, elseBlock) {
+    return new _AnimatedCond2.default((0, _utils.adapt)(_cond), (0, _utils.adapt)(ifBlock), elseBlock === undefined ? undefined : (0, _utils.adapt)(elseBlock));
+  };
+
+  var block = exports.block = function block(items) {
+    return (0, _utils.adapt)(items);
+  };
+
+  var call = exports.call = function call(args, func) {
+    return new _AnimatedCall2.default(args, func);
+  };
+
+  var debug = exports.debug = function debug(message, value) {
+    return new _AnimatedDebug2.default(message, (0, _utils.adapt)(value));
+  };
+
+  var startClock = exports.startClock = function startClock(clock) {
+    return new _AnimatedStartClock2.default(clock);
+  };
+
+  var always = exports.always = function always(item) {
+    return new _AnimatedAlways2.default(item);
+  };
+
+  var concat = exports.concat = function concat() {
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return new _AnimatedConcat2.default(args.map(_utils.adapt));
+  };
+
+  var stopClock = exports.stopClock = function stopClock(clock) {
+    return new _AnimatedStopClock2.default(clock);
+  };
+
+  var clockRunning = exports.clockRunning = function clockRunning(clock) {
+    return new _AnimatedClockTest2.default(clock);
+  };
+
+  var event = exports.event = function event(argMapping, config) {
+    return new _AnimatedEvent2.default(argMapping, config);
+  };
+});

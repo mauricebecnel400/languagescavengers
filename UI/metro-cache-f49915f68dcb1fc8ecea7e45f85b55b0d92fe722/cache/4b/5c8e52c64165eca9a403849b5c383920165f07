@@ -1,0 +1,13 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+   module.exports = _require(_dependencyMap[0], "react-native/Libraries/Image/AssetRegistry").registerAsset({
+      "__packager_asset": true,
+      "httpServerLocation": "/assets/assets",
+      "width": 100,
+      "height": 100,
+      "scales": [1],
+      "hash": "e1340113a10ce9dae30f61ba09a06c03",
+      "name": "LanguageScavengersWorld",
+      "type": "png",
+      "fileHashes": ["e1340113a10ce9dae30f61ba09a06c03"]
+   });
+});

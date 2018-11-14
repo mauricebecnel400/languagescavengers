@@ -1,0 +1,323 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class, _temp;
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _uriParser = _require(_dependencyMap[0], "uri-parser");
+
+  var _uriParser2 = _interopRequireDefault(_uriParser);
+
+  var _urlJoin = _require(_dependencyMap[1], "url-join");
+
+  var _urlJoin2 = _interopRequireDefault(_urlJoin);
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _AssetRegistry = _require(_dependencyMap[3], "react-native/Libraries/Image/AssetRegistry");
+
+  var _AssetRegistry2 = _interopRequireDefault(_AssetRegistry);
+
+  var _AssetSourceResolver = _require(_dependencyMap[4], "react-native/Libraries/Image/AssetSourceResolver");
+
+  var _AssetSourceResolver2 = _interopRequireDefault(_AssetSourceResolver);
+
+  var _resolveAssetSource = _require(_dependencyMap[5], "react-native/Libraries/Image/resolveAssetSource");
+
+  var _resolveAssetSource2 = _interopRequireDefault(_resolveAssetSource);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  var FS = void 0,
+      Constants = void 0;
+
+  try {
+    FS = _require(_dependencyMap[6], "expo-file-system").FileSystem;
+  } catch (error) {
+    throw new Error('`expo-asset` requires `expo-file-system` package to be installed and linked.');
+  }
+
+  try {
+    Constants = _require(_dependencyMap[7], "expo-constants").Constants;
+  } catch (error) {
+    throw new Error('`expo-asset` requires `expo-constants` package to be installed and linked.');
+  }
+
+  var parser = new _uriParser2.default.Parser();
+  var bundledAssets = new Set(FS.bundledAssets || []);
+  var assetMapOverride = Constants.manifest && Constants.manifest.assetMapOverride;
+
+  var getManifestBaseUrl = function getManifestBaseUrl(manifestUrl) {
+    var urlComponents = parser.parse(manifestUrl);
+
+    if (urlComponents.protocol === 'exp') {
+      urlComponents.protocol = 'http';
+    } else if (urlComponents.protocol === 'exps') {
+      urlComponents.protocol = 'https';
+    }
+
+    urlComponents.relative = urlComponents.directory;
+    return parser.format(urlComponents);
+  };
+
+  var manifestBaseUrl = Constants.experienceUrl ? getManifestBaseUrl(Constants.experienceUrl) : null;
+
+  var resolveIfRelative = function resolveIfRelative(uri) {
+    var uriComponents = parser.parse(uri);
+
+    if (uriComponents.protocol === '' && manifestBaseUrl) {
+      return (0, _urlJoin2.default)(manifestBaseUrl, uri.replace(/^\.?\//, ''));
+    } else {
+      return uri;
+    }
+  };
+
+  var pickScale = function pickScale(originalMeta) {
+    var meta = assetMapOverride ? _extends({}, originalMeta, assetMapOverride[originalMeta.hash]) : originalMeta;
+    var scale = meta.scales.length > 1 ? _AssetSourceResolver2.default.pickScale(meta.scales, _reactNative.PixelRatio.get()) : 1;
+    var index = meta.scales.findIndex(function (s) {
+      return s === scale;
+    });
+    var hash = meta.fileHashes ? meta.fileHashes[index] || meta.fileHashes[0] : meta.hash;
+    var uri = meta.fileUris ? meta.fileUris[index] || meta.fileUris[0] : meta.uri;
+    var suffix = '/' + meta.name + (scale === 1 ? '' : '@' + scale + 'x') + '.' + meta.type + '?platform=' + _reactNative.Platform.OS + '&hash=' + meta.hash;
+
+    if (uri) {
+      return {
+        uri: resolveIfRelative(uri),
+        hash: hash
+      };
+    }
+
+    var assetUrlOverride = Constants.manifest && Constants.manifest.assetUrlOverride;
+
+    if (assetUrlOverride) {
+      return {
+        uri: resolveIfRelative((0, _urlJoin2.default)(assetUrlOverride, hash)),
+        hash: hash
+      };
+    }
+
+    if (/^https?:/.test(meta.httpServerLocation)) {
+      return {
+        uri: meta.httpServerLocation + suffix,
+        hash: hash
+      };
+    }
+
+    if (Constants.manifest && Constants.manifest.developer) {
+      return {
+        uri: Constants.manifest.bundleUrl.match(/^https?:\/\/.*?\//)[0] + meta.httpServerLocation.replace(/^\/?/, '') + suffix,
+        hash: hash
+      };
+    }
+
+    return {
+      uri: 'https://d1wp6m56sqw74a.cloudfront.net/~assets/' + hash,
+      hash: hash
+    };
+  };
+
+  var getUriInBundle = function getUriInBundle(hash, type) {
+    var assetName = 'asset_' + hash + (type ? '.' + type : '');
+
+    if (__DEV__ || Constants.appOwnership !== 'standalone' || !bundledAssets.has(assetName)) {
+      return null;
+    }
+
+    return "" + FS.bundleDirectory + assetName;
+  };
+
+  var Asset = (_temp = _class = function () {
+    function Asset(_ref) {
+      var name = _ref.name,
+          type = _ref.type,
+          hash = _ref.hash,
+          uri = _ref.uri,
+          width = _ref.width,
+          height = _ref.height;
+
+      _classCallCheck(this, Asset);
+
+      this.name = name;
+      this.type = type;
+      this.hash = hash;
+      this.uri = uri;
+      this.localUri = getUriInBundle(hash, type);
+
+      if (typeof width === 'number') {
+        this.width = width;
+      }
+
+      if (typeof height === 'number') {
+        this.height = height;
+      }
+
+      this.downloading = false;
+      this.downloaded = !!this.localUri;
+      this.downloadCallbacks = [];
+    }
+
+    _createClass(Asset, [{
+      key: "downloadAsync",
+      value: function downloadAsync() {
+        var _this = this;
+
+        var localUri, exists, md5, _ref2, _ref3;
+
+        return regeneratorRuntime.async(function downloadAsync$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.downloaded) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
+                if (!this.downloading) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _context.next = 5;
+                return regeneratorRuntime.awrap(new Promise(function (resolve, reject) {
+                  return _this.downloadCallbacks.push({
+                    resolve: resolve,
+                    reject: reject
+                  });
+                }));
+
+              case 5:
+                return _context.abrupt("return");
+
+              case 6:
+                this.downloading = true;
+                _context.prev = 7;
+                localUri = FS.cacheDirectory + "ExponentAsset-" + this.hash + "." + this.type;
+                exists = void 0, md5 = void 0;
+                _context.next = 12;
+                return regeneratorRuntime.awrap(FS.getInfoAsync(localUri, {
+                  cache: true,
+                  md5: true
+                }));
+
+              case 12:
+                _ref2 = _context.sent;
+                exists = _ref2.exists;
+                md5 = _ref2.md5;
+
+                if (!(!exists || md5 !== this.hash)) {
+                  _context.next = 22;
+                  break;
+                }
+
+                _context.next = 18;
+                return regeneratorRuntime.awrap(FS.downloadAsync(this.uri, localUri, {
+                  cache: true,
+                  md5: true
+                }));
+
+              case 18:
+                _ref3 = _context.sent;
+                md5 = _ref3.md5;
+
+                if (!(md5 !== this.hash)) {
+                  _context.next = 22;
+                  break;
+                }
+
+                throw new Error("Downloaded file for asset '" + this.name + "." + this.type + "' " + ("Located at " + this.uri + " ") + "failed MD5 integrity check");
+
+              case 22:
+                this.localUri = localUri;
+                this.downloaded = true;
+                this.downloadCallbacks.forEach(function (_ref4) {
+                  var resolve = _ref4.resolve;
+                  return resolve();
+                });
+                _context.next = 31;
+                break;
+
+              case 27:
+                _context.prev = 27;
+                _context.t0 = _context["catch"](7);
+                this.downloadCallbacks.forEach(function (_ref5) {
+                  var reject = _ref5.reject;
+                  return reject(_context.t0);
+                });
+                throw _context.t0;
+
+              case 31:
+                _context.prev = 31;
+                this.downloading = false;
+                this.downloadCallbacks = [];
+                return _context.finish(31);
+
+              case 35:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, null, this, [[7, 27, 31, 35]]);
+      }
+    }], [{
+      key: "loadAsync",
+      value: function loadAsync(moduleId) {
+        var moduleIds = typeof moduleId === 'number' ? [moduleId] : moduleId;
+        return Promise.all(moduleIds.map(function (m) {
+          return Asset.fromModule(m).downloadAsync();
+        }));
+      }
+    }, {
+      key: "fromModule",
+      value: function fromModule(moduleId) {
+        var meta = _AssetRegistry2.default.getAssetByID(moduleId);
+
+        return Asset.fromMetadata(meta);
+      }
+    }, {
+      key: "fromMetadata",
+      value: function fromMetadata(meta) {
+        var metaHash = meta.hash;
+
+        if (Asset.byHash[metaHash]) {
+          return Asset.byHash[metaHash];
+        }
+
+        var _pickScale = pickScale(meta),
+            uri = _pickScale.uri,
+            hash = _pickScale.hash;
+
+        var asset = new Asset({
+          name: meta.name,
+          type: meta.type,
+          hash: hash,
+          uri: uri,
+          width: meta.width,
+          height: meta.height
+        });
+        Asset.byHash[metaHash] = asset;
+        return asset;
+      }
+    }]);
+
+    return Asset;
+  }(), _class.byHash = {}, _temp);
+  exports.default = Asset;
+
+  _resolveAssetSource2.default.setCustomSourceTransformer(function (resolver) {
+    var asset = Asset.fromMetadata(resolver.asset);
+    return resolver.fromSource(asset.downloaded ? asset.localUri : asset.uri);
+  });
+});

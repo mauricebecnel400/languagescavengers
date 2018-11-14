@@ -1,0 +1,502 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _react2 = _require(_dependencyMap[0], "react");
+
+    var _react3 = _interopRequireDefault(_react2);
+
+    var _index = _require(_dependencyMap[1], "./../node_modules/react-transform-hmr/lib/index.js");
+
+    var _index2 = _interopRequireDefault(_index);
+
+    var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+    var _class,
+        _temp,
+        _jsxFileName = "/home/monopolized/github/languagescavengers/UI/screens/ScavengerModeScreen.js";
+
+    var _reactNative = _require(_dependencyMap[2], "react-native");
+
+    var _expo = _require(_dependencyMap[3], "expo");
+
+    var _vectorIcons = _require(_dependencyMap[4], "@expo/vector-icons");
+
+    var _CardScroll = _require(_dependencyMap[5], "../components/CardScroll");
+
+    var _CardScroll2 = _interopRequireDefault(_CardScroll);
+
+    var _ButtonCamera = _require(_dependencyMap[6], "../components/ButtonCamera");
+
+    var _ButtonCamera2 = _interopRequireDefault(_ButtonCamera);
+
+    var _ButtonSkip = _require(_dependencyMap[7], "../components/ButtonSkip");
+
+    var _ButtonSkip2 = _interopRequireDefault(_ButtonSkip);
+
+    var _ExpoCamera = _require(_dependencyMap[8], "../components/ExpoCamera");
+
+    var _ExpoCamera2 = _interopRequireDefault(_ExpoCamera);
+
+    var _Card = _require(_dependencyMap[9], "../components/Card");
+
+    var _Card2 = _interopRequireDefault(_Card);
+
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+    function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+    function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+    var _components = {
+        ScavengerMode: {
+            displayName: "ScavengerMode"
+        }
+    };
+
+    var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+        filename: "/home/monopolized/github/languagescavengers/UI/screens/ScavengerModeScreen.js",
+        components: _components,
+        locals: [module],
+        imports: [_react3.default]
+    });
+
+    function _wrapComponent(id) {
+        return function (Component) {
+            return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+        };
+    }
+
+    var ScavengerMode = _wrapComponent("ScavengerMode")((_temp = _class = function (_React$Component) {
+        _inherits(ScavengerMode, _React$Component);
+
+        function ScavengerMode(props) {
+            _classCallCheck(this, ScavengerMode);
+
+            var _this = _possibleConstructorReturn(this, (ScavengerMode.__proto__ || Object.getPrototypeOf(ScavengerMode)).call(this, props));
+
+            _this.state = {
+                overallScore: 300,
+                roundScore: 10,
+                currentWord: 'Lapiz',
+                cameraEnabled: false,
+                result: false
+            };
+            _this.handleCameraClick = _this.handleCameraClick.bind(_this);
+            _this.handleSkipClick = _this.handleSkipClick.bind(_this);
+            return _this;
+        }
+
+        _createClass(ScavengerMode, [{
+            key: "handleSkipClick",
+            value: function handleSkipClick() {
+                this.setState({
+                    currentWord: 'Silla'
+                });
+            }
+        }, {
+            key: "handleCameraClick",
+            value: function handleCameraClick() {
+                result = getPermsAsync();
+                takePhotoAsync();
+                this.setState({
+                    cameraEnabled: false,
+                    result: true
+                });
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var result = void 0;
+
+                var screen = _react3.default.createElement(
+                    _reactNative.ScrollView,
+                    {
+                        style: styles.container,
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 72
+                        }
+                    },
+                    _react3.default.createElement(
+                        _CardScroll2.default,
+                        {
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 73
+                            }
+                        },
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.Header,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 74
+                                }
+                            },
+                            _react3.default.createElement(_vectorIcons.FontAwesome, {
+                                name: "search",
+                                size: 30,
+                                style: styles.MagnifyingGlass,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 75
+                                }
+                            }),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.TileHeaderText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 76
+                                    }
+                                },
+                                " Scavenger Mode "
+                            )
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.SubHeader,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 78
+                                }
+                            },
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.SubText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 79
+                                    }
+                                },
+                                " Overall Score "
+                            ),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.CurrentWord,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 80
+                                    }
+                                },
+                                " ",
+                                this.state.overallScore,
+                                " points"
+                            )
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.SubHeader,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 82
+                                }
+                            },
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.SubText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 83
+                                    }
+                                },
+                                " Round Score "
+                            ),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.CurrentWord,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 84
+                                    }
+                                },
+                                " ",
+                                this.state.roundScore,
+                                " points"
+                            )
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.SubHeader,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 86
+                                }
+                            },
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.SubText,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 87
+                                    }
+                                },
+                                " Current Word "
+                            ),
+                            _react3.default.createElement(
+                                _reactNative.Text,
+                                {
+                                    style: styles.CurrentWord,
+                                    __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 88
+                                    }
+                                },
+                                " ",
+                                this.state.currentWord,
+                                " "
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        _reactNative.View,
+                        {
+                            style: styles.Options,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 91
+                            }
+                        },
+                        _react3.default.createElement(_ButtonCamera2.default, {
+                            clickHandler: this.handleCameraClick,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 92
+                            }
+                        }),
+                        _react3.default.createElement(_ButtonSkip2.default, {
+                            clickHandler: this.handleSkipClick,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 93
+                            }
+                        })
+                    )
+                );
+
+                if (this.state.cameraEnabled === true) {
+                    screen;
+                }
+
+                ;
+
+                if (this.state.result === true) {
+                    screen = _react3.default.createElement(
+                        _reactNative.ScrollView,
+                        {
+                            style: styles.container,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 103
+                            }
+                        },
+                        _react3.default.createElement(
+                            _Card2.default,
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 104
+                                }
+                            },
+                            _react3.default.createElement(_vectorIcons.FontAwesome, {
+                                name: "check",
+                                size: 60,
+                                style: styles.Camera,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 105
+                                }
+                            }),
+                            "Correct"
+                        ),
+                        _react3.default.createElement(
+                            _reactNative.View,
+                            {
+                                style: styles.Options,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 108
+                                }
+                            },
+                            _react3.default.createElement(_ButtonCamera2.default, {
+                                clickHandler: this.handleCameraClick,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 109
+                                }
+                            }),
+                            _react3.default.createElement(_ButtonSkip2.default, {
+                                clickHandler: this.handleSkipClick,
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 110
+                                }
+                            })
+                        )
+                    );
+                }
+
+                ;
+                return screen;
+            }
+        }]);
+
+        return ScavengerMode;
+    }(_react3.default.Component), _class.navigationOptions = {
+        headerTransparent: true
+    }, _temp));
+
+    exports.default = ScavengerMode;
+
+    function getPermsAsync() {
+        var _ref, status;
+
+        return regeneratorRuntime.async(function getPermsAsync$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        _context.next = 2;
+                        return regeneratorRuntime.awrap(_expo.Permissions.askAsync(_expo.Permissions.CAMERA, _expo.Permissions.CAMERA_ROLL));
+
+                    case 2:
+                        _ref = _context.sent;
+                        status = _ref.status;
+
+                        if (!(status === 'granted')) {
+                            _context.next = 8;
+                            break;
+                        }
+
+                        return _context.abrupt("return", status);
+
+                    case 8:
+                        return _context.abrupt("return", 69);
+
+                    case 9:
+                    case "end":
+                        return _context.stop();
+                }
+            }
+        }, null, this);
+    }
+
+    function takePhotoAsync() {
+        var result, localUri, filename, match, type, formData;
+        return regeneratorRuntime.async(function takePhotoAsync$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        _context2.next = 2;
+                        return regeneratorRuntime.awrap(_expo.ImagePicker.launchCameraAsync({
+                            allowsEditing: true,
+                            aspect: [4, 3]
+                        }));
+
+                    case 2:
+                        result = _context2.sent;
+
+                        if (!result.cancelled) {
+                            _context2.next = 5;
+                            break;
+                        }
+
+                        return _context2.abrupt("return");
+
+                    case 5:
+                        localUri = result.uri;
+                        filename = localUri.split('/').pop();
+                        console.log("from result", result, localUri, filename);
+                        match = /\.(\w+)$/.exec(filename);
+                        type = match ? "image/" + match[1] : "image";
+                        formData = new FormData();
+                        formData.append('photo', {
+                            uri: localUri,
+                            name: filename,
+                            type: type
+                        });
+                        console.log(formData);
+                        _context2.next = 15;
+                        return regeneratorRuntime.awrap(fetch('http://192.168.1.12:8080/post', {
+                            method: 'POST',
+                            body: formData,
+                            header: {
+                                'content-type': 'multipart/form-data'
+                            }
+                        }));
+
+                    case 15:
+                        return _context2.abrupt("return", _context2.sent);
+
+                    case 16:
+                    case "end":
+                        return _context2.stop();
+                }
+            }
+        }, null, this);
+    }
+
+    var styles = _reactNative.StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: '#ADD8E6',
+            paddingTop: 65
+        },
+        Header: {
+            flex: 1,
+            flexDirection: 'row',
+            height: 100
+        },
+        TileHeaderText: {
+            fontSize: 30,
+            paddingTop: 20,
+            color: 'rgba(96,100,109, 1)',
+            lineHeight: 24,
+            textAlign: 'left',
+            fontWeight: 'bold'
+        },
+        MagnifyingGlass: {
+            padding: 10,
+            color: 'rgba(96,100,109, 1)'
+        },
+        SubHeader: {
+            flex: 1,
+            flexDirection: 'row'
+        },
+        SubText: {
+            fontSize: 20,
+            padding: 10,
+            color: 'rgba(96,100,109, 1)',
+            lineHeight: 24,
+            textAlign: 'left',
+            fontWeight: 'bold'
+        },
+        CurrentWord: {
+            fontSize: 25,
+            padding: 10,
+            color: 'rgba(96,100,109, 1)',
+            lineHeight: 24,
+            textAlign: 'left',
+            fontWeight: 'bold'
+        },
+        Options: {
+            flex: 1,
+            flexDirection: 'row',
+            alignContent: 'center',
+            justifyContent: 'center'
+        }
+    });
+});

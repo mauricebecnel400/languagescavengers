@@ -1,0 +1,247 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var React = _interopRequireWildcard(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation-tabs/src/utils/createTabNavigator.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  exports.default = createTabNavigator;
+
+  var _reactNavigation = _require(_dependencyMap[2], "react-navigation");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    NavigationView: {
+      displayName: "NavigationView",
+      isInFunction: true
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation-tabs/src/utils/createTabNavigator.js",
+    components: _components,
+    locals: [module],
+    imports: [React.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  function createTabNavigator(TabView) {
+    var NavigationView = _wrapComponent("NavigationView")(function (_React$Component) {
+      _inherits(NavigationView, _React$Component);
+
+      function NavigationView() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, NavigationView);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NavigationView.__proto__ || Object.getPrototypeOf(NavigationView)).call.apply(_ref, [this].concat(args))), _this), _this._renderScene = function (_ref2) {
+          var route = _ref2.route;
+          var _this$props = _this.props,
+              screenProps = _this$props.screenProps,
+              descriptors = _this$props.descriptors;
+          var descriptor = descriptors[route.key];
+          var TabComponent = descriptor.getComponent();
+          return React.createElement(_reactNavigation.SceneView, {
+            screenProps: screenProps,
+            navigation: descriptor.navigation,
+            component: TabComponent,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 39
+            }
+          });
+        }, _this._renderIcon = function (_ref3) {
+          var route = _ref3.route,
+              _ref3$focused = _ref3.focused,
+              focused = _ref3$focused === undefined ? true : _ref3$focused,
+              tintColor = _ref3.tintColor,
+              _ref3$horizontal = _ref3.horizontal,
+              horizontal = _ref3$horizontal === undefined ? false : _ref3$horizontal;
+          var descriptors = _this.props.descriptors;
+          var descriptor = descriptors[route.key];
+          var options = descriptor.options;
+
+          if (options.tabBarIcon) {
+            return typeof options.tabBarIcon === 'function' ? options.tabBarIcon({
+              focused: focused,
+              tintColor: tintColor,
+              horizontal: horizontal
+            }) : options.tabBarIcon;
+          }
+
+          return null;
+        }, _this._getButtonComponent = function (_ref4) {
+          var route = _ref4.route;
+          var descriptors = _this.props.descriptors;
+          var descriptor = descriptors[route.key];
+          var options = descriptor.options;
+
+          if (options.tabBarButtonComponent) {
+            return options.tabBarButtonComponent;
+          }
+
+          return null;
+        }, _this._getLabelText = function (_ref5) {
+          var route = _ref5.route;
+          var descriptors = _this.props.descriptors;
+          var descriptor = descriptors[route.key];
+          var options = descriptor.options;
+
+          if (options.tabBarLabel) {
+            return options.tabBarLabel;
+          }
+
+          if (typeof options.title === 'string') {
+            return options.title;
+          }
+
+          return route.routeName;
+        }, _this._getAccessibilityLabel = function (_ref6) {
+          var route = _ref6.route;
+          var descriptors = _this.props.descriptors;
+          var descriptor = descriptors[route.key];
+          var options = descriptor.options;
+
+          if (typeof options.tabBarAccessibilityLabel !== 'undefined') {
+            return options.tabBarAccessibilityLabel;
+          }
+
+          var label = _this._getLabelText({
+            route: route
+          });
+
+          if (typeof label === 'string') {
+            return label;
+          }
+        }, _this._getTestID = function (_ref7) {
+          var route = _ref7.route;
+          var descriptors = _this.props.descriptors;
+          var descriptor = descriptors[route.key];
+          var options = descriptor.options;
+          return options.tabBarTestID;
+        }, _this._handleTabPress = function (_ref8) {
+          var route = _ref8.route;
+          _this._isTabPress = true;
+          var descriptors = _this.props.descriptors;
+          var descriptor = descriptors[route.key];
+          var navigation = descriptor.navigation,
+              options = descriptor.options;
+
+          var defaultHandler = function defaultHandler() {
+            if (navigation.isFocused()) {
+              if (route.hasOwnProperty('index') && route.index > 0) {
+                navigation.dispatch(_reactNavigation.StackActions.popToTop({
+                  key: route.key
+                }));
+              } else {}
+            } else {
+              _this._jumpTo(route.routeName);
+            }
+          };
+
+          if (options.tabBarOnPress) {
+            options.tabBarOnPress({
+              navigation: navigation,
+              defaultHandler: defaultHandler
+            });
+          } else {
+            defaultHandler();
+          }
+        }, _this._handleIndexChange = function (index) {
+          if (_this._isTabPress) {
+            _this._isTabPress = false;
+            return;
+          }
+
+          _this._jumpTo(_this.props.navigation.state.routes[index].routeName);
+        }, _this._handleSwipeStart = function () {
+          _this.setState({
+            isSwiping: true
+          });
+        }, _this._handleSwipeEnd = function () {
+          _this.setState({
+            isSwiping: false
+          });
+        }, _this._jumpTo = function (routeName) {
+          return _this.props.navigation.dispatch(_reactNavigation.NavigationActions.navigate({
+            routeName: routeName
+          }));
+        }, _this._isTabPress = false, _temp), _possibleConstructorReturn(_this, _ret);
+      }
+
+      _createClass(NavigationView, [{
+        key: "render",
+        value: function render() {
+          var _props = this.props,
+              descriptors = _props.descriptors,
+              navigation = _props.navigation,
+              screenProps = _props.screenProps;
+          var state = navigation.state;
+          var route = state.routes[state.index];
+          var descriptor = descriptors[route.key];
+
+          var options = _extends({}, this.props.navigationConfig, descriptor.options);
+
+          return React.createElement(TabView, _extends({}, options, {
+            getLabelText: this._getLabelText,
+            getButtonComponent: this._getButtonComponent,
+            getAccessibilityLabel: this._getAccessibilityLabel,
+            getTestID: this._getTestID,
+            renderIcon: this._renderIcon,
+            renderScene: this._renderScene,
+            onIndexChange: this._handleIndexChange,
+            onTabPress: this._handleTabPress,
+            navigation: navigation,
+            descriptors: descriptors,
+            screenProps: screenProps,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 178
+            }
+          }));
+        }
+      }]);
+
+      return NavigationView;
+    }(React.Component));
+
+    return function (routes) {
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var router = (0, _reactNavigation.TabRouter)(routes, config);
+      var navigator = (0, _reactNavigation.createNavigator)(NavigationView, router, config);
+      return (0, _reactNavigation.createNavigationContainer)(navigator);
+    };
+  }
+});

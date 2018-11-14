@@ -1,0 +1,11 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = _require(_dependencyMap[0], "react-native/Libraries/Image/AssetRegistry").registerAsset({
+    "__packager_asset": true,
+    "httpServerLocation": "/assets/node_modules/@expo/vector-icons/fonts",
+    "scales": [1],
+    "hash": "a37b0c01c0baf1888ca812cc0508f6e2",
+    "name": "MaterialIcons",
+    "type": "ttf",
+    "fileHashes": ["a37b0c01c0baf1888ca812cc0508f6e2"]
+  });
+});

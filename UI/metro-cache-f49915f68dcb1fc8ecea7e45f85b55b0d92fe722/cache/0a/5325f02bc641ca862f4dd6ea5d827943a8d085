@@ -1,0 +1,150 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.clock = exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+  var _AnimatedValue2 = _require(_dependencyMap[0], "./AnimatedValue");
+
+  var _AnimatedValue3 = _interopRequireDefault(_AnimatedValue2);
+
+  var _AnimatedNode2 = _require(_dependencyMap[1], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  var _utils = _require(_dependencyMap[2], "../utils");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var AnimatedMainClock = function (_AnimatedValue) {
+    _inherits(AnimatedMainClock, _AnimatedValue);
+
+    function AnimatedMainClock() {
+      _classCallCheck(this, AnimatedMainClock);
+
+      var _this = _possibleConstructorReturn(this, (AnimatedMainClock.__proto__ || Object.getPrototypeOf(AnimatedMainClock)).call(this, {
+        type: 'MAIN_CLOCK'
+      }));
+
+      _this._runFrame = function () {
+        _this._updateValue(0);
+
+        if (_this.__children.length > 0) {
+          _this._frameCallback = requestAnimationFrame(_this._runFrame);
+        }
+      };
+
+      return _this;
+    }
+
+    _createClass(AnimatedMainClock, [{
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        return +new Date();
+      }
+    }, {
+      key: "__attach",
+      value: function __attach() {
+        _get(AnimatedMainClock.prototype.__proto__ || Object.getPrototypeOf(AnimatedMainClock.prototype), "__attach", this).call(this);
+
+        if (!this._frameCallback) {
+          this._frameCallback = requestAnimationFrame(this._runFrame);
+        }
+      }
+    }, {
+      key: "__detach",
+      value: function __detach() {
+        if (this._frameCallback) {
+          cancelAnimationFrame(this._frameCallback);
+          this._frameCallback = null;
+        }
+
+        _get(AnimatedMainClock.prototype.__proto__ || Object.getPrototypeOf(AnimatedMainClock.prototype), "__detach", this).call(this);
+      }
+    }]);
+
+    return AnimatedMainClock;
+  }(_AnimatedValue3.default);
+
+  var mainClock = new AnimatedMainClock();
+
+  var AnimatedClock = function (_AnimatedNode) {
+    _inherits(AnimatedClock, _AnimatedNode);
+
+    function AnimatedClock() {
+      _classCallCheck(this, AnimatedClock);
+
+      return _possibleConstructorReturn(this, (AnimatedClock.__proto__ || Object.getPrototypeOf(AnimatedClock)).call(this, {
+        type: 'clock'
+      }));
+    }
+
+    _createClass(AnimatedClock, [{
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        return (0, _utils.val)(mainClock);
+      }
+    }, {
+      key: "__attach",
+      value: function __attach() {
+        _get(AnimatedClock.prototype.__proto__ || Object.getPrototypeOf(AnimatedClock.prototype), "__attach", this).call(this);
+
+        if (this._started && !this._attached) {
+          mainClock.__addChild(this);
+        }
+
+        this._attached = true;
+      }
+    }, {
+      key: "__detach",
+      value: function __detach() {
+        if (this._started && this._attached) {
+          mainClock.__removeChild(this);
+        }
+
+        this._attached = false;
+
+        _get(AnimatedClock.prototype.__proto__ || Object.getPrototypeOf(AnimatedClock.prototype), "__detach", this).call(this);
+      }
+    }, {
+      key: "start",
+      value: function start() {
+        if (!this._started && this._attached) {
+          mainClock.__addChild(this);
+        }
+
+        this._started = true;
+      }
+    }, {
+      key: "stop",
+      value: function stop() {
+        if (this._started && this._attached) {
+          mainClock.__removeChild(this);
+        }
+
+        this._started = false;
+      }
+    }, {
+      key: "isStarted",
+      value: function isStarted() {
+        return this._started;
+      }
+    }]);
+
+    return AnimatedClock;
+  }(_AnimatedNode3.default);
+
+  exports.default = AnimatedClock;
+  var clock = mainClock;
+  exports.clock = clock;
+});

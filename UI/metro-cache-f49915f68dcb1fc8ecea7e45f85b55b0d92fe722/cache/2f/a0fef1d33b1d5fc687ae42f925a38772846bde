@@ -1,0 +1,28 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _createNavigator = _require(_dependencyMap[0], "../navigators/createNavigator");
+
+  var _createNavigator2 = _interopRequireDefault(_createNavigator);
+
+  var _SwitchRouter = _require(_dependencyMap[1], "../routers/SwitchRouter");
+
+  var _SwitchRouter2 = _interopRequireDefault(_SwitchRouter);
+
+  var _SwitchView = _require(_dependencyMap[2], "../views/SwitchView/SwitchView");
+
+  var _SwitchView2 = _interopRequireDefault(_SwitchView);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function createSwitchNavigator(routeConfigMap) {
+    var switchConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var router = (0, _SwitchRouter2.default)(routeConfigMap, switchConfig);
+    var Navigator = (0, _createNavigator2.default)(_SwitchView2.default, router, switchConfig);
+    return Navigator;
+  }
+
+  exports.default = createSwitchNavigator;
+});

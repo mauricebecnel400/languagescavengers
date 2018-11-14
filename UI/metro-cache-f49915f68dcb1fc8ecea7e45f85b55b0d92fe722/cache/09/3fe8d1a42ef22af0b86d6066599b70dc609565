@@ -1,0 +1,317 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _invariant = _require(_dependencyMap[0], "../utils/invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  var _getScreenForRouteName = _require(_dependencyMap[1], "./getScreenForRouteName");
+
+  var _getScreenForRouteName2 = _interopRequireDefault(_getScreenForRouteName);
+
+  var _createConfigGetter = _require(_dependencyMap[2], "./createConfigGetter");
+
+  var _createConfigGetter2 = _interopRequireDefault(_createConfigGetter);
+
+  var _NavigationActions = _require(_dependencyMap[3], "../NavigationActions");
+
+  var _NavigationActions2 = _interopRequireDefault(_NavigationActions);
+
+  var _StackActions = _require(_dependencyMap[4], "./StackActions");
+
+  var _StackActions2 = _interopRequireDefault(_StackActions);
+
+  var _validateRouteConfigMap = _require(_dependencyMap[5], "./validateRouteConfigMap");
+
+  var _validateRouteConfigMap2 = _interopRequireDefault(_validateRouteConfigMap);
+
+  var _pathUtils = _require(_dependencyMap[6], "./pathUtils");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+  var defaultActionCreators = function defaultActionCreators(route, navStateKey) {
+    return {};
+  };
+
+  function childrenUpdateWithoutSwitchingIndex(actionType) {
+    return [_NavigationActions2.default.SET_PARAMS, _StackActions2.default.COMPLETE_TRANSITION].includes(actionType);
+  }
+
+  exports.default = function (routeConfigs) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    (0, _validateRouteConfigMap2.default)(routeConfigs);
+    var order = config.order || Object.keys(routeConfigs);
+    var getCustomActionCreators = config.getCustomActionCreators || defaultActionCreators;
+    var initialRouteParams = config.initialRouteParams;
+    var initialRouteName = config.initialRouteName || order[0];
+    var backBehavior = config.backBehavior || 'none';
+    var shouldBackNavigateToInitialRoute = backBehavior === 'initialRoute';
+    var resetOnBlur = config.hasOwnProperty('resetOnBlur') ? config.resetOnBlur : true;
+    var initialRouteIndex = order.indexOf(initialRouteName);
+    var childRouters = {};
+    order.forEach(function (routeName) {
+      var routeConfig = routeConfigs[routeName];
+      childRouters[routeName] = null;
+      var screen = (0, _getScreenForRouteName2.default)(routeConfigs, routeName);
+
+      if (screen.router) {
+        childRouters[routeName] = screen.router;
+      }
+    });
+
+    var _createPathParser = (0, _pathUtils.createPathParser)(childRouters, routeConfigs, config),
+        getPathAndParamsForRoute = _createPathParser.getPathAndParamsForRoute,
+        _getActionForPathAndParams = _createPathParser.getActionForPathAndParams;
+
+    if (initialRouteIndex === -1) {
+      throw new Error("Invalid initialRouteName '" + initialRouteName + "'." + ("Should be one of " + order.map(function (n) {
+        return "\"" + n + "\"";
+      }).join(', ')));
+    }
+
+    function resetChildRoute(routeName) {
+      var params = routeName === initialRouteName ? initialRouteParams : undefined;
+      var childRouter = childRouters[routeName];
+
+      if (childRouter) {
+        var childAction = _NavigationActions2.default.init();
+
+        return _extends({}, childRouter.getStateForAction(childAction), {
+          key: routeName,
+          routeName: routeName,
+          params: params
+        });
+      }
+
+      return {
+        key: routeName,
+        routeName: routeName,
+        params: params
+      };
+    }
+
+    function getNextState(prevState, possibleNextState) {
+      if (!prevState) {
+        return possibleNextState;
+      }
+
+      var nextState = void 0;
+
+      if (prevState.index !== possibleNextState.index && resetOnBlur) {
+        var prevRouteName = prevState.routes[prevState.index].routeName;
+        var nextRoutes = [].concat(_toConsumableArray(possibleNextState.routes));
+        nextRoutes[prevState.index] = resetChildRoute(prevRouteName);
+        return _extends({}, possibleNextState, {
+          routes: nextRoutes
+        });
+      } else {
+        nextState = possibleNextState;
+      }
+
+      return nextState;
+    }
+
+    function getInitialState() {
+      var routes = order.map(resetChildRoute);
+      return {
+        routes: routes,
+        index: initialRouteIndex,
+        isTransitioning: false
+      };
+    }
+
+    return {
+      childRouters: childRouters,
+      getActionCreators: function getActionCreators(route, stateKey) {
+        return getCustomActionCreators(route, stateKey);
+      },
+      getStateForAction: function getStateForAction(action, inputState) {
+        var prevState = inputState ? _extends({}, inputState) : inputState;
+        var state = inputState || getInitialState();
+        var activeChildIndex = state.index;
+
+        if (action.type === _NavigationActions2.default.INIT) {
+          var params = action.params;
+
+          if (params) {
+            state.routes = state.routes.map(function (route) {
+              return _extends({}, route, {
+                params: _extends({}, route.params, params, route.routeName === initialRouteName ? initialRouteParams : null)
+              });
+            });
+          }
+        }
+
+        var activeChildLastState = state.routes[state.index];
+        var activeChildRouter = childRouters[order[state.index]];
+
+        if (activeChildRouter) {
+          var activeChildState = activeChildRouter.getStateForAction(action, activeChildLastState);
+
+          if (!activeChildState && inputState) {
+            return null;
+          }
+
+          if (activeChildState && activeChildState !== activeChildLastState) {
+            var _routes = [].concat(_toConsumableArray(state.routes));
+
+            _routes[state.index] = activeChildState;
+            return getNextState(prevState, _extends({}, state, {
+              routes: _routes
+            }));
+          }
+        }
+
+        var isBackEligible = action.key == null || action.key === activeChildLastState.key;
+
+        if (action.type === _NavigationActions2.default.BACK) {
+          if (isBackEligible && shouldBackNavigateToInitialRoute) {
+            activeChildIndex = initialRouteIndex;
+          } else {
+            return state;
+          }
+        }
+
+        var didNavigate = false;
+
+        if (action.type === _NavigationActions2.default.NAVIGATE) {
+          didNavigate = !!order.find(function (childId, i) {
+            if (childId === action.routeName) {
+              activeChildIndex = i;
+              return true;
+            }
+
+            return false;
+          });
+
+          if (didNavigate) {
+            var childState = state.routes[activeChildIndex];
+            var childRouter = childRouters[action.routeName];
+            var newChildState = void 0;
+
+            if (action.action) {
+              newChildState = childRouter ? childRouter.getStateForAction(action.action, childState) : null;
+            } else if (!action.action && action.params) {
+              newChildState = _extends({}, childState, {
+                params: _extends({}, childState.params || {}, action.params)
+              });
+            }
+
+            if (newChildState && newChildState !== childState) {
+              var _routes2 = [].concat(_toConsumableArray(state.routes));
+
+              _routes2[activeChildIndex] = newChildState;
+              return getNextState(prevState, _extends({}, state, {
+                routes: _routes2,
+                index: activeChildIndex
+              }));
+            } else if (!newChildState && state.index === activeChildIndex && prevState) {
+              return null;
+            }
+          }
+        }
+
+        if (action.type === _NavigationActions2.default.SET_PARAMS) {
+          var key = action.key;
+          var lastRoute = state.routes.find(function (route) {
+            return route.key === key;
+          });
+
+          if (lastRoute) {
+            var _params = _extends({}, lastRoute.params, action.params);
+
+            var _routes3 = [].concat(_toConsumableArray(state.routes));
+
+            _routes3[state.routes.indexOf(lastRoute)] = _extends({}, lastRoute, {
+              params: _params
+            });
+            return getNextState(prevState, _extends({}, state, {
+              routes: _routes3
+            }));
+          }
+        }
+
+        if (activeChildIndex !== state.index) {
+          return getNextState(prevState, _extends({}, state, {
+            index: activeChildIndex
+          }));
+        } else if (didNavigate && !inputState) {
+          return state;
+        } else if (didNavigate) {
+          return _extends({}, state);
+        }
+
+        var index = state.index;
+        var routes = state.routes;
+        order.find(function (childId, i) {
+          var childRouter = childRouters[childId];
+
+          if (i === index) {
+            return false;
+          }
+
+          var childState = routes[i];
+
+          if (childRouter) {
+            childState = childRouter.getStateForAction(action, childState);
+          }
+
+          if (!childState) {
+            index = i;
+            return true;
+          }
+
+          if (childState !== routes[i]) {
+            routes = [].concat(_toConsumableArray(routes));
+            routes[i] = childState;
+            index = i;
+            return true;
+          }
+
+          return false;
+        });
+
+        if (childrenUpdateWithoutSwitchingIndex(action.type)) {
+          index = state.index;
+        }
+
+        if (index !== state.index || routes !== state.routes) {
+          return getNextState(prevState, _extends({}, state, {
+            index: index,
+            routes: routes
+          }));
+        }
+
+        return state;
+      },
+      getComponentForState: function getComponentForState(state) {
+        var routeName = state.routes[state.index].routeName;
+        (0, _invariant2.default)(routeName, "There is no route defined for index " + state.index + ". Check that\n        that you passed in a navigation state with a valid tab/screen index.");
+        var childRouter = childRouters[routeName];
+
+        if (childRouter) {
+          return childRouter.getComponentForState(state.routes[state.index]);
+        }
+
+        return (0, _getScreenForRouteName2.default)(routeConfigs, routeName);
+      },
+      getComponentForRouteName: function getComponentForRouteName(routeName) {
+        return (0, _getScreenForRouteName2.default)(routeConfigs, routeName);
+      },
+      getPathAndParamsForState: function getPathAndParamsForState(state) {
+        var route = state.routes[state.index];
+        return getPathAndParamsForRoute(route);
+      },
+      getActionForPathAndParams: function getActionForPathAndParams(path, params) {
+        return _getActionForPathAndParams(path, params);
+      },
+      getScreenOptions: (0, _createConfigGetter2.default)(routeConfigs, config.navigationOptions)
+    };
+  };
+});

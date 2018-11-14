@@ -1,0 +1,14 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var ExponentErrorRecovery = _reactNative.NativeModules.ExponentErrorRecovery;
+  exports.default = {
+    setRecoveryProps: function setRecoveryProps(props) {
+      return ExponentErrorRecovery.setRecoveryProps(props);
+    }
+  };
+});

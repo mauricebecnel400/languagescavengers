@@ -1,0 +1,20 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    get AdMobBanner() {
+      return _require(_dependencyMap[0], './src/AdMobBanner').default;
+    },
+
+    get AdMobInterstitial() {
+      return _require(_dependencyMap[1], './src/AdMobInterstitial');
+    },
+
+    get AdMobRewarded() {
+      return _require(_dependencyMap[2], './src/AdMobRewarded');
+    },
+
+    get PublisherBanner() {
+      return _require(_dependencyMap[3], './src/PublisherBanner').default;
+    }
+
+  };
+});

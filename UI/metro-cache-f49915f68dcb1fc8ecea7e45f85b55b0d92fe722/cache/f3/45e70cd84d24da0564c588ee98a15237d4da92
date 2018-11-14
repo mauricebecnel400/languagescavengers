@@ -1,0 +1,57 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.isSupported = isSupported;
+  exports.requestReview = requestReview;
+  exports.storeUrl = storeUrl;
+  exports.hasAction = hasAction;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _expoConstants = _require(_dependencyMap[1], "expo-constants");
+
+  function isSupported() {
+    return _reactNative.Platform.OS === 'ios' && _reactNative.NativeModules.ExponentStoreReview.isSupported;
+  }
+
+  function requestReview() {
+    if (isSupported()) {
+      _reactNative.NativeModules.ExponentStoreReview.requestReview();
+    } else {
+      var url = storeUrl();
+
+      if (url) {
+        _reactNative.Linking.canOpenURL(url).then(function (supported) {
+          if (!supported) {
+            console.log("Expo.StoreReview.requestReview(): Can't open store url: ", url);
+          } else {
+            return _reactNative.Linking.openURL(url);
+          }
+        }).catch(function (err) {
+          return console.warn('Expo.StoreReview.requestReview(): Error opening link to store: ', err);
+        });
+      } else {
+        console.log("Expo.StoreReview.requestReview(): Couldn't link to store, please make sure the `android.playStoreUrl` & `ios.appStoreUrl` fields are filled out in your `app.json`");
+      }
+    }
+  }
+
+  function storeUrl() {
+    var OS = _reactNative.Platform.OS;
+
+    if (OS === 'ios') {
+      return _expoConstants.Constants.manifest.ios.appStoreUrl;
+    } else if (OS === 'android') {
+      return _expoConstants.Constants.manifest.android.playStoreUrl;
+    } else {
+      console.warn("Expo.StoreReview.storeUrl(): Unsupported OS: " + OS);
+    }
+
+    return null;
+  }
+
+  function hasAction() {
+    return !!storeUrl() || isSupported();
+  }
+});

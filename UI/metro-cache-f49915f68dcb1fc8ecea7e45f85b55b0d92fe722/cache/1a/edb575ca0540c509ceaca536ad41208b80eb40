@@ -1,0 +1,110 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+  var _AnimatedNode2 = _require(_dependencyMap[0], "./AnimatedNode");
+
+  var _AnimatedNode3 = _interopRequireDefault(_AnimatedNode2);
+
+  var _base = _require(_dependencyMap[1], "../base");
+
+  var _utils = _require(_dependencyMap[2], "../utils");
+
+  var _evaluateOnce = _require(_dependencyMap[3], "../derived/evaluateOnce");
+
+  var _interpolate2 = _require(_dependencyMap[4], "../derived/interpolate");
+
+  var _interpolate3 = _interopRequireDefault(_interpolate2);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  function sanitizeValue(value) {
+    return value === null || value === undefined || typeof value === 'string' ? value : Number(value);
+  }
+
+  var AnimatedValue = function (_AnimatedNode) {
+    _inherits(AnimatedValue, _AnimatedNode);
+
+    function AnimatedValue(value) {
+      _classCallCheck(this, AnimatedValue);
+
+      var _this = _possibleConstructorReturn(this, (AnimatedValue.__proto__ || Object.getPrototypeOf(AnimatedValue)).call(this, {
+        type: 'value',
+        value: sanitizeValue(value)
+      }));
+
+      _this._startingValue = _this._value = value;
+      _this._animation = null;
+      return _this;
+    }
+
+    _createClass(AnimatedValue, [{
+      key: "__detach",
+      value: function __detach() {
+        this.__detachAnimation(this._animation);
+
+        _get(AnimatedValue.prototype.__proto__ || Object.getPrototypeOf(AnimatedValue.prototype), "__detach", this).call(this);
+      }
+    }, {
+      key: "__detachAnimation",
+      value: function __detachAnimation(animation) {
+        animation && animation.__detach();
+
+        if (this._animation === animation) {
+          this._animation = null;
+        }
+      }
+    }, {
+      key: "__attachAnimation",
+      value: function __attachAnimation(animation) {
+        this.__detachAnimation(this._animation);
+
+        this._animation = animation;
+      }
+    }, {
+      key: "__onEvaluate",
+      value: function __onEvaluate() {
+        if (this.__inputNodes && this.__inputNodes.length) {
+          this.__inputNodes.forEach(_utils.val);
+        }
+
+        return this._value + this._offset;
+      }
+    }, {
+      key: "_updateValue",
+      value: function _updateValue(value) {
+        this._value = value;
+
+        this.__forceUpdateCache(value);
+      }
+    }, {
+      key: "setValue",
+      value: function setValue(value) {
+        this.__detachAnimation(this._animation);
+
+        (0, _evaluateOnce.evaluateOnce)((0, _base.set)(this, value), this);
+      }
+    }, {
+      key: "interpolate",
+      value: function interpolate(config) {
+        return (0, _interpolate3.default)(this, config);
+      }
+    }]);
+
+    return AnimatedValue;
+  }(_AnimatedNode3.default);
+
+  exports.default = AnimatedValue;
+});

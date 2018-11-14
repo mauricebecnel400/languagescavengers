@@ -1,0 +1,19 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = onChange;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _AnimatedValue = _require(_dependencyMap[1], "../core/AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function onChange(value, action) {
+    var prevValue = new _AnimatedValue2.default();
+    return (0, _base.block)([(0, _base.cond)((0, _base.not)((0, _base.defined)(prevValue)), (0, _base.set)(prevValue, value)), (0, _base.cond)((0, _base.neq)(value, prevValue), [(0, _base.set)(prevValue, value), action])]);
+  }
+});

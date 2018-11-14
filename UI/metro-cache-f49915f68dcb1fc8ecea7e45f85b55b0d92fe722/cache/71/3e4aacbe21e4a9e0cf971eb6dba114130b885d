@@ -1,0 +1,121 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    "_args": [["react-native-branch@2.2.5", "/home/monopolized/github/CS470_Project/UI/node_modules/expo"]],
+    "_from": "react-native-branch@2.2.5",
+    "_id": "react-native-branch@2.2.5",
+    "_inCache": true,
+    "_installable": true,
+    "_location": "/react-native-branch",
+    "_nodeVersion": "6.9.5",
+    "_npmOperationalInternal": {
+      "host": "s3://npm-registry-packages",
+      "tmp": "tmp/react-native-branch_2.2.5_1524000794909_0.5218300311933108"
+    },
+    "_npmUser": {
+      "email": "a.aaron.lopez@gmail.com",
+      "name": "aaaronlopez"
+    },
+    "_npmVersion": "3.10.10",
+    "_phantomChildren": {},
+    "_requested": {
+      "name": "react-native-branch",
+      "raw": "react-native-branch@2.2.5",
+      "rawSpec": "2.2.5",
+      "scope": null,
+      "spec": "2.2.5",
+      "type": "version"
+    },
+    "_requiredBy": ["/expo"],
+    "_resolved": "https://registry.npmjs.org/react-native-branch/-/react-native-branch-2.2.5.tgz",
+    "_shasum": "4074dd63b4973e6397d9ce50e97b57c77a518e9d",
+    "_shrinkwrap": null,
+    "_spec": "react-native-branch@2.2.5",
+    "_where": "/home/monopolized/github/CS470_Project/UI/node_modules/expo",
+    "authors": ["Jimmy Dee (https://github.com/jdee)", "Kevin Stumpf (https://github.com/kevinstumpf)", "Zack Story <zack@root-two.com> (https://github.com/rt2zz)"],
+    "ava": {
+      "babel": "inherit",
+      "require": ["./test/helpers/RNBranch.mock.js", "babel-polyfill", "babel-register", "react-native-mock/mock.js"]
+    },
+    "babel": {
+      "ignore": false,
+      "presets": ["react-native"]
+    },
+    "bugs": {
+      "url": "https://github.com/BranchMetrics/react-native-branch-deep-linking/issues"
+    },
+    "dependencies": {},
+    "description": "Branch Metrics React Native SDK",
+    "devDependencies": {
+      "ava": "~0.14.0",
+      "babel-eslint": "^6.0.4",
+      "babel-polyfill": "^6.7.4",
+      "eslint": "^2.7.0",
+      "eslint-config-rackt": "^1.1.1",
+      "mockery": "*",
+      "react": "16.0.0-alpha.6",
+      "react-addons-create-fragment": "16.0.0-alpha.3",
+      "react-addons-pure-render-mixin": "16.0.0-alpha.3",
+      "react-addons-test-utils": "16.0.0-alpha.3",
+      "react-addons-update": "16.0.0-alpha.3",
+      "react-dom": "16.0.0-alpha.3",
+      "react-native": "0.43.1",
+      "react-native-mock": "^0.3.0",
+      "sinon": "*",
+      "underscore": "*"
+    },
+    "directories": {},
+    "dist": {
+      "fileCount": 186,
+      "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJa1mgdCRA9TVsSAnZWagAAQbYP/RdAGDUoXmp3sRLE+dGl\nq6ALW6lGHzBeXajnAUH940WXR3uEhzcMSVpSaYGzDkZfsfc1ohjPx6+9gGRQ\n+1BddlnxM9vMEb+/2vNCIGrF2jOzzUJ4ArYP81rTN2R9HSUrH3QmkyrUePZo\nAQTJqi7CoykuNUGLlSikI8b1OG/NjGkNa+5yWxnR6o2wZbrPk4ZJTWRGWVUT\nGEmIOrlmrs1dBgUGyhZe+KAaXST8F4bw3kKxJzrG98+cR2Qhy/ISS0XIbAJv\nsdQNpfw2O1yU636iL71Yp+QQ/ag0wKPOj/9Kafgban5YTmNXfmo7o0+dgQ8H\nsp0Wesc4bf+1okLdXRkpt2sTPmyJXu6rDzZIXpp/TenyOeeF+E7cbnS2qOBh\n01QIReVXrth3RwfmkUlSzTGAsNBLrw/4pO3tc8aMuESAG3US/abuPh0po8DG\nMG/DWncaTOqYNxExt3kk+fK9RKS0WcnRoweEa3tcAQemNGCUaTYKzGNIbPU9\nCsK7PdMdcijO7bmjmh4IEofGASaq9pz7kGzr1IgRjBpj1yzzI+dWFk/ju1bH\nEn2gLVMTVhdgVr0MDic2QHjrJ+FLugtu8xvEIoxe3ek8BwSEmnxx3VBJP+9q\nr9Ky6YP5sDrT4lvp/N5VifRW7p/y83puxbolls56tlhljdRIhnVjsriQW5r0\nbZQB\r\n=J9Fa\r\n-----END PGP SIGNATURE-----\r\n",
+      "shasum": "4074dd63b4973e6397d9ce50e97b57c77a518e9d",
+      "tarball": "https://registry.npmjs.org/react-native-branch/-/react-native-branch-2.2.5.tgz",
+      "unpackedSize": 8221950
+    },
+    "files": ["android", "branch.example.json", "docs", "ios", "react-native-branch.podspec", "scripts", "src"],
+    "gitHead": "fe1d9e1dc1b7d660a279ace1f30300f8360fcad9",
+    "homepage": "https://github.com/BranchMetrics/react-native-branch-deep-linking",
+    "keywords": ["android", "branch", "deep", "deeplink", "ios", "link", "metrics", "react-component", "react-native"],
+    "license": "MIT",
+    "main": "src/index.js",
+    "maintainers": [{
+      "name": "aaaronlopez",
+      "email": "a.aaron.lopez@gmail.com"
+    }, {
+      "name": "ethanneff",
+      "email": "ethan.neff@eneff.com"
+    }, {
+      "name": "jdee",
+      "email": "jgvdthree@gmail.com"
+    }, {
+      "name": "kevinstumpf",
+      "email": "kevin@dispatchertrucking.com"
+    }, {
+      "name": "maephet",
+      "email": "alexjaustin@gmail.com"
+    }, {
+      "name": "rt2zz",
+      "email": "ztstory@gmail.com"
+    }],
+    "name": "react-native-branch",
+    "optionalDependencies": {},
+    "peerDependencies": {
+      "react-native": ">=0.40.0"
+    },
+    "readme": "ERROR: No README data found!",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/BranchMetrics/react-native-branch-deep-linking.git"
+    },
+    "rnpm": {
+      "commands": {
+        "postlink": "node ./node_modules/react-native-branch/scripts/addBranchConfig.js",
+        "postunlink": "node ./node_modules/react-native-branch/scripts/removeBranchConfig.js"
+      }
+    },
+    "scripts": {
+      "lint": "eslint src test",
+      "test": "ava"
+    },
+    "version": "2.2.5"
+  };
+});

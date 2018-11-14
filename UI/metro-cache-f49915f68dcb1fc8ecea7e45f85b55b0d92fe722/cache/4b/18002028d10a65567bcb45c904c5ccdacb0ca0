@@ -1,0 +1,134 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = undefined;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _AnimatedValue = _require(_dependencyMap[0], "../core/AnimatedValue");
+
+  var _AnimatedValue2 = _interopRequireDefault(_AnimatedValue);
+
+  var _Animation2 = _require(_dependencyMap[1], "./Animation");
+
+  var _Animation3 = _interopRequireDefault(_Animation2);
+
+  var _SpringConfig = _require(_dependencyMap[2], "../SpringConfig");
+
+  var _SpringConfig2 = _interopRequireDefault(_SpringConfig);
+
+  var _spring = _require(_dependencyMap[3], "./spring");
+
+  var _spring2 = _interopRequireDefault(_spring);
+
+  var _base = _require(_dependencyMap[4], "../base");
+
+  var _AnimatedClock = _require(_dependencyMap[5], "../core/AnimatedClock");
+
+  var _AnimatedClock2 = _interopRequireDefault(_AnimatedClock);
+
+  var _invariant = _require(_dependencyMap[6], "fbjs/lib/invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  function withDefault(value, defaultValue) {
+    if (value === undefined || value === null) {
+      return defaultValue;
+    }
+
+    return value;
+  }
+
+  var SpringAnimation = function (_Animation) {
+    _inherits(SpringAnimation, _Animation);
+
+    function SpringAnimation(config) {
+      _classCallCheck(this, SpringAnimation);
+
+      var _this = _possibleConstructorReturn(this, (SpringAnimation.__proto__ || Object.getPrototypeOf(SpringAnimation)).call(this));
+
+      _this._overshootClamping = withDefault(config.overshootClamping, false);
+      _this._restDisplacementThreshold = withDefault(config.restDisplacementThreshold, 0.001);
+      _this._restSpeedThreshold = withDefault(config.restSpeedThreshold, 0.001);
+      _this._initialVelocity = withDefault(config.velocity, 0);
+      _this._lastVelocity = withDefault(config.velocity, 0);
+      _this._toValue = config.toValue;
+      _this._delay = withDefault(config.delay, 0);
+
+      if (config.stiffness !== undefined || config.damping !== undefined || config.mass !== undefined) {
+        (0, _invariant2.default)(config.bounciness === undefined && config.speed === undefined && config.tension === undefined && config.friction === undefined, 'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one');
+        _this._stiffness = withDefault(config.stiffness, 100);
+        _this._damping = withDefault(config.damping, 10);
+        _this._mass = withDefault(config.mass, 1);
+      } else if (config.bounciness !== undefined || config.speed !== undefined) {
+        (0, _invariant2.default)(config.tension === undefined && config.friction === undefined && config.stiffness === undefined && config.damping === undefined && config.mass === undefined, 'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one');
+
+        var springConfig = _SpringConfig2.default.fromBouncinessAndSpeed(withDefault(config.bounciness, 8), withDefault(config.speed, 12));
+
+        _this._stiffness = springConfig.stiffness;
+        _this._damping = springConfig.damping;
+        _this._mass = 1;
+      } else {
+        var _springConfig = _SpringConfig2.default.fromOrigamiTensionAndFriction(withDefault(config.tension, 40), withDefault(config.friction, 7));
+
+        _this._stiffness = _springConfig.stiffness;
+        _this._damping = _springConfig.damping;
+        _this._mass = 1;
+      }
+
+      (0, _invariant2.default)(_this._stiffness > 0, 'Stiffness value must be greater than 0');
+      (0, _invariant2.default)(_this._damping > 0, 'Damping value must be greater than 0');
+      (0, _invariant2.default)(_this._mass > 0, 'Mass value must be greater than 0');
+      return _this;
+    }
+
+    _createClass(SpringAnimation, [{
+      key: "start",
+      value: function start(value) {
+        this._clock = new _AnimatedClock2.default();
+        var state = {
+          finished: new _AnimatedValue2.default(0),
+          velocity: new _AnimatedValue2.default(this._initialVelocity),
+          position: value,
+          time: new _AnimatedValue2.default(0)
+        };
+        var config = {
+          damping: this._damping,
+          mass: this._mass,
+          stiffness: this._stiffness,
+          toValue: this._toValue,
+          overshootClamping: this._overshootClamping,
+          restSpeedThreshold: this._restSpeedThreshold,
+          restDisplacementThreshold: this._restDisplacementThreshold
+        };
+        return (0, _base.block)([(0, _base.cond)((0, _base.clockRunning)(this._clock), 0, [(0, _base.startClock)(this._clock)]), (0, _spring2.default)(this._clock, state, config), (0, _base.cond)(state.finished, (0, _base.stopClock)(this._clock))]);
+      }
+    }, {
+      key: "stop",
+      value: function stop() {}
+    }], [{
+      key: "getDefaultState",
+      value: function getDefaultState() {
+        return {
+          position: new _AnimatedValue2.default(0),
+          finished: new _AnimatedValue2.default(0),
+          velocity: new _AnimatedValue2.default(0),
+          time: new _AnimatedValue2.default(0)
+        };
+      }
+    }]);
+
+    return SpringAnimation;
+  }(_Animation3.default);
+
+  exports.default = SpringAnimation;
+});

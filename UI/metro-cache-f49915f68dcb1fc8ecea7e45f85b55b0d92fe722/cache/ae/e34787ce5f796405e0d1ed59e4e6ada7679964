@@ -1,0 +1,60 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    get Entypo() {
+      return _require(_dependencyMap[0], './Entypo').default;
+    },
+
+    get EvilIcons() {
+      return _require(_dependencyMap[1], './EvilIcons').default;
+    },
+
+    get Feather() {
+      return _require(_dependencyMap[2], './Feather').default;
+    },
+
+    get FontAwesome() {
+      return _require(_dependencyMap[3], './FontAwesome').default;
+    },
+
+    get Foundation() {
+      return _require(_dependencyMap[4], './Foundation').default;
+    },
+
+    get Ionicons() {
+      return _require(_dependencyMap[5], './Ionicons').default;
+    },
+
+    get MaterialCommunityIcons() {
+      return _require(_dependencyMap[6], './MaterialCommunityIcons').default;
+    },
+
+    get MaterialIcons() {
+      return _require(_dependencyMap[7], './MaterialIcons').default;
+    },
+
+    get Octicons() {
+      return _require(_dependencyMap[8], './Octicons').default;
+    },
+
+    get SimpleLineIcons() {
+      return _require(_dependencyMap[9], './SimpleLineIcons').default;
+    },
+
+    get Zocial() {
+      return _require(_dependencyMap[10], './Zocial').default;
+    },
+
+    get createIconSet() {
+      return _require(_dependencyMap[11], './createIconSet').default;
+    },
+
+    get createIconSetFromFontello() {
+      return _require(_dependencyMap[12], './createIconSetFromFontello').default;
+    },
+
+    get createIconSetFromIcoMoon() {
+      return _require(_dependencyMap[13], './createIconSetFromIcoMoon').default;
+    }
+
+  };
+});

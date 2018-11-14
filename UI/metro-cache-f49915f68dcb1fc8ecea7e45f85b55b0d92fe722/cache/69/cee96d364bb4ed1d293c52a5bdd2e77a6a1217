@@ -1,0 +1,8 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    get Contacts() {
+      return _require(_dependencyMap[0], './src/Contacts');
+    }
+
+  };
+});

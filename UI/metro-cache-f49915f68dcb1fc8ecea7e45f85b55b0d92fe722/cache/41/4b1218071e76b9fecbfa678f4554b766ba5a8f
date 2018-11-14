@@ -1,0 +1,882 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.DEFAULT = exports.ReminderStatus = exports.CalendarAccessLevel = exports.EventAccessLevel = exports.AlarmMethod = exports.AttendeeType = exports.AttendeeStatus = exports.AttendeeRole = exports.SourceType = exports.EventStatus = exports.CalendarType = exports.Availability = exports.Frequency = exports.EntityTypes = undefined;
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  exports.getCalendarsAsync = getCalendarsAsync;
+  exports.createCalendarAsync = createCalendarAsync;
+  exports.updateCalendarAsync = updateCalendarAsync;
+  exports.deleteCalendarAsync = deleteCalendarAsync;
+  exports.getEventsAsync = getEventsAsync;
+  exports.getEventAsync = getEventAsync;
+  exports.createEventAsync = createEventAsync;
+  exports.updateEventAsync = updateEventAsync;
+  exports.deleteEventAsync = deleteEventAsync;
+  exports.getAttendeesForEventAsync = getAttendeesForEventAsync;
+  exports.createAttendeeAsync = createAttendeeAsync;
+  exports.updateAttendeeAsync = updateAttendeeAsync;
+  exports.deleteAttendeeAsync = deleteAttendeeAsync;
+  exports.getRemindersAsync = getRemindersAsync;
+  exports.getReminderAsync = getReminderAsync;
+  exports.createReminderAsync = createReminderAsync;
+  exports.updateReminderAsync = updateReminderAsync;
+  exports.deleteReminderAsync = deleteReminderAsync;
+  exports.getSourcesAsync = getSourcesAsync;
+  exports.getSourceAsync = getSourceAsync;
+  exports.openEventInCalendar = openEventInCalendar;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  function getCalendarsAsync(entityType) {
+    return regeneratorRuntime.async(function getCalendarsAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (entityType) {
+              _context.next = 2;
+              break;
+            }
+
+            return _context.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getCalendarsAsync(null));
+
+          case 2:
+            return _context.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getCalendarsAsync(entityType));
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function createCalendarAsync() {
+    var details = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var color, newDetails;
+    return regeneratorRuntime.async(function createCalendarAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            color = details.color;
+
+            if (color) {
+              color = (0, _reactNative.processColor)(color);
+            }
+
+            newDetails = _extends({}, details, {
+              id: undefined,
+              color: color
+            });
+            return _context2.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveCalendarAsync(newDetails));
+
+          case 4:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function updateCalendarAsync(id) {
+    var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var color, newDetails;
+    return regeneratorRuntime.async(function updateCalendarAsync$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            if (id) {
+              _context3.next = 2;
+              break;
+            }
+
+            throw new Error('updateCalendarAsync must be called with an id (string) of the target calendar');
+
+          case 2:
+            color = details.color;
+
+            if (color) {
+              color = (0, _reactNative.processColor)(color);
+            }
+
+            if (_reactNative.Platform.OS === 'android') {
+              if (details.hasOwnProperty('source') || details.hasOwnProperty('color') || details.hasOwnProperty('allowsModifications') || details.hasOwnProperty('allowedAvailabilities') || details.hasOwnProperty('isPrimary') || details.hasOwnProperty('ownerAccount') || details.hasOwnProperty('timeZone') || details.hasOwnProperty('allowedReminders') || details.hasOwnProperty('allowedAttendeeTypes') || details.hasOwnProperty('accessLevel')) {
+                console.warn('updateCalendarAsync was called with one or more read-only properties, which will not be updated');
+              }
+            } else {
+              if (details.hasOwnProperty('source') || details.hasOwnProperty('type') || details.hasOwnProperty('entityType') || details.hasOwnProperty('allowsModifications') || details.hasOwnProperty('allowedAvailabilities')) {
+                console.warn('updateCalendarAsync was called with one or more read-only properties, which will not be updated');
+              }
+            }
+
+            newDetails = _extends({}, details, {
+              id: id,
+              color: color
+            });
+            return _context3.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveCalendarAsync(newDetails));
+
+          case 7:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function deleteCalendarAsync(id) {
+    return regeneratorRuntime.async(function deleteCalendarAsync$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            if (id) {
+              _context4.next = 2;
+              break;
+            }
+
+            throw new Error('deleteCalendarAsync must be called with an id (string) of the target calendar');
+
+          case 2:
+            return _context4.abrupt("return", _reactNative.NativeModules.ExponentCalendar.deleteCalendarAsync(id));
+
+          case 3:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getEventsAsync(calendarIds, startDate, endDate) {
+    return regeneratorRuntime.async(function getEventsAsync$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            if (startDate) {
+              _context5.next = 2;
+              break;
+            }
+
+            throw new Error('getEventsAsync must be called with a startDate (date) to search for events');
+
+          case 2:
+            if (endDate) {
+              _context5.next = 4;
+              break;
+            }
+
+            throw new Error('getEventsAsync must be called with an endDate (date) to search for events');
+
+          case 4:
+            if (!(!calendarIds || !calendarIds.length)) {
+              _context5.next = 6;
+              break;
+            }
+
+            throw new Error('getEventsAsync must be called with a non-empty array of calendarIds to search');
+
+          case 6:
+            return _context5.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getEventsAsync(startDate, endDate, calendarIds));
+
+          case 7:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getEventAsync(id) {
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        _ref$futureEvents = _ref.futureEvents,
+        futureEvents = _ref$futureEvents === undefined ? false : _ref$futureEvents,
+        instanceStartDate = _ref.instanceStartDate;
+
+    return regeneratorRuntime.async(function getEventAsync$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            if (id) {
+              _context6.next = 2;
+              break;
+            }
+
+            throw new Error('getEventAsync must be called with an id (string) of the target event');
+
+          case 2:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context6.next = 6;
+              break;
+            }
+
+            return _context6.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getEventByIdAsync(id, instanceStartDate));
+
+          case 6:
+            return _context6.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getEventByIdAsync(id));
+
+          case 7:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function createEventAsync(calendarId) {
+    var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var newDetails;
+    return regeneratorRuntime.async(function createEventAsync$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            if (calendarId) {
+              _context7.next = 2;
+              break;
+            }
+
+            throw new Error('createEventAsync must be called with an id (string) of the target calendar');
+
+          case 2:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context7.next = 9;
+              break;
+            }
+
+            if (details.startDate) {
+              _context7.next = 5;
+              break;
+            }
+
+            throw new Error('createEventAsync requires a startDate (Date)');
+
+          case 5:
+            if (details.endDate) {
+              _context7.next = 7;
+              break;
+            }
+
+            throw new Error('createEventAsync requires an endDate (Date)');
+
+          case 7:
+            if (details.timeZone) {
+              _context7.next = 9;
+              break;
+            }
+
+            throw new Error('createEventAsync requires a timeZone (string)');
+
+          case 9:
+            newDetails = _extends({}, details, {
+              id: undefined,
+              calendarId: calendarId === DEFAULT ? undefined : calendarId
+            });
+            return _context7.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveEventAsync(newDetails, {}));
+
+          case 11:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function updateEventAsync(id) {
+    var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        _ref2$futureEvents = _ref2.futureEvents,
+        futureEvents = _ref2$futureEvents === undefined ? false : _ref2$futureEvents,
+        instanceStartDate = _ref2.instanceStartDate;
+
+    var newDetails;
+    return regeneratorRuntime.async(function updateEventAsync$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            if (id) {
+              _context8.next = 2;
+              break;
+            }
+
+            throw new Error('updateEventAsync must be called with an id (string) of the target event');
+
+          case 2:
+            if (_reactNative.Platform.OS === 'ios') {
+              if (details.hasOwnProperty('creationDate') || details.hasOwnProperty('lastModifiedDate') || details.hasOwnProperty('originalStartDate') || details.hasOwnProperty('isDetached') || details.hasOwnProperty('status') || details.hasOwnProperty('organizer')) {
+                console.warn('updateEventAsync was called with one or more read-only properties, which will not be updated');
+              }
+            }
+
+            newDetails = _extends({}, details, {
+              id: id,
+              instanceStartDate: instanceStartDate
+            });
+            return _context8.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveEventAsync(newDetails, {
+              futureEvents: futureEvents
+            }));
+
+          case 5:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function deleteEventAsync(id) {
+    var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        _ref3$futureEvents = _ref3.futureEvents,
+        futureEvents = _ref3$futureEvents === undefined ? false : _ref3$futureEvents,
+        instanceStartDate = _ref3.instanceStartDate;
+
+    return regeneratorRuntime.async(function deleteEventAsync$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            if (id) {
+              _context9.next = 2;
+              break;
+            }
+
+            throw new Error('deleteEventAsync must be called with an id (string) of the target event');
+
+          case 2:
+            return _context9.abrupt("return", _reactNative.NativeModules.ExponentCalendar.deleteEventAsync({
+              id: id,
+              instanceStartDate: instanceStartDate
+            }, {
+              futureEvents: futureEvents
+            }));
+
+          case 3:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getAttendeesForEventAsync(id) {
+    var _ref4 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        _ref4$futureEvents = _ref4.futureEvents,
+        futureEvents = _ref4$futureEvents === undefined ? false : _ref4$futureEvents,
+        instanceStartDate = _ref4.instanceStartDate;
+
+    var params;
+    return regeneratorRuntime.async(function getAttendeesForEventAsync$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            if (id) {
+              _context10.next = 2;
+              break;
+            }
+
+            throw new Error('getAttendeesForEventAsync must be called with an id (string) of the target event');
+
+          case 2:
+            params = _reactNative.Platform.OS === 'ios' ? {
+              id: id,
+              instanceStartDate: instanceStartDate
+            } : id;
+            return _context10.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getAttendeesForEventAsync(params));
+
+          case 4:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function createAttendeeAsync(eventId) {
+    var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var newDetails;
+    return regeneratorRuntime.async(function createAttendeeAsync$(_context11) {
+      while (1) {
+        switch (_context11.prev = _context11.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context11.next = 2;
+              break;
+            }
+
+            throw new Error('createAttendeeAsync is not available on iOS');
+
+          case 2:
+            if (eventId) {
+              _context11.next = 4;
+              break;
+            }
+
+            throw new Error('createAttendeeAsync must be called with an id (string) of the target event');
+
+          case 4:
+            if (details.email) {
+              _context11.next = 6;
+              break;
+            }
+
+            throw new Error('createAttendeeAsync requires an email (string)');
+
+          case 6:
+            if (details.role) {
+              _context11.next = 8;
+              break;
+            }
+
+            throw new Error('createAttendeeAsync requires a role (string)');
+
+          case 8:
+            if (details.type) {
+              _context11.next = 10;
+              break;
+            }
+
+            throw new Error('createAttendeeAsync requires a type (string)');
+
+          case 10:
+            if (details.status) {
+              _context11.next = 12;
+              break;
+            }
+
+            throw new Error('createAttendeeAsync requires a status (string)');
+
+          case 12:
+            newDetails = _extends({}, details, {
+              id: undefined
+            });
+            return _context11.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveAttendeeForEventAsync(newDetails, eventId));
+
+          case 14:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function updateAttendeeAsync(id) {
+    var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var newDetails;
+    return regeneratorRuntime.async(function updateAttendeeAsync$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context12.next = 2;
+              break;
+            }
+
+            throw new Error('updateAttendeeAsync is not available on iOS');
+
+          case 2:
+            if (id) {
+              _context12.next = 4;
+              break;
+            }
+
+            throw new Error('updateAttendeeAsync must be called with an id (string) of the target event');
+
+          case 4:
+            newDetails = _extends({}, details, {
+              id: id
+            });
+            return _context12.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveAttendeeForEventAsync(newDetails, null));
+
+          case 6:
+          case "end":
+            return _context12.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function deleteAttendeeAsync(id) {
+    return regeneratorRuntime.async(function deleteAttendeeAsync$(_context13) {
+      while (1) {
+        switch (_context13.prev = _context13.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'ios')) {
+              _context13.next = 2;
+              break;
+            }
+
+            throw new Error('deleteAttendeeAsync is not available on iOS');
+
+          case 2:
+            if (id) {
+              _context13.next = 4;
+              break;
+            }
+
+            throw new Error('deleteAttendeeAsync must be called with an id (string) of the target event');
+
+          case 4:
+            return _context13.abrupt("return", _reactNative.NativeModules.ExponentCalendar.deleteAttendeeAsync(id));
+
+          case 5:
+          case "end":
+            return _context13.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getRemindersAsync(calendarIds, status, startDate, endDate) {
+    return regeneratorRuntime.async(function getRemindersAsync$(_context14) {
+      while (1) {
+        switch (_context14.prev = _context14.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context14.next = 2;
+              break;
+            }
+
+            throw new Error('getRemindersAsync is not available on Android');
+
+          case 2:
+            if (!(status && !startDate)) {
+              _context14.next = 4;
+              break;
+            }
+
+            throw new Error('getRemindersAsync must be called with a startDate (date) to search for reminders');
+
+          case 4:
+            if (!(status && !endDate)) {
+              _context14.next = 6;
+              break;
+            }
+
+            throw new Error('getRemindersAsync must be called with an endDate (date) to search for reminders');
+
+          case 6:
+            if (!(!calendarIds || !calendarIds.length)) {
+              _context14.next = 8;
+              break;
+            }
+
+            throw new Error('getRemindersAsync must be called with a non-empty array of calendarIds to search');
+
+          case 8:
+            return _context14.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getRemindersAsync(startDate || null, endDate || null, calendarIds, status || null));
+
+          case 9:
+          case "end":
+            return _context14.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getReminderAsync(id) {
+    return regeneratorRuntime.async(function getReminderAsync$(_context15) {
+      while (1) {
+        switch (_context15.prev = _context15.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context15.next = 2;
+              break;
+            }
+
+            throw new Error('getReminderAsync is not available on Android');
+
+          case 2:
+            if (id) {
+              _context15.next = 4;
+              break;
+            }
+
+            throw new Error('getReminderAsync must be called with an id (string) of the target reminder');
+
+          case 4:
+            return _context15.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getReminderByIdAsync(id));
+
+          case 5:
+          case "end":
+            return _context15.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function createReminderAsync(calendarId) {
+    var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var newDetails;
+    return regeneratorRuntime.async(function createReminderAsync$(_context16) {
+      while (1) {
+        switch (_context16.prev = _context16.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context16.next = 2;
+              break;
+            }
+
+            throw new Error('createReminderAsync is not available on Android');
+
+          case 2:
+            if (calendarId) {
+              _context16.next = 4;
+              break;
+            }
+
+            throw new Error('createReminderAsync must be called with an id (string) of the target calendar');
+
+          case 4:
+            newDetails = _extends({}, details, {
+              id: undefined,
+              calendarId: calendarId === DEFAULT ? undefined : calendarId
+            });
+            return _context16.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveReminderAsync(newDetails));
+
+          case 6:
+          case "end":
+            return _context16.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function updateReminderAsync(id) {
+    var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var newDetails;
+    return regeneratorRuntime.async(function updateReminderAsync$(_context17) {
+      while (1) {
+        switch (_context17.prev = _context17.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context17.next = 2;
+              break;
+            }
+
+            throw new Error('updateReminderAsync is not available on Android');
+
+          case 2:
+            if (id) {
+              _context17.next = 4;
+              break;
+            }
+
+            throw new Error('updateReminderAsync must be called with an id (string) of the target reminder');
+
+          case 4:
+            if (details.hasOwnProperty('creationDate') || details.hasOwnProperty('lastModifiedDate')) {
+              console.warn('updateReminderAsync was called with one or more read-only properties, which will not be updated');
+            }
+
+            newDetails = _extends({}, details, {
+              id: id
+            });
+            return _context17.abrupt("return", _reactNative.NativeModules.ExponentCalendar.saveReminderAsync(newDetails));
+
+          case 7:
+          case "end":
+            return _context17.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function deleteReminderAsync(id) {
+    return regeneratorRuntime.async(function deleteReminderAsync$(_context18) {
+      while (1) {
+        switch (_context18.prev = _context18.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context18.next = 2;
+              break;
+            }
+
+            throw new Error('deleteReminderAsync is not available on Android');
+
+          case 2:
+            if (id) {
+              _context18.next = 4;
+              break;
+            }
+
+            throw new Error('deleteReminderAsync must be called with an id (string) of the target reminder');
+
+          case 4:
+            return _context18.abrupt("return", _reactNative.NativeModules.ExponentCalendar.deleteReminderAsync(id));
+
+          case 5:
+          case "end":
+            return _context18.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getSourcesAsync() {
+    return regeneratorRuntime.async(function getSourcesAsync$(_context19) {
+      while (1) {
+        switch (_context19.prev = _context19.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context19.next = 2;
+              break;
+            }
+
+            throw new Error('getSourcesAsync is not available on Android');
+
+          case 2:
+            return _context19.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getSourcesAsync());
+
+          case 3:
+          case "end":
+            return _context19.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getSourceAsync(id) {
+    return regeneratorRuntime.async(function getSourceAsync$(_context20) {
+      while (1) {
+        switch (_context20.prev = _context20.next) {
+          case 0:
+            if (!(_reactNative.Platform.OS === 'android')) {
+              _context20.next = 2;
+              break;
+            }
+
+            throw new Error('getSourceAsync is not available on Android');
+
+          case 2:
+            if (id) {
+              _context20.next = 4;
+              break;
+            }
+
+            throw new Error('getSourceAsync must be called with an id (string) of the target source');
+
+          case 4:
+            return _context20.abrupt("return", _reactNative.NativeModules.ExponentCalendar.getSourceByIdAsync(id));
+
+          case 5:
+          case "end":
+            return _context20.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function openEventInCalendar(id) {
+    if (_reactNative.Platform.OS === 'ios') {
+      console.warn('openEventInCalendar is not available on iOS');
+      return;
+    }
+
+    if (!id) {
+      throw new Error('openEventInCalendar must be called with an id (string) of the target event');
+    }
+
+    return _reactNative.NativeModules.ExponentCalendar.openEventInCalendar(parseInt(id, 10));
+  }
+
+  var EntityTypes = exports.EntityTypes = {
+    EVENT: 'event',
+    REMINDER: 'reminder'
+  };
+  var Frequency = exports.Frequency = {
+    DAILY: 'daily',
+    WEEKLY: 'weekly',
+    MONTHLY: 'monthly',
+    YEARLY: 'yearly'
+  };
+  var Availability = exports.Availability = {
+    NOT_SUPPORTED: 'notSupported',
+    BUSY: 'busy',
+    FREE: 'free',
+    TENTATIVE: 'tentative',
+    UNAVAILABLE: 'unavailable'
+  };
+  var CalendarType = exports.CalendarType = {
+    LOCAL: 'local',
+    CALDAV: 'caldav',
+    EXCHANGE: 'exchange',
+    SUBSCRIBED: 'subscribed',
+    BIRTHDAYS: 'birthdays'
+  };
+  var EventStatus = exports.EventStatus = {
+    NONE: 'none',
+    CONFIRMED: 'confirmed',
+    TENTATIVE: 'tentative',
+    CANCELED: 'canceled'
+  };
+  var SourceType = exports.SourceType = {
+    LOCAL: 'local',
+    EXCHANGE: 'exchange',
+    CALDAV: 'caldav',
+    MOBILEME: 'mobileme',
+    SUBSCRIBED: 'subscribed',
+    BIRTHDAYS: 'birthdays'
+  };
+  var AttendeeRole = exports.AttendeeRole = {
+    UNKNOWN: 'unknown',
+    REQUIRED: 'required',
+    OPTIONAL: 'optional',
+    CHAIR: 'chair',
+    NON_PARTICIPANT: 'nonParticipant',
+    ATTENDEE: 'attendee',
+    ORGANIZER: 'organizer',
+    PERFORMER: 'performer',
+    SPEAKER: 'speaker',
+    NONE: 'none'
+  };
+  var AttendeeStatus = exports.AttendeeStatus = {
+    UNKNOWN: 'unknown',
+    PENDING: 'pending',
+    ACCEPTED: 'accepted',
+    DECLINED: 'declined',
+    TENTATIVE: 'tentative',
+    DELEGATED: 'delegated',
+    COMPLETED: 'completed',
+    IN_PROCESS: 'inProcess',
+    INVITED: 'invited',
+    NONE: 'none'
+  };
+  var AttendeeType = exports.AttendeeType = {
+    UNKNOWN: 'unknown',
+    PERSON: 'person',
+    ROOM: 'room',
+    GROUP: 'group',
+    RESOURCE: 'resource',
+    OPTIONAL: 'optional',
+    REQUIRED: 'required',
+    NONE: 'none'
+  };
+  var AlarmMethod = exports.AlarmMethod = {
+    ALARM: 'alarm',
+    ALERT: 'alert',
+    EMAIL: 'email',
+    SMS: 'sms',
+    DEFAULT: 'default'
+  };
+  var EventAccessLevel = exports.EventAccessLevel = {
+    CONFIDENTIAL: 'confidential',
+    PRIVATE: 'private',
+    PUBLIC: 'public',
+    DEFAULT: 'default'
+  };
+  var CalendarAccessLevel = exports.CalendarAccessLevel = {
+    CONTRIBUTOR: 'contributor',
+    EDITOR: 'editor',
+    FREEBUSY: 'freebusy',
+    OVERRIDE: 'override',
+    OWNER: 'owner',
+    READ: 'read',
+    RESPOND: 'respond',
+    ROOT: 'root',
+    NONE: 'none'
+  };
+  var ReminderStatus = exports.ReminderStatus = {
+    COMPLETED: 'completed',
+    INCOMPLETE: 'incomplete'
+  };
+  var DEFAULT = exports.DEFAULT = 'default';
+});

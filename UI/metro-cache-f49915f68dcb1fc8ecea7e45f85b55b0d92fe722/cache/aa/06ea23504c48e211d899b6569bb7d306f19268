@@ -1,0 +1,30 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  exports.default = processTheme;
+
+  var _processColor = _require(_dependencyMap[0], "react-native/Libraries/StyleSheet/processColor");
+
+  var _processColor2 = _interopRequireDefault(_processColor);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+  function processTheme() {
+    var theme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return Object.keys(theme).reduce(function (result, key) {
+      var value = theme[key];
+
+      if (key.toLowerCase().endsWith('color')) {
+        value = (0, _processColor2.default)(value);
+      }
+
+      return _extends({}, result, _defineProperty({}, key, value));
+    }, {});
+  }
+});

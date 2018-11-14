@@ -1,0 +1,373 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.ContactTypes = exports.SortTypes = exports.ContainerTypes = exports.CalendarFormats = exports.Fields = exports.RELATIONSHIPS = exports.DATES = exports.URLS = exports.IM_ADDRESSES = exports.SOCIAL_PROFILES = exports.PHONETIC_LAST_NAME = exports.PHONETIC_MIDDLE_NAME = exports.PHONETIC_FIRST_NAME = exports.NAME_SUFFIX = exports.NAME_PREFIX = exports.NON_GREGORIAN_BIRTHDAY = exports.BIRTHDAY = exports.NOTE = exports.RAW_IMAGE = exports.IMAGE = exports.ADDRESSES = exports.EMAILS = exports.PHONE_NUMBERS = undefined;
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  exports.shareContactAsync = shareContactAsync;
+  exports.getContactsAsync = getContactsAsync;
+  exports.getPagedContactsAsync = getPagedContactsAsync;
+  exports.getContactByIdAsync = getContactByIdAsync;
+  exports.addContactAsync = addContactAsync;
+  exports.updateContactAsync = updateContactAsync;
+  exports.removeContactAsync = removeContactAsync;
+  exports.writeContactToFileAsync = writeContactToFileAsync;
+  exports.presentFormAsync = presentFormAsync;
+  exports.addExistingGroupToContainerAsync = addExistingGroupToContainerAsync;
+  exports.createGroupAsync = createGroupAsync;
+  exports.updateGroupNameAsync = updateGroupNameAsync;
+  exports.removeGroupAsync = removeGroupAsync;
+  exports.addExistingContactToGroupAsync = addExistingContactToGroupAsync;
+  exports.removeContactFromGroupAsync = removeContactFromGroupAsync;
+  exports.getGroupsAsync = getGroupsAsync;
+  exports.getDefaultContainerIdAsync = getDefaultContainerIdAsync;
+  exports.getContainersAsync = getContainersAsync;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var _expoCore = _require(_dependencyMap[1], "expo-core");
+
+  var _uuidJs = _require(_dependencyMap[2], "uuid-js");
+
+  var _uuidJs2 = _interopRequireDefault(_uuidJs);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+  var ExpoContacts = _expoCore.NativeModulesProxy.ExpoContacts;
+  var isIos = _expoCore.Platform.OS === 'ios';
+
+  function shareContactAsync(contactId, message) {
+    var shareOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    var _url;
+
+    return regeneratorRuntime.async(function shareContactAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!isIos) {
+              _context.next = 7;
+              break;
+            }
+
+            _context.next = 3;
+            return regeneratorRuntime.awrap(writeContactToFileAsync({
+              id: contactId
+            }));
+
+          case 3:
+            _url = _context.sent;
+
+            _reactNative.Share.share({
+              url: _url,
+              message: message
+            }, shareOptions);
+
+            _context.next = 8;
+            break;
+
+          case 7:
+            return _context.abrupt("return", ExpoContacts.shareContactAsync(contactId, message));
+
+          case 8:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function getContactsAsync() {
+    var contactQuery = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return ExpoContacts.getContactsAsync(contactQuery);
+  }
+
+  function getPagedContactsAsync() {
+    var contactQuery = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    var pageSize = contactQuery.pageSize,
+        nOptions = _objectWithoutProperties(contactQuery, ["pageSize"]);
+
+    if (pageSize && pageSize <= 0) {
+      throw new Error('Error: Contacts.getPagedContactsAsync: `pageSize` must be greater than 0');
+    }
+
+    return getContactsAsync(_extends({}, nOptions, {
+      pageSize: pageSize
+    }));
+  }
+
+  function getContactByIdAsync(id, fields) {
+    var results;
+    return regeneratorRuntime.async(function getContactByIdAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            if (!(id == null)) {
+              _context2.next = 4;
+              break;
+            }
+
+            throw new Error('Error: Contacts.getContactByIdAsync: Please pass an ID as a parameter');
+
+          case 4:
+            _context2.next = 6;
+            return regeneratorRuntime.awrap(ExpoContacts.getContactsAsync({
+              pageSize: 1,
+              pageOffset: 0,
+              fields: fields,
+              id: id
+            }));
+
+          case 6:
+            results = _context2.sent;
+
+            if (!(results && results.data && results.data.length > 0)) {
+              _context2.next = 9;
+              break;
+            }
+
+            return _context2.abrupt("return", results.data[0]);
+
+          case 9:
+            return _context2.abrupt("return", null);
+
+          case 10:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function addContactAsync(contact, containerId) {
+    return ExpoContacts.addContactAsync(contact, containerId);
+  }
+
+  function updateContactAsync(contact) {
+    return ExpoContacts.updateContactAsync(contact);
+  }
+
+  function removeContactAsync(contactId) {
+    return ExpoContacts.removeContactAsync(contactId);
+  }
+
+  function writeContactToFileAsync() {
+    var contactQuery = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return ExpoContacts.writeContactToFileAsync(contactQuery);
+  }
+
+  function presentFormAsync(contactId, contact) {
+    var formOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    if (isIos) {
+      var adjustedOptions = formOptions;
+
+      if (contactId) {
+        if (contact) {
+          contact = null;
+          console.log('Expo.Contacts.presentFormAsync: You should define either a `contact` or a `contactId` but not both.');
+        }
+
+        if (adjustedOptions.isNew !== undefined) {
+          console.log('Expo.Contacts.presentFormAsync: formOptions.isNew is not supported with `contactId`');
+        }
+      }
+
+      return ExpoContacts.presentFormAsync(contactId, contact, adjustedOptions);
+    } else {
+      return ExpoContacts.presentFormAsync(contactId, contact, formOptions);
+    }
+  }
+
+  function addExistingGroupToContainerAsync(groupId, containerId) {
+    if (isIos) {
+      return ExpoContacts.addExistingGroupToContainerAsync(groupId, containerId);
+    } else {
+      throw new Error('Error: Contacts.addExistingGroupToContainerAsync: iOS Only');
+    }
+  }
+
+  function createGroupAsync(name, containerId) {
+    return regeneratorRuntime.async(function createGroupAsync$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            if (!isIos) {
+              _context3.next = 9;
+              break;
+            }
+
+            name = name || _uuidJs2.default.create().toString();
+
+            if (containerId) {
+              _context3.next = 6;
+              break;
+            }
+
+            _context3.next = 5;
+            return regeneratorRuntime.awrap(getDefaultContainerIdAsync());
+
+          case 5:
+            containerId = _context3.sent;
+
+          case 6:
+            return _context3.abrupt("return", ExpoContacts.createGroupAsync(name, containerId));
+
+          case 9:
+            throw new Error('Error: Contacts.createGroupAsync: iOS Only');
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function updateGroupNameAsync(groupName, groupId) {
+    if (isIos) {
+      return ExpoContacts.updateGroupNameAsync(groupName, groupId);
+    } else {
+      throw new Error('Error: Contacts.updateGroupNameAsync: iOS Only');
+    }
+  }
+
+  function removeGroupAsync(groupId) {
+    if (isIos) {
+      return ExpoContacts.removeGroupAsync(groupId);
+    } else {
+      throw new Error('Error: Contacts.removeGroupAsync: iOS Only');
+    }
+  }
+
+  function addExistingContactToGroupAsync(contactId, groupId) {
+    if (isIos) {
+      return ExpoContacts.addExistingContactToGroupAsync(contactId, groupId);
+    } else {
+      throw new Error('Error: Contacts.addExistingContactToGroupAsync: iOS Only');
+    }
+  }
+
+  function removeContactFromGroupAsync(contactId, groupId) {
+    if (isIos) {
+      return ExpoContacts.removeContactFromGroupAsync(contactId, groupId);
+    } else {
+      throw new Error('Error: Contacts.removeContactFromGroupAsync: iOS Only');
+    }
+  }
+
+  function getGroupsAsync(groupQuery) {
+    if (isIos) {
+      return ExpoContacts.getGroupsAsync(groupQuery);
+    } else {
+      throw new Error('Error: Contacts.getGroupsAsync: iOS Only');
+    }
+  }
+
+  function getDefaultContainerIdAsync() {
+    if (isIos) {
+      return ExpoContacts.getDefaultContainerIdentifierAsync();
+    } else {
+      throw new Error('Error: Contacts.getDefaultContainerIdAsync: iOS Only');
+    }
+  }
+
+  function getContainersAsync(containerQuery) {
+    if (isIos) {
+      return ExpoContacts.getContainersAsync(containerQuery);
+    } else {
+      throw new Error('Error: Contacts.getContainersAsync: iOS Only');
+    }
+  }
+
+  var PHONE_NUMBERS = exports.PHONE_NUMBERS = 'phoneNumbers';
+  var EMAILS = exports.EMAILS = 'emails';
+  var ADDRESSES = exports.ADDRESSES = 'addresses';
+  var IMAGE = exports.IMAGE = 'image';
+  var RAW_IMAGE = exports.RAW_IMAGE = 'rawImage';
+  var NOTE = exports.NOTE = 'note';
+  var BIRTHDAY = exports.BIRTHDAY = 'birthday';
+  var NON_GREGORIAN_BIRTHDAY = exports.NON_GREGORIAN_BIRTHDAY = 'nonGregorianBirthday';
+  var NAME_PREFIX = exports.NAME_PREFIX = 'namePrefix';
+  var NAME_SUFFIX = exports.NAME_SUFFIX = 'nameSuffix';
+  var PHONETIC_FIRST_NAME = exports.PHONETIC_FIRST_NAME = 'phoneticFirstName';
+  var PHONETIC_MIDDLE_NAME = exports.PHONETIC_MIDDLE_NAME = 'phoneticMiddleName';
+  var PHONETIC_LAST_NAME = exports.PHONETIC_LAST_NAME = 'phoneticLastName';
+  var SOCIAL_PROFILES = exports.SOCIAL_PROFILES = 'socialProfiles';
+  var IM_ADDRESSES = exports.IM_ADDRESSES = 'instantMessageAddresses';
+  var URLS = exports.URLS = 'urlAddresses';
+  var DATES = exports.DATES = 'dates';
+  var RELATIONSHIPS = exports.RELATIONSHIPS = 'relationships';
+  var Fields = exports.Fields = {
+    ID: 'id',
+    ContactType: 'contactType',
+    Name: 'name',
+    FirstName: 'firstName',
+    MiddleName: 'middleName',
+    LastName: 'lastName',
+    MaidenName: 'maidenName',
+    NamePrefix: 'namePrefix',
+    NameSuffix: 'nameSuffix',
+    Nickname: 'nickname',
+    PhoneticFirstName: 'phoneticFirstName',
+    PhoneticMiddleName: 'phoneticMiddleName',
+    PhoneticLastName: 'phoneticLastName',
+    Birthday: 'birthday',
+    NonGregorianBirthday: 'nonGregorianBirthday',
+    Emails: 'emails',
+    PhoneNumbers: 'phoneNumbers',
+    Addresses: 'addresses',
+    SocialProfiles: 'socialProfiles',
+    InstantMessageAddresses: 'instantMessageAddresses',
+    UrlAddresses: 'urlAddresses',
+    Company: 'company',
+    JobTitle: 'jobTitle',
+    Department: 'department',
+    ImageAvailable: 'imageAvailable',
+    Image: 'image',
+    RawImage: 'rawImage',
+    ExtraNames: 'extraNames',
+    Note: 'note',
+    Dates: 'dates',
+    Relationships: 'relationships'
+  };
+  var CalendarFormats = exports.CalendarFormats = {
+    Gregorian: 'gregorian',
+    Buddhist: 'buddhist',
+    Chinese: 'chinese',
+    Coptic: 'coptic',
+    EthiopicAmeteMihret: 'ethiopicAmeteMihret',
+    EthiopicAmeteAlem: 'ethiopicAmeteAlem',
+    Hebrew: 'hebrew',
+    ISO8601: 'iso8601',
+    Indian: 'indian',
+    Islamic: 'islamic',
+    IslamicCivil: 'islamicCivil',
+    Japanese: 'japanese',
+    Persian: 'persian',
+    RepublicOfChina: 'republicOfChina',
+    IslamicTabular: 'islamicTabular',
+    IslamicUmmAlQura: 'islamicUmmAlQura'
+  };
+  var ContainerTypes = exports.ContainerTypes = {
+    Local: 'local',
+    Exchange: 'exchange',
+    CardDAV: 'cardDAV',
+    Unassigned: 'unassigned'
+  };
+  var SortTypes = exports.SortTypes = {
+    UserDefault: 'userDefault',
+    FirstName: 'firstName',
+    LastName: 'lastName',
+    None: 'none'
+  };
+  var ContactTypes = exports.ContactTypes = {
+    Person: 'person',
+    Company: 'company'
+  };
+});

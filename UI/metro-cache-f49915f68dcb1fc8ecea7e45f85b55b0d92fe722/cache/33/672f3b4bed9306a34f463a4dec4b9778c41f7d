@@ -1,0 +1,140 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _class,
+      _temp2,
+      _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/expo-ads-admob/src/AdMobBanner.js";
+
+  var _propTypes = _require(_dependencyMap[2], "prop-types");
+
+  var _propTypes2 = _interopRequireDefault(_propTypes);
+
+  var _expoCore = _require(_dependencyMap[3], "expo-core");
+
+  var _reactNative = _require(_dependencyMap[4], "react-native");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    AdMobBanner: {
+      displayName: "AdMobBanner"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/expo-ads-admob/src/AdMobBanner.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var AdMobBanner = _wrapComponent("AdMobBanner")((_temp2 = _class = function (_React$Component) {
+    _inherits(AdMobBanner, _React$Component);
+
+    function AdMobBanner() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, AdMobBanner);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AdMobBanner.__proto__ || Object.getPrototypeOf(AdMobBanner)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        style: {}
+      }, _this._handleSizeChange = function (_ref2) {
+        var nativeEvent = _ref2.nativeEvent;
+        var height = nativeEvent.height,
+            width = nativeEvent.width;
+
+        _this.setState({
+          style: {
+            width: width,
+            height: height
+          }
+        });
+      }, _this._handleDidFailToReceiveAdWithError = function (_ref3) {
+        var nativeEvent = _ref3.nativeEvent;
+        return _this.props.onDidFailToReceiveAdWithError && _this.props.onDidFailToReceiveAdWithError(nativeEvent.error);
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(AdMobBanner, [{
+      key: "render",
+      value: function render() {
+        return _react3.default.createElement(
+          _reactNative.View,
+          {
+            style: this.props.style,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 92
+            }
+          },
+          _react3.default.createElement(ExpoBannerView, {
+            style: this.state.style,
+            adUnitID: this.props.adUnitID,
+            bannerSize: this.props.bannerSize,
+            testDeviceID: this.props.testDeviceID,
+            onSizeChange: this._handleSizeChange,
+            onAdViewDidReceiveAd: this.props.onAdViewDidReceiveAd,
+            onDidFailToReceiveAdWithError: this._handleDidFailToReceiveAdWithError,
+            onAdViewWillPresentScreen: this.props.onAdViewWillPresentScreen,
+            onAdViewWillDismissScreen: this.props.onAdViewWillDismissScreen,
+            onAdViewDidDismissScreen: this.props.onAdViewDidDismissScreen,
+            onAdViewWillLeaveApplication: this.props.onAdViewWillLeaveApplication,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 93
+            }
+          })
+        );
+      }
+    }]);
+
+    return AdMobBanner;
+  }(_react3.default.Component), _class.propTypes = _extends({
+    bannerSize: _propTypes2.default.oneOf(['banner', 'largeBanner', 'mediumRectangle', 'fullBanner', 'leaderboard', 'smartBannerPortrait', 'smartBannerLandscape']),
+    adUnitID: _propTypes2.default.string,
+    testDeviceID: _propTypes2.default.string,
+    onAdViewDidReceiveAd: _propTypes2.default.func,
+    onDidFailToReceiveAdWithError: _propTypes2.default.func,
+    onAdViewWillPresentScreen: _propTypes2.default.func,
+    onAdViewWillDismissScreen: _propTypes2.default.func,
+    onAdViewDidDismissScreen: _propTypes2.default.func,
+    onAdViewWillLeaveApplication: _propTypes2.default.func
+  }, _reactNative.ViewPropTypes), _class.defaultProps = {
+    bannerSize: 'smartBannerPortrait'
+  }, _temp2));
+
+  exports.default = AdMobBanner;
+  var ExpoBannerView = (0, _expoCore.requireNativeViewManager)('ExpoAdsAdMobBannerView', AdMobBanner);
+});

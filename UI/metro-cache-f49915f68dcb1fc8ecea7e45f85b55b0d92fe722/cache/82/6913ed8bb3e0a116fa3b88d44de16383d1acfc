@@ -1,0 +1,103 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    "_args": [["expo-gl@~1.0.2", "/home/monopolized/github/CS470_Project/UI/node_modules/expo"]],
+    "_from": "expo-gl@>=1.0.2 <1.1.0",
+    "_hasShrinkwrap": false,
+    "_id": "expo-gl@1.0.2",
+    "_inCache": true,
+    "_installable": true,
+    "_integrity": "",
+    "_location": "/expo-gl",
+    "_nodeVersion": "9.5.0",
+    "_npmOperationalInternal": {
+      "host": "s3://npm-registry-packages",
+      "tmp": "tmp/expo-gl_1.0.2_1536669263587_0.0030641759286715864"
+    },
+    "_npmUser": {
+      "email": "sapeta.tomasz@gmail.com",
+      "name": "tsapeta"
+    },
+    "_npmVersion": "6.1.0",
+    "_phantomChildren": {},
+    "_requested": {
+      "name": "expo-gl",
+      "raw": "expo-gl@~1.0.2",
+      "rawSpec": "~1.0.2",
+      "scope": null,
+      "spec": ">=1.0.2 <1.1.0",
+      "type": "range"
+    },
+    "_requiredBy": ["/expo"],
+    "_resolved": "https://registry.npmjs.org/expo-gl/-/expo-gl-1.0.2.tgz",
+    "_shasum": "730811ab43b25ec68a8ebee036292589238342e0",
+    "_shrinkwrap": null,
+    "_spec": "expo-gl@~1.0.2",
+    "_where": "/home/monopolized/github/CS470_Project/UI/node_modules/expo",
+    "author": {
+      "name": "650 Industries, Inc."
+    },
+    "dependencies": {
+      "expo-camera-interface": "~1.0.2",
+      "expo-core": "~1.1.0",
+      "expo-file-system-interface": "~1.0.2",
+      "expo-gl-cpp": "~1.0.2"
+    },
+    "description": "Expo GL standalone universal module",
+    "devDependencies": {
+      "babel-preset-expo": "^4.0.0"
+    },
+    "directories": {},
+    "dist": {
+      "fileCount": 43,
+      "integrity": "sha512-QCpAlwSeOWc+O6IYn8kwq36fjdqoyNxTT31qcT3/pm1fPIGV0OJz3sImnx/1V9gdYY0efR/5Nw/ItWCknJCG9A==",
+      "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbl7ZQCRA9TVsSAnZWagAAE9YQAIy1NzxpOsaSgwdEdcCD\nj/VklEgPPPdQtKUHWv9Gvk0uPN2oWP1oaMHeXshcBfK/ZfQmuKSwTBI08fkg\nuwKvPIJeLt4phRxty73Wx+M2iaJQJuxzyvK04bT7itgdsRib1281XiFEIvHJ\nAOzkfBr54K94sSgfUvqtPVLyfGxCQ1wkkBI/pjra0W9TKamUFHwzE5+DES/e\nGvdPcKO0YApH8nq2DsuQ14jPcMsOdP3bJ8HWkTP1iIIUELXhCXl0RWdmc5KC\ntGYl87LJ+MTEg21blQKB2DQKWCVAqh7+OXTSmDqZkumh3yWbwvWDMLL6lhSC\nEP7bhN6fZEou08GZFV7JrvJ8tdExEob9FGS82LwQtCFcwkEE/JkmpZgYqi10\nfhPKmy8dYyyO27VBp5L27aHbK5HioW0aLxYs7tihNiXW7dhPp0D37zpty0K7\njjiiZO/wlqkm8WC/FjfmFvKNNA0R+YmJ4sn//GTUqpEWSdHMNWSHkiyH28g3\n3LkiGqvSMCj9unLQUQjkK2+qBWiCkspAQ3J3P2BfzA9U4sH/Y9HpupGVVbIV\nNljHlerabhRum46XXKuwwvCGEc6kHXucDLfppGZTy50hPqgMUarfv8Titf7M\nONa/pGAb1vs5cRtE9i1qTgd+hrwDIn8T0eRYFVhW6W2CmcopgYuTq5H5XEYY\nuS1+\r\n=vx87\r\n-----END PGP SIGNATURE-----\r\n",
+      "shasum": "730811ab43b25ec68a8ebee036292589238342e0",
+      "tarball": "https://registry.npmjs.org/expo-gl/-/expo-gl-1.0.2.tgz",
+      "unpackedSize": 222152
+    },
+    "homepage": "https://docs.expo.io/",
+    "keywords": ["expo", "gl", "glview", "react-native", "webgl"],
+    "license": "MIT",
+    "main": "index.js",
+    "maintainers": [{
+      "name": "brentvatne",
+      "email": "brentvatne@gmail.com"
+    }, {
+      "name": "ccheever",
+      "email": "ccheever@gmail.com"
+    }, {
+      "name": "esamelson",
+      "email": "eric@expo.io"
+    }, {
+      "name": "expoadmin",
+      "email": "support@expo.io"
+    }, {
+      "name": "exponent",
+      "email": "exponent.team@gmail.com"
+    }, {
+      "name": "ide",
+      "email": "ide+npm@jameside.com"
+    }, {
+      "name": "jesseruder",
+      "email": "jesseruder@gmail.com"
+    }, {
+      "name": "sjchmiela",
+      "email": "sjchmiela@gmail.com"
+    }, {
+      "name": "terribleben",
+      "email": "ben@exp.host"
+    }, {
+      "name": "tsapeta",
+      "email": "sapeta.tomasz@gmail.com"
+    }],
+    "name": "expo-gl",
+    "optionalDependencies": {},
+    "peerDependencies": {
+      "prop-types": "^15.6.1",
+      "react": "^16.4.0",
+      "react-native": "^0.55.4"
+    },
+    "readme": "ERROR: No README data found!",
+    "version": "1.0.2"
+  };
+});

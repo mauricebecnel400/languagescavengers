@@ -1,0 +1,88 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.getCurrentDeviceCountryAsync = getCurrentDeviceCountryAsync;
+  exports.getCurrentLocaleAsync = getCurrentLocaleAsync;
+  exports.getCurrentTimeZoneAsync = getCurrentTimeZoneAsync;
+  exports.reload = reload;
+  exports.addNewVersionListenerExperimental = addNewVersionListenerExperimental;
+
+  var _invariant = _require(_dependencyMap[0], "invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  var _fbemitter = _require(_dependencyMap[1], "fbemitter");
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _Localization = _require(_dependencyMap[3], "./Localization");
+
+  var _Localization2 = _interopRequireDefault(_Localization);
+
+  var _Updates = _require(_dependencyMap[4], "./Updates");
+
+  var Updates = _interopRequireWildcard(_Updates);
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function getCurrentDeviceCountryAsync() {
+    console.warn('Util.getCurrentDeviceCountryAsync is deprecated, use Localization.getCurrentDeviceCountryAsync');
+    return _Localization2.default.getCurrentDeviceCountryAsync();
+  }
+
+  function getCurrentLocaleAsync() {
+    console.warn('Util.getCurrentLocaleAsync is deprecated, use Localization.getCurrentLocaleAsync');
+    return _Localization2.default.getCurrentLocaleAsync();
+  }
+
+  function getCurrentTimeZoneAsync() {
+    console.warn('Util.getCurrentTimeZoneAsync is deprecated, use Localization.getCurrentTimeZoneAsync');
+    return _Localization2.default.getCurrentTimeZoneAsync();
+  }
+
+  function reload() {
+    console.warn('Util.reload is deprecated, use Updates.reload instead');
+    return Updates.reload();
+  }
+
+  var _emitter = void 0;
+
+  function _getEmitter() {
+    if (!_emitter) {
+      _emitter = new _fbemitter.EventEmitter();
+
+      _reactNative.DeviceEventEmitter.addListener('Exponent.nativeUpdatesEvent', _emitNewVersionAvailable);
+    }
+
+    return _emitter;
+  }
+
+  function _emitNewVersionAvailable(newVersionEvent) {
+    if (typeof newVersionEvent === 'string') {
+      newVersionEvent = JSON.parse(newVersionEvent);
+    }
+
+    if (newVersionEvent.type === 'downloadFinished') {
+      if (newVersionEvent.manifestString && typeof newVersionEvent.manifestString === 'string') {
+        newVersionEvent.manifest = JSON.parse(newVersionEvent.manifestString);
+        delete newVersionEvent.manifestString;
+      }
+
+      delete newVersionEvent.type;
+      (0, _invariant2.default)(_emitter, "EventEmitter must be initialized to use from its listener");
+
+      _emitter.emit('newVersionAvailable', newVersionEvent);
+    }
+  }
+
+  function addNewVersionListenerExperimental(listener) {
+    console.warn('Util.addNewVersionListenerExperimental is deprecated, use Updates.addListener instead');
+
+    var emitter = _getEmitter();
+
+    return emitter.addListener('newVersionAvailable', listener);
+  }
+});

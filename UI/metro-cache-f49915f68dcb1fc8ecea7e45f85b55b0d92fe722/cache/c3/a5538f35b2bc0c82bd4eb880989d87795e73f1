@@ -1,0 +1,150 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.EventType = undefined;
+  exports.reload = reload;
+  exports.reloadFromCache = reloadFromCache;
+  exports.checkForUpdateAsync = checkForUpdateAsync;
+  exports.fetchUpdateAsync = fetchUpdateAsync;
+  exports.addListener = addListener;
+
+  var _invariant = _require(_dependencyMap[0], "invariant");
+
+  var _invariant2 = _interopRequireDefault(_invariant);
+
+  var _fbemitter = _require(_dependencyMap[1], "fbemitter");
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var ExponentUpdates = _reactNative.NativeModules.ExponentUpdates;
+
+  function reload() {
+    ExponentUpdates.reload();
+  }
+
+  function reloadFromCache() {
+    ExponentUpdates.reloadFromCache();
+  }
+
+  function checkForUpdateAsync() {
+    var result, returnObj;
+    return regeneratorRuntime.async(function checkForUpdateAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return regeneratorRuntime.awrap(ExponentUpdates.checkForUpdateAsync());
+
+          case 2:
+            result = _context.sent;
+            returnObj = {
+              isAvailable: !!result
+            };
+
+            if (result) {
+              returnObj.manifest = typeof result === 'string' ? JSON.parse(result) : result;
+            }
+
+            return _context.abrupt("return", returnObj);
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function fetchUpdateAsync() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        eventListener = _ref.eventListener;
+
+    var subscription, result, returnObj;
+    return regeneratorRuntime.async(function fetchUpdateAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            subscription = void 0;
+            result = void 0;
+
+            if (eventListener && typeof eventListener === 'function') {
+              subscription = addListener(eventListener);
+            }
+
+            _context2.prev = 3;
+            _context2.next = 6;
+            return regeneratorRuntime.awrap(ExponentUpdates.fetchUpdateAsync());
+
+          case 6:
+            result = _context2.sent;
+
+          case 7:
+            _context2.prev = 7;
+            subscription && subscription.remove();
+            return _context2.finish(7);
+
+          case 10:
+            returnObj = {
+              isNew: !!result
+            };
+
+            if (result) {
+              returnObj.manifest = typeof result === 'string' ? JSON.parse(result) : result;
+            }
+
+            return _context2.abrupt("return", returnObj);
+
+          case 13:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this, [[3,, 7, 10]]);
+  }
+
+  var _emitter = void 0;
+
+  function _getEmitter() {
+    if (!_emitter) {
+      _emitter = new _fbemitter.EventEmitter();
+
+      _reactNative.DeviceEventEmitter.addListener('Exponent.nativeUpdatesEvent', _emitEvent);
+    }
+
+    return _emitter;
+  }
+
+  function _emitEvent(params) {
+    var newParams = params;
+
+    if (typeof params === 'string') {
+      newParams = JSON.parse(params);
+    }
+
+    if (newParams.manifestString) {
+      newParams.manifest = JSON.parse(newParams.manifestString);
+      delete newParams.manifestString;
+    }
+
+    (0, _invariant2.default)(_emitter, "EventEmitter must be initialized to use from its listener");
+
+    _emitter.emit('Exponent.updatesEvent', newParams);
+  }
+
+  function addListener(listener) {
+    var emitter = _getEmitter();
+
+    return emitter.addListener('Exponent.updatesEvent', listener);
+  }
+
+  var EventType = exports.EventType = {
+    DOWNLOAD_STARTED: 'downloadStart',
+    DOWNLOAD_PROGRESS: 'downloadProgress',
+    DOWNLOAD_FINISHED: 'downloadFinished',
+    NO_UPDATE_AVAILABLE: 'noUpdateAvailable',
+    ERROR: 'error'
+  };
+});

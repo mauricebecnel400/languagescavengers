@@ -1,0 +1,142 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.NativeAdIconView = undefined;
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var React = _interopRequireWildcard(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/expo/src/facebook-ads/AdIconViewManager.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _withNativeAd = _require(_dependencyMap[3], "./withNativeAd");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    AdIconViewChild: {
+      displayName: "AdIconViewChild"
+    },
+    AdIconView: {
+      displayName: "AdIconView"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/expo/src/facebook-ads/AdIconViewManager.js",
+    components: _components,
+    locals: [module],
+    imports: [React.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var NativeAdIconView = exports.NativeAdIconView = (0, _reactNative.requireNativeComponent)('AdIconView', null, {});
+
+  var AdIconViewChild = _wrapComponent("AdIconViewChild")(function (_React$Component) {
+    _inherits(AdIconViewChild, _React$Component);
+
+    function AdIconViewChild() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, AdIconViewChild);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AdIconViewChild.__proto__ || Object.getPrototypeOf(AdIconViewChild)).call.apply(_ref, [this].concat(args))), _this), _this._handleAdIconViewRef = function (ref) {
+        if (_this._nativeAdIconViewRef) {
+          _this.props.unregister(_this._nativeAdIconViewRef);
+
+          _this._nativeAdIconViewRef = null;
+        }
+
+        if (ref) {
+          _this.props.register(ref);
+
+          _this._nativeAdIconViewRef = ref;
+        }
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(AdIconViewChild, [{
+      key: "render",
+      value: function render() {
+        return React.createElement(NativeAdIconView, _extends({}, this.props, {
+          ref: this._handleAdIconViewRef,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 29
+          }
+        }));
+      }
+    }]);
+
+    return AdIconViewChild;
+  }(React.Component));
+
+  var AdIconView = _wrapComponent("AdIconView")(function (_React$Component2) {
+    _inherits(AdIconView, _React$Component2);
+
+    function AdIconView() {
+      _classCallCheck(this, AdIconView);
+
+      return _possibleConstructorReturn(this, (AdIconView.__proto__ || Object.getPrototypeOf(AdIconView)).apply(this, arguments));
+    }
+
+    _createClass(AdIconView, [{
+      key: "render",
+      value: function render() {
+        var _this3 = this;
+
+        return React.createElement(
+          _withNativeAd.AdIconViewContext.Consumer,
+          {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 36
+            }
+          },
+          function (contextValue) {
+            return React.createElement(AdIconViewChild, _extends({}, _this3.props, contextValue, {
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 38
+              }
+            }));
+          }
+        );
+      }
+    }]);
+
+    return AdIconView;
+  }(React.Component));
+
+  exports.default = AdIconView;
+});

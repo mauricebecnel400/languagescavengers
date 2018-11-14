@@ -1,0 +1,380 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation-tabs/src/views/BottomTabBar.js",
+      _class,
+      _temp2;
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = _require(_dependencyMap[2], "react-native");
+
+  var _reactNavigation = _require(_dependencyMap[3], "react-navigation");
+
+  var _CrossFadeIcon = _require(_dependencyMap[4], "./CrossFadeIcon");
+
+  var _CrossFadeIcon2 = _interopRequireDefault(_CrossFadeIcon);
+
+  var _withDimensions = _require(_dependencyMap[5], "../utils/withDimensions");
+
+  var _withDimensions2 = _interopRequireDefault(_withDimensions);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    TouchableWithoutFeedbackWrapper: {
+      displayName: "TouchableWithoutFeedbackWrapper"
+    },
+    TabBarBottom: {
+      displayName: "TabBarBottom"
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation-tabs/src/views/BottomTabBar.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var majorVersion = parseInt(_reactNative.Platform.Version, 10);
+  var isIos = _reactNative.Platform.OS === 'ios';
+  var isIOS11 = majorVersion >= 11 && isIos;
+  var DEFAULT_MAX_TAB_ITEM_WIDTH = 125;
+
+  var TouchableWithoutFeedbackWrapper = _wrapComponent("TouchableWithoutFeedbackWrapper")(function (_React$Component) {
+    _inherits(TouchableWithoutFeedbackWrapper, _React$Component);
+
+    function TouchableWithoutFeedbackWrapper() {
+      _classCallCheck(this, TouchableWithoutFeedbackWrapper);
+
+      return _possibleConstructorReturn(this, (TouchableWithoutFeedbackWrapper.__proto__ || Object.getPrototypeOf(TouchableWithoutFeedbackWrapper)).apply(this, arguments));
+    }
+
+    _createClass(TouchableWithoutFeedbackWrapper, [{
+      key: "render",
+      value: function render() {
+        var _props = this.props,
+            onPress = _props.onPress,
+            testID = _props.testID,
+            accessibilityLabel = _props.accessibilityLabel,
+            props = _objectWithoutProperties(_props, ["onPress", "testID", "accessibilityLabel"]);
+
+        return _react3.default.createElement(
+          _reactNative.TouchableWithoutFeedback,
+          {
+            onPress: onPress,
+            testID: testID,
+            accessibilityLabel: accessibilityLabel,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 56
+            }
+          },
+          _react3.default.createElement(_reactNative.View, _extends({}, props, {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 61
+            }
+          }))
+        );
+      }
+    }]);
+
+    return TouchableWithoutFeedbackWrapper;
+  }(_react3.default.Component));
+
+  var TabBarBottom = _wrapComponent("TabBarBottom")((_temp2 = _class = function (_React$Component2) {
+    _inherits(TabBarBottom, _React$Component2);
+
+    function TabBarBottom() {
+      var _ref;
+
+      var _temp, _this2, _ret;
+
+      _classCallCheck(this, TabBarBottom);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = TabBarBottom.__proto__ || Object.getPrototypeOf(TabBarBottom)).call.apply(_ref, [this].concat(args))), _this2), _this2._renderLabel = function (_ref2) {
+        var route = _ref2.route,
+            focused = _ref2.focused;
+        var _this2$props = _this2.props,
+            activeTintColor = _this2$props.activeTintColor,
+            inactiveTintColor = _this2$props.inactiveTintColor,
+            labelStyle = _this2$props.labelStyle,
+            showLabel = _this2$props.showLabel,
+            showIcon = _this2$props.showIcon,
+            allowFontScaling = _this2$props.allowFontScaling;
+
+        if (showLabel === false) {
+          return null;
+        }
+
+        var label = _this2.props.getLabelText({
+          route: route
+        });
+
+        var tintColor = focused ? activeTintColor : inactiveTintColor;
+
+        if (typeof label === 'string') {
+          return _react3.default.createElement(
+            _reactNative.Animated.Text,
+            {
+              numberOfLines: 1,
+              style: [styles.label, {
+                color: tintColor
+              }, showIcon && _this2._shouldUseHorizontalLabels() ? styles.labelBeside : styles.labelBeneath, labelStyle],
+              allowFontScaling: allowFontScaling,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 99
+              }
+            },
+            label
+          );
+        }
+
+        if (typeof label === 'function') {
+          return label({
+            route: route,
+            focused: focused,
+            tintColor: tintColor
+          });
+        }
+
+        return label;
+      }, _this2._renderIcon = function (_ref3) {
+        var route = _ref3.route,
+            focused = _ref3.focused;
+        var _this2$props2 = _this2.props,
+            navigation = _this2$props2.navigation,
+            activeTintColor = _this2$props2.activeTintColor,
+            inactiveTintColor = _this2$props2.inactiveTintColor,
+            renderIcon = _this2$props2.renderIcon,
+            showIcon = _this2$props2.showIcon,
+            showLabel = _this2$props2.showLabel;
+
+        if (showIcon === false) {
+          return null;
+        }
+
+        var horizontal = _this2._shouldUseHorizontalLabels();
+
+        var activeOpacity = focused ? 1 : 0;
+        var inactiveOpacity = focused ? 0 : 1;
+        return _react3.default.createElement(_CrossFadeIcon2.default, {
+          route: route,
+          horizontal: horizontal,
+          navigation: navigation,
+          activeOpacity: activeOpacity,
+          inactiveOpacity: inactiveOpacity,
+          activeTintColor: activeTintColor,
+          inactiveTintColor: inactiveTintColor,
+          renderIcon: renderIcon,
+          style: [styles.iconWithExplicitHeight, showLabel === false && !horizontal && styles.iconWithoutLabel, showLabel !== false && !horizontal && styles.iconWithLabel],
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 142
+          }
+        });
+      }, _this2._shouldUseHorizontalLabels = function () {
+        var routes = _this2.props.navigation.state.routes;
+        var _this2$props3 = _this2.props,
+            isLandscape = _this2$props3.isLandscape,
+            dimensions = _this2$props3.dimensions,
+            adaptive = _this2$props3.adaptive,
+            tabStyle = _this2$props3.tabStyle;
+
+        if (!adaptive) {
+          return false;
+        }
+
+        if (_reactNative.Platform.isPad) {
+          var maxTabItemWidth = DEFAULT_MAX_TAB_ITEM_WIDTH;
+
+          var flattenedStyle = _reactNative.StyleSheet.flatten(tabStyle);
+
+          if (flattenedStyle) {
+            if (typeof flattenedStyle.width === 'number') {
+              maxTabItemWidth = flattenedStyle.width;
+            } else if (typeof flattenedStyle.maxWidth === 'number') {
+              maxTabItemWidth = flattenedStyle.maxWidth;
+            }
+          }
+
+          return routes.length * maxTabItemWidth <= dimensions.width;
+        } else {
+          return isLandscape;
+        }
+      }, _temp), _possibleConstructorReturn(_this2, _ret);
+    }
+
+    _createClass(TabBarBottom, [{
+      key: "render",
+      value: function render() {
+        var _this3 = this;
+
+        var _props2 = this.props,
+            navigation = _props2.navigation,
+            activeBackgroundColor = _props2.activeBackgroundColor,
+            inactiveBackgroundColor = _props2.inactiveBackgroundColor,
+            onTabPress = _props2.onTabPress,
+            safeAreaInset = _props2.safeAreaInset,
+            style = _props2.style,
+            tabStyle = _props2.tabStyle;
+        var routes = navigation.state.routes;
+        var tabBarStyle = [styles.tabBar, this._shouldUseHorizontalLabels() && !_reactNative.Platform.isPad ? styles.tabBarCompact : styles.tabBarRegular, style];
+        return _react3.default.createElement(
+          _reactNavigation.SafeAreaView,
+          {
+            style: tabBarStyle,
+            forceInset: safeAreaInset,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 209
+            }
+          },
+          routes.map(function (route, index) {
+            var focused = index === navigation.state.index;
+            var scene = {
+              route: route,
+              focused: focused
+            };
+
+            var accessibilityLabel = _this3.props.getAccessibilityLabel({
+              route: route
+            });
+
+            var testID = _this3.props.getTestID({
+              route: route
+            });
+
+            var backgroundColor = focused ? activeBackgroundColor : inactiveBackgroundColor;
+            var ButtonComponent = _this3.props.getButtonComponent({
+              route: route
+            }) || TouchableWithoutFeedbackWrapper;
+            return _react3.default.createElement(
+              ButtonComponent,
+              {
+                key: route.key,
+                onPress: function onPress() {
+                  return onTabPress({
+                    route: route
+                  });
+                },
+                testID: testID,
+                accessibilityLabel: accessibilityLabel,
+                style: [styles.tab, {
+                  backgroundColor: backgroundColor
+                }, _this3._shouldUseHorizontalLabels() ? styles.tabLandscape : styles.tabPortrait, tabStyle],
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 227
+                }
+              },
+              _this3._renderIcon(scene),
+              _this3._renderLabel(scene)
+            );
+          })
+        );
+      }
+    }]);
+
+    return TabBarBottom;
+  }(_react3.default.Component), _class.defaultProps = {
+    activeTintColor: '#3478f6',
+    activeBackgroundColor: 'transparent',
+    inactiveTintColor: '#929292',
+    inactiveBackgroundColor: 'transparent',
+    showLabel: true,
+    showIcon: true,
+    allowFontScaling: true,
+    adaptive: isIOS11,
+    safeAreaInset: {
+      bottom: 'always',
+      top: 'never'
+    }
+  }, _temp2));
+
+  var DEFAULT_HEIGHT = 49;
+  var COMPACT_HEIGHT = 29;
+
+  var styles = _reactNative.StyleSheet.create({
+    tabBar: {
+      backgroundColor: '#fff',
+      borderTopWidth: _reactNative.StyleSheet.hairlineWidth,
+      borderTopColor: 'rgba(0, 0, 0, .3)',
+      flexDirection: 'row'
+    },
+    tabBarCompact: {
+      height: COMPACT_HEIGHT
+    },
+    tabBarRegular: {
+      height: DEFAULT_HEIGHT
+    },
+    tab: {
+      flex: 1,
+      alignItems: isIos ? 'center' : 'stretch'
+    },
+    tabPortrait: {
+      justifyContent: 'flex-end',
+      flexDirection: 'column'
+    },
+    tabLandscape: {
+      justifyContent: 'center',
+      flexDirection: 'row'
+    },
+    iconWithoutLabel: {
+      flex: 1
+    },
+    iconWithLabel: {
+      flex: 1
+    },
+    iconWithExplicitHeight: {
+      height: _reactNative.Platform.isPad ? DEFAULT_HEIGHT : COMPACT_HEIGHT
+    },
+    label: {
+      textAlign: 'center',
+      backgroundColor: 'transparent'
+    },
+    labelBeneath: {
+      fontSize: 11,
+      marginBottom: 1.5
+    },
+    labelBeside: {
+      fontSize: 12,
+      marginLeft: 15
+    }
+  });
+
+  exports.default = (0, _withDimensions2.default)(TabBarBottom);
+});

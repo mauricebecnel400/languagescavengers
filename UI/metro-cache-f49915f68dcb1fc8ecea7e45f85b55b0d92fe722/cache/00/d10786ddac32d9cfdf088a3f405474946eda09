@@ -1,0 +1,132 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = _require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = _require(_dependencyMap[1], "./../../../react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation/src/navigators/createNavigator.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactLifecyclesCompat = _require(_dependencyMap[2], "react-lifecycles-compat");
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    Navigator: {
+      displayName: "Navigator",
+      isInFunction: true
+    }
+  };
+
+  var _reactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/monopolized/github/languagescavengers/UI/node_modules/react-navigation/src/navigators/createNavigator.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _reactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  function createNavigator(NavigatorView, router, navigationConfig) {
+    var _class, _temp2;
+
+    var Navigator = _wrapComponent("Navigator")((_temp2 = _class = function (_React$Component) {
+      _inherits(Navigator, _React$Component);
+
+      function Navigator() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Navigator);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Navigator.__proto__ || Object.getPrototypeOf(Navigator)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+          descriptors: {},
+          screenProps: _this.props.screenProps
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+      }
+
+      _createClass(Navigator, [{
+        key: "render",
+        value: function render() {
+          return _react3.default.createElement(NavigatorView, _extends({}, this.props, {
+            screenProps: this.state.screenProps,
+            navigation: this.props.navigation,
+            navigationConfig: navigationConfig,
+            descriptors: this.state.descriptors,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 57
+            }
+          }));
+        }
+      }], [{
+        key: "getDerivedStateFromProps",
+        value: function getDerivedStateFromProps(nextProps, prevState) {
+          var prevDescriptors = prevState.descriptors;
+          var navigation = nextProps.navigation,
+              screenProps = nextProps.screenProps;
+          var state = navigation.state;
+          var routes = state.routes;
+
+          if (typeof routes === 'undefined') {
+            throw new TypeError('No "routes" found in navigation state. Did you try to pass the navigation prop of a React component to a Navigator child? See https://reactnavigation.org/docs/en/custom-navigators.html#navigator-navigation-prop');
+          }
+
+          var descriptors = {};
+          routes.forEach(function (route) {
+            if (prevDescriptors && prevDescriptors[route.key] && route === prevDescriptors[route.key].state && screenProps === prevState.screenProps) {
+              descriptors[route.key] = prevDescriptors[route.key];
+              return;
+            }
+
+            var getComponent = router.getComponentForRouteName.bind(null, route.routeName);
+            var childNavigation = navigation.getChildNavigation(route.key);
+            var options = router.getScreenOptions(childNavigation, screenProps);
+            descriptors[route.key] = {
+              key: route.key,
+              getComponent: getComponent,
+              options: options,
+              state: route,
+              navigation: childNavigation
+            };
+          });
+          return {
+            descriptors: descriptors,
+            screenProps: screenProps
+          };
+        }
+      }]);
+
+      return Navigator;
+    }(_react3.default.Component), _class.router = router, _class.navigationOptions = null, _temp2));
+
+    return (0, _reactLifecyclesCompat.polyfill)(Navigator);
+  }
+
+  exports.default = createNavigator;
+});

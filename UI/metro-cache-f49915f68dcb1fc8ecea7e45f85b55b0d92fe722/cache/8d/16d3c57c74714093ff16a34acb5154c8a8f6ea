@@ -1,0 +1,60 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  module.exports = {
+    get createStackNavigator() {
+      return _require(_dependencyMap[0], './navigators/createContainedStackNavigator').default;
+    },
+
+    get createUncontainedStackNavigator() {
+      return _require(_dependencyMap[1], './navigators/createStackNavigator').default;
+    },
+
+    get Header() {
+      return _require(_dependencyMap[2], './views/Header/Header').default;
+    },
+
+    get HeaderBackButton() {
+      return _require(_dependencyMap[3], './views/Header/HeaderBackButton').default;
+    },
+
+    get HeaderTitle() {
+      return _require(_dependencyMap[4], './views/Header/HeaderTitle').default;
+    },
+
+    get HeaderStyleInterpolator() {
+      return _require(_dependencyMap[5], './views/Header/HeaderStyleInterpolator').default;
+    },
+
+    get StackView() {
+      return _require(_dependencyMap[6], './views/StackView/StackView').default;
+    },
+
+    get StackViewCard() {
+      return _require(_dependencyMap[7], './views/StackView/StackViewCard').default;
+    },
+
+    get StackViewLayout() {
+      return _require(_dependencyMap[8], './views/StackView/StackViewLayout').default;
+    },
+
+    get StackViewStyleInterpolator() {
+      return _require(_dependencyMap[9], './views/StackView/StackViewStyleInterpolator').default;
+    },
+
+    get StackViewTransitionConfigs() {
+      return _require(_dependencyMap[10], './views/StackView/StackViewTransitionConfigs').default;
+    },
+
+    get createPointerEventsContainer() {
+      return _require(_dependencyMap[11], './views/StackView/createPointerEventsContainer').default;
+    },
+
+    get Transitioner() {
+      return _require(_dependencyMap[12], './views/Transitioner').default;
+    },
+
+    get ScenesReducer() {
+      return _require(_dependencyMap[13], './views/ScenesReducer').default;
+    }
+
+  };
+});

@@ -1,0 +1,52 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.ImpactStyles = exports.NotificationTypes = undefined;
+  exports.notification = notification;
+  exports.impact = impact;
+  exports.selection = selection;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var NotificationTypes = exports.NotificationTypes = {
+    Success: 'success',
+    Warning: 'warning',
+    Error: 'error'
+  };
+  var ImpactStyles = exports.ImpactStyles = {
+    Light: 'light',
+    Medium: 'medium',
+    Heavy: 'heavy'
+  };
+
+  function notification(type) {
+    if (_reactNative.Platform.OS === 'ios') {
+      _reactNative.NativeModules.ExponentHaptic.notification(type || 'success');
+    } else {
+      console.warn('`Expo.Haptic` is only available on iOS');
+
+      _reactNative.Vibration.vibrate();
+    }
+  }
+
+  function impact(style) {
+    if (_reactNative.Platform.OS === 'ios') {
+      _reactNative.NativeModules.ExponentHaptic.impact(style || 'medium');
+    } else {
+      console.warn('`Expo.Haptic` is only available on iOS');
+
+      _reactNative.Vibration.vibrate();
+    }
+  }
+
+  function selection() {
+    if (_reactNative.Platform.OS === 'ios') {
+      _reactNative.NativeModules.ExponentHaptic.selection();
+    } else {
+      console.warn('`Expo.Haptic` is only available on iOS');
+
+      _reactNative.Vibration.vibrate();
+    }
+  }
+});

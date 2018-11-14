@@ -1,0 +1,138 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.createSourceWithParamsPropType = exports.paymentRequestWithAndroidPayOptionsPropTypes = exports.androidPayLineItemPropTypes = exports.createTokenWithBankAccountParamsPropTypes = exports.createTokenWithCardParamsPropTypes = exports.paymentRequestWithCardFormOptionsPropTypes = exports.paymentRequestWithApplePayOptionsPropTypes = exports.applePayOptionShippingMethodPropTypes = exports.applePayAddressFieldsPropTypes = exports.paymentRequestWithApplePayItemsPropTypes = exports.paymentRequestWithApplePayItemPropTypes = exports.canMakeApplePayPaymentsOptionsPropTypes = exports.availableApplePayNetworkPropTypes = exports.setOptionsOptionsPropTypes = exports.availableSourceTypes = exports.availableApplePayShippingTypes = exports.availableApplePayAddressFields = exports.availableApplePayNetworks = undefined;
+
+  var _propTypes = _require(_dependencyMap[0], "prop-types");
+
+  var _propTypes2 = _interopRequireDefault(_propTypes);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var availableApplePayNetworks = exports.availableApplePayNetworks = ['american_express', 'discover', 'master_card', 'visa'];
+  var availableApplePayAddressFields = exports.availableApplePayAddressFields = ['all', 'name', 'email', 'phone', 'postal_address'];
+  var availableApplePayShippingTypes = exports.availableApplePayShippingTypes = ['shipping', 'delivery', 'store_pickup', 'service_pickup'];
+  var availableSourceTypes = exports.availableSourceTypes = ['bancontact', 'bitcoin', 'giropay', 'ideal', 'sepaDebit', 'sofort', 'threeDSecure', 'alipay'];
+  var setOptionsOptionsPropTypes = exports.setOptionsOptionsPropTypes = {
+    publishableKey: _propTypes2.default.string,
+    merchantId: _propTypes2.default.string,
+    androidPayMode: _propTypes2.default.string
+  };
+
+  var availableApplePayNetworkPropTypes = exports.availableApplePayNetworkPropTypes = _propTypes2.default.oneOf(availableApplePayNetworks);
+
+  var canMakeApplePayPaymentsOptionsPropTypes = exports.canMakeApplePayPaymentsOptionsPropTypes = {
+    networks: _propTypes2.default.arrayOf(availableApplePayNetworkPropTypes)
+  };
+  var paymentRequestWithApplePayItemPropTypes = exports.paymentRequestWithApplePayItemPropTypes = {
+    label: _propTypes2.default.string.isRequired,
+    amount: _propTypes2.default.string.isRequired,
+    type: _propTypes2.default.oneOf(['final', 'pending'])
+  };
+  var paymentRequestWithApplePayItemsPropTypes = exports.paymentRequestWithApplePayItemsPropTypes = {
+    items: _propTypes2.default.arrayOf(_propTypes2.default.shape(paymentRequestWithApplePayItemPropTypes)).isRequired
+  };
+
+  var applePayAddressFieldsPropTypes = exports.applePayAddressFieldsPropTypes = _propTypes2.default.oneOf(availableApplePayAddressFields);
+
+  var applePayOptionShippingMethodPropTypes = exports.applePayOptionShippingMethodPropTypes = {
+    id: _propTypes2.default.string.isRequired,
+    label: _propTypes2.default.string.isRequired,
+    detail: _propTypes2.default.string.isRequired,
+    amount: _propTypes2.default.string.isRequired
+  };
+  var paymentRequestWithApplePayOptionsPropTypes = exports.paymentRequestWithApplePayOptionsPropTypes = {
+    currencyCode: _propTypes2.default.string,
+    countryCode: _propTypes2.default.string,
+    requiredBillingAddressFields: _propTypes2.default.arrayOf(applePayAddressFieldsPropTypes),
+    requiredShippingAddressFields: _propTypes2.default.arrayOf(applePayAddressFieldsPropTypes),
+    shippingMethods: _propTypes2.default.arrayOf(_propTypes2.default.shape(applePayOptionShippingMethodPropTypes)),
+    shippingType: _propTypes2.default.oneOf(availableApplePayShippingTypes)
+  };
+  var paymentRequestWithCardFormOptionsPropTypes = exports.paymentRequestWithCardFormOptionsPropTypes = {
+    requiredBillingAddressFields: _propTypes2.default.oneOf(['full', 'zip']),
+    managedAccountCurrency: _propTypes2.default.string,
+    smsAutofillDisabled: _propTypes2.default.bool,
+    prefilledInformation: _propTypes2.default.shape({
+      email: _propTypes2.default.string,
+      phone: _propTypes2.default.string,
+      billingAddress: _propTypes2.default.shape({
+        name: _propTypes2.default.string,
+        line1: _propTypes2.default.string,
+        line2: _propTypes2.default.string,
+        city: _propTypes2.default.string,
+        state: _propTypes2.default.string,
+        postalCode: _propTypes2.default.string,
+        country: _propTypes2.default.string,
+        phone: _propTypes2.default.string,
+        email: _propTypes2.default.string
+      })
+    }),
+    theme: _propTypes2.default.shape({
+      primaryBackgroundColor: _propTypes2.default.string,
+      secondaryBackgroundColor: _propTypes2.default.string,
+      primaryForegroundColor: _propTypes2.default.string,
+      secondaryForegroundColor: _propTypes2.default.string,
+      accentColor: _propTypes2.default.string,
+      errorColor: _propTypes2.default.string
+    })
+  };
+  var createTokenWithCardParamsPropTypes = exports.createTokenWithCardParamsPropTypes = {
+    number: _propTypes2.default.string.isRequired,
+    expMonth: _propTypes2.default.number.isRequired,
+    expYear: _propTypes2.default.number.isRequired,
+    cvc: _propTypes2.default.string,
+    name: _propTypes2.default.string,
+    addressLine1: _propTypes2.default.string,
+    addressLine2: _propTypes2.default.string,
+    addressCity: _propTypes2.default.string,
+    addressState: _propTypes2.default.string,
+    addressZip: _propTypes2.default.string,
+    addressCountry: _propTypes2.default.string,
+    country: _propTypes2.default.string,
+    currency: _propTypes2.default.string,
+    brand: _propTypes2.default.string,
+    last4: _propTypes2.default.string,
+    fingerprint: _propTypes2.default.string,
+    funding: _propTypes2.default.string
+  };
+  var createTokenWithBankAccountParamsPropTypes = exports.createTokenWithBankAccountParamsPropTypes = {
+    accountNumber: _propTypes2.default.string.isRequired,
+    countryCode: _propTypes2.default.string.isRequired,
+    currency: _propTypes2.default.string.isRequired,
+    routingNumber: _propTypes2.default.string,
+    accountHolderName: _propTypes2.default.string,
+    accountHolderType: _propTypes2.default.oneOf(['company', 'individual'])
+  };
+  var androidPayLineItemPropTypes = exports.androidPayLineItemPropTypes = {
+    currency_code: _propTypes2.default.string.isRequired,
+    total_price: _propTypes2.default.string.isRequired,
+    unit_price: _propTypes2.default.string.isRequired,
+    quantity: _propTypes2.default.string.isRequired,
+    description: _propTypes2.default.string.isRequired
+  };
+  var paymentRequestWithAndroidPayOptionsPropTypes = exports.paymentRequestWithAndroidPayOptionsPropTypes = {
+    total_price: _propTypes2.default.string.isRequired,
+    currency_code: _propTypes2.default.string.isRequired,
+    line_items: _propTypes2.default.arrayOf(_propTypes2.default.shape(androidPayLineItemPropTypes)).isRequired,
+    shipping_address_required: _propTypes2.default.bool,
+    billing_address_required: _propTypes2.default.bool
+  };
+  var createSourceWithParamsPropType = exports.createSourceWithParamsPropType = {
+    type: _propTypes2.default.oneOf(availableSourceTypes).isRequired,
+    amount: _propTypes2.default.number,
+    name: _propTypes2.default.string,
+    returnURL: _propTypes2.default.string,
+    statementDescriptor: _propTypes2.default.string,
+    currency: _propTypes2.default.string,
+    email: _propTypes2.default.string,
+    bank: _propTypes2.default.string,
+    iban: _propTypes2.default.string,
+    addressLine1: _propTypes2.default.string,
+    city: _propTypes2.default.string,
+    postalCode: _propTypes2.default.string,
+    country: _propTypes2.default.string,
+    card: _propTypes2.default.string
+  };
+});

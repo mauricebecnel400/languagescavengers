@@ -1,0 +1,129 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _reactNavigation = _require(_dependencyMap[0], "react-navigation");
+
+  var _DrawerActions = _require(_dependencyMap[1], "./DrawerActions");
+
+  var _DrawerActions2 = _interopRequireDefault(_DrawerActions);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function withDefaultValue(obj, key, defaultValue) {
+    if (obj.hasOwnProperty(key) && typeof obj[key] !== 'undefined') {
+      return obj;
+    }
+
+    obj[key] = defaultValue;
+    return obj;
+  }
+
+  var getActiveRouteKey = function getActiveRouteKey(route) {
+    if (route.routes && route.routes[route.index]) {
+      return getActiveRouteKey(route.routes[route.index]);
+    }
+
+    return route.key;
+  };
+
+  exports.default = function (routeConfigs) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    config = _extends({}, config);
+    config = withDefaultValue(config, 'resetOnBlur', false);
+    config = withDefaultValue(config, 'backBehavior', 'initialRoute');
+    var switchRouter = (0, _reactNavigation.SwitchRouter)(routeConfigs, config);
+    return _extends({}, switchRouter, {
+      getActionCreators: function getActionCreators(route, navStateKey) {
+        return _extends({
+          openDrawer: function openDrawer() {
+            return _DrawerActions2.default.openDrawer({
+              key: navStateKey
+            });
+          },
+          closeDrawer: function closeDrawer() {
+            return _DrawerActions2.default.closeDrawer({
+              key: navStateKey
+            });
+          },
+          toggleDrawer: function toggleDrawer() {
+            return _DrawerActions2.default.toggleDrawer({
+              key: navStateKey
+            });
+          }
+        }, switchRouter.getActionCreators(route, navStateKey));
+      },
+      getStateForAction: function getStateForAction(action, state) {
+        if (!state) {
+          return _extends({}, switchRouter.getStateForAction(action, undefined), {
+            isDrawerOpen: false,
+            openId: 0,
+            closeId: 0,
+            toggleId: 0
+          });
+        }
+
+        var isRouterTargeted = action.key == null || action.key === state.key;
+
+        if (isRouterTargeted) {
+          if (action.type === _DrawerActions2.default.DRAWER_CLOSED) {
+            return _extends({}, state, {
+              isDrawerOpen: false
+            });
+          }
+
+          if (action.type === _DrawerActions2.default.DRAWER_OPENED) {
+            return _extends({}, state, {
+              isDrawerOpen: true
+            });
+          }
+
+          if (action.type === _DrawerActions2.default.CLOSE_DRAWER) {
+            return _extends({}, state, {
+              closeId: state.closeId + 1
+            });
+          }
+
+          if (action.type === _reactNavigation.NavigationActions.BACK && state.isDrawerOpen) {
+            return _extends({}, state, {
+              closeId: state.closeId + 1
+            });
+          }
+
+          if (action.type === _DrawerActions2.default.OPEN_DRAWER) {
+            return _extends({}, state, {
+              openId: state.openId + 1
+            });
+          }
+
+          if (action.type === _DrawerActions2.default.TOGGLE_DRAWER) {
+            return _extends({}, state, {
+              toggleId: state.toggleId + 1
+            });
+          }
+        }
+
+        var switchedState = switchRouter.getStateForAction(action, state);
+
+        if (switchedState === null) {
+          return null;
+        }
+
+        if (switchedState !== state) {
+          if (getActiveRouteKey(switchedState) !== getActiveRouteKey(state)) {
+            return _extends({}, switchedState, {
+              closeId: state.closeId + 1
+            });
+          }
+
+          return switchedState;
+        }
+
+        return state;
+      }
+    });
+  };
+});

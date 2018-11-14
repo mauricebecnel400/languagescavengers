@@ -1,0 +1,70 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  exports.default = getNavigation;
+
+  var _getNavigationActionCreators = _require(_dependencyMap[0], "./routers/getNavigationActionCreators");
+
+  var _getNavigationActionCreators2 = _interopRequireDefault(_getNavigationActionCreators);
+
+  var _getChildNavigation2 = _require(_dependencyMap[1], "./getChildNavigation");
+
+  var _getChildNavigation3 = _interopRequireDefault(_getChildNavigation2);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function getNavigation(router, state, dispatch, actionSubscribers, getScreenProps, getCurrentNavigation) {
+    var actions = router.getActionCreators(state, null);
+    var navigation = {
+      actions: actions,
+      router: router,
+      state: state,
+      dispatch: dispatch,
+      getScreenProps: getScreenProps,
+      getChildNavigation: function getChildNavigation(childKey) {
+        return (0, _getChildNavigation3.default)(navigation, childKey, getCurrentNavigation);
+      },
+      isFocused: function isFocused(childKey) {
+        var _getCurrentNavigation = getCurrentNavigation().state,
+            routes = _getCurrentNavigation.routes,
+            index = _getCurrentNavigation.index;
+
+        if (childKey == null || routes[index].key === childKey) {
+          return true;
+        }
+
+        return false;
+      },
+      addListener: function addListener(eventName, handler) {
+        if (eventName !== 'action') {
+          return {
+            remove: function remove() {}
+          };
+        }
+
+        actionSubscribers.add(handler);
+        return {
+          remove: function remove() {
+            actionSubscribers.delete(handler);
+          }
+        };
+      },
+      dangerouslyGetParent: function dangerouslyGetParent() {
+        return null;
+      }
+    };
+
+    var actionCreators = _extends({}, (0, _getNavigationActionCreators2.default)(navigation.state), actions);
+
+    Object.keys(actionCreators).forEach(function (actionName) {
+      navigation[actionName] = function () {
+        return navigation.dispatch(actionCreators[actionName].apply(actionCreators, arguments));
+      };
+    });
+    return navigation;
+  }
+});

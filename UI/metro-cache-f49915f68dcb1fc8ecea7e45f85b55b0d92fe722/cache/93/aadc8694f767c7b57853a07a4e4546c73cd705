@@ -1,0 +1,51 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.MediaTypeOptions = undefined;
+  exports.launchImageLibraryAsync = launchImageLibraryAsync;
+  exports.launchCameraAsync = launchCameraAsync;
+
+  var _reactNative = _require(_dependencyMap[0], "react-native");
+
+  var ExponentImagePicker = _reactNative.NativeModules.ExponentImagePicker;
+  var MEDIA_TYPE_OPTIONS = {
+    All: 'All',
+    Videos: 'Videos',
+    Images: 'Images'
+  };
+
+  function launchImageLibraryAsync() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return regeneratorRuntime.async(function launchImageLibraryAsync$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt("return", ExponentImagePicker.launchImageLibraryAsync(options));
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  function launchCameraAsync() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return regeneratorRuntime.async(function launchCameraAsync$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            return _context2.abrupt("return", ExponentImagePicker.launchCameraAsync(options));
+
+          case 1:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  }
+
+  var MediaTypeOptions = exports.MediaTypeOptions = MEDIA_TYPE_OPTIONS;
+});

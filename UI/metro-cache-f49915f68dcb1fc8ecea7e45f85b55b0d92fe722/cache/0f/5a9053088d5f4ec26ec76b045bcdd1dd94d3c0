@@ -1,0 +1,9 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  var Parser = _require(_dependencyMap[0], './parser');
+
+  var p = new Parser();
+  exports.Parser = Parser;
+  exports.parse = p.parse;
+  exports.complete = p.complete;
+  exports.format = p.format;
+});

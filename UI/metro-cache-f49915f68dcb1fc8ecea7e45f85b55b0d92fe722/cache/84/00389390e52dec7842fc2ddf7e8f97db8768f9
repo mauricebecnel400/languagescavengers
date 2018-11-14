@@ -1,0 +1,139 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  'use strict';
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var _jsxFileName = "/home/monopolized/github/languagescavengers/UI/node_modules/react-native/Libraries/Image/Image.ios.js";
+
+  var EdgeInsetsPropType = _require(_dependencyMap[0], '../StyleSheet/EdgeInsetsPropType');
+
+  var ImageResizeMode = _require(_dependencyMap[1], './ImageResizeMode');
+
+  var ImageSourcePropType = _require(_dependencyMap[2], './ImageSourcePropType');
+
+  var ImageStylePropTypes = _require(_dependencyMap[3], './ImageStylePropTypes');
+
+  var NativeMethodsMixin = _require(_dependencyMap[4], '../Renderer/shims/NativeMethodsMixin');
+
+  var NativeModules = _require(_dependencyMap[5], '../BatchedBridge/NativeModules');
+
+  var React = _require(_dependencyMap[6], "react");
+
+  var PropTypes = _require(_dependencyMap[7], "prop-types");
+
+  var ReactNativeViewAttributes = _require(_dependencyMap[8], '../Components/View/ReactNativeViewAttributes');
+
+  var StyleSheet = _require(_dependencyMap[9], '../StyleSheet/StyleSheet');
+
+  var StyleSheetPropType = _require(_dependencyMap[10], '../StyleSheet/StyleSheetPropType');
+
+  var createReactClass = _require(_dependencyMap[11], "create-react-class");
+
+  var flattenStyle = _require(_dependencyMap[12], '../StyleSheet/flattenStyle');
+
+  var requireNativeComponent = _require(_dependencyMap[13], '../ReactNative/requireNativeComponent');
+
+  var resolveAssetSource = _require(_dependencyMap[14], './resolveAssetSource');
+
+  var ImageViewManager = NativeModules.ImageViewManager;
+  var Image = createReactClass({
+    displayName: 'Image',
+    propTypes: {
+      style: StyleSheetPropType(ImageStylePropTypes),
+      source: ImageSourcePropType,
+      defaultSource: PropTypes.oneOfType([PropTypes.shape({
+        uri: PropTypes.string,
+        width: PropTypes.number,
+        height: PropTypes.number,
+        scale: PropTypes.number
+      }), PropTypes.number]),
+      accessible: PropTypes.bool,
+      accessibilityLabel: PropTypes.node,
+      blurRadius: PropTypes.number,
+      capInsets: EdgeInsetsPropType,
+      resizeMethod: PropTypes.oneOf(['auto', 'resize', 'scale']),
+      resizeMode: PropTypes.oneOf(['cover', 'contain', 'stretch', 'repeat', 'center']),
+      testID: PropTypes.string,
+      onLayout: PropTypes.func,
+      onLoadStart: PropTypes.func,
+      onProgress: PropTypes.func,
+      onError: PropTypes.func,
+      onPartialLoad: PropTypes.func,
+      onLoad: PropTypes.func,
+      onLoadEnd: PropTypes.func
+    },
+    statics: {
+      resizeMode: ImageResizeMode,
+      getSize: function getSize(uri, success, failure) {
+        ImageViewManager.getSize(uri, success, failure || function () {
+          console.warn('Failed to get size for image: ' + uri);
+        });
+      },
+      prefetch: function prefetch(url) {
+        return ImageViewManager.prefetchImage(url);
+      },
+      resolveAssetSource: resolveAssetSource
+    },
+    mixins: [NativeMethodsMixin],
+    viewConfig: {
+      uiViewClassName: 'UIView',
+      validAttributes: ReactNativeViewAttributes.UIView
+    },
+    render: function render() {
+      var source = resolveAssetSource(this.props.source) || {
+        uri: undefined,
+        width: undefined,
+        height: undefined
+      };
+      var sources = void 0;
+      var style = void 0;
+
+      if (Array.isArray(source)) {
+        style = flattenStyle([styles.base, this.props.style]) || {};
+        sources = source;
+      } else {
+        var _width = source.width,
+            _height = source.height,
+            uri = source.uri;
+        style = flattenStyle([{
+          width: _width,
+          height: _height
+        }, styles.base, this.props.style]) || {};
+        sources = [source];
+
+        if (uri === '') {
+          console.warn('source.uri should not be an empty string');
+        }
+      }
+
+      var resizeMode = this.props.resizeMode || (style || {}).resizeMode || 'cover';
+      var tintColor = (style || {}).tintColor;
+
+      if (this.props.src) {
+        console.warn('The <Image> component requires a `source` property rather than `src`.');
+      }
+
+      if (this.props.children) {
+        throw new Error('The <Image> component cannot contain children. If you want to render content on top of the image, consider using the <ImageBackground> component or absolute positioning.');
+      }
+
+      return React.createElement(RCTImageView, _extends({}, this.props, {
+        style: style,
+        resizeMode: resizeMode,
+        tintColor: tintColor,
+        source: sources,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 247
+        }
+      }));
+    }
+  });
+  var styles = StyleSheet.create({
+    base: {
+      overflow: 'hidden'
+    }
+  });
+  var RCTImageView = requireNativeComponent('RCTImageView', Image);
+  module.exports = Image;
+});

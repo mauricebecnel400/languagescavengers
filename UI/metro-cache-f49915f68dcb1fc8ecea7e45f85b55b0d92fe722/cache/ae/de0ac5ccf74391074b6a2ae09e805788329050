@@ -1,0 +1,16 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = max;
+
+  var _base = _require(_dependencyMap[0], "../base");
+
+  var _utils = _require(_dependencyMap[1], "../utils");
+
+  function max(a, b) {
+    a = (0, _utils.adapt)(a);
+    b = (0, _utils.adapt)(b);
+    return (0, _base.cond)((0, _base.lessThan)(a, b), b, a);
+  }
+});
