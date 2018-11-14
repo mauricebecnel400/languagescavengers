@@ -1,8 +1,0 @@
---- adb starting (pid 20055) ---
-adb I 20055 20055 main.cpp:78] Android Debug Bridge version 1.0.36
-adb I 20055 20055 main.cpp:78] Revision af05c7354fe1-android
-adb I 20055 20055 main.cpp:78] 
---- adb starting (pid 6484) ---
-adb I  6484  6484 main.cpp:78] Android Debug Bridge version 1.0.36
-adb I  6484  6484 main.cpp:78] Revision af05c7354fe1-android
-adb I  6484  6484 main.cpp:78] 

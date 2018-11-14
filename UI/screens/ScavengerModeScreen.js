@@ -1,3 +1,19 @@
+/*****************************************************************************************
+ * Team: Language Scavengers
+ * Date: 11/13/2018
+ * Description: This screen will be for Scavenger Mode.
+ * Display:
+ *      - Word to find
+ *      - points at stake
+ *      - Current score
+ *
+ * Buttons:
+ *      - Camera Button
+ *          -goes to camera
+ *      - Skip Button
+ *          -finds another word to be found
+ *
+ *****************************************************************************************/
 import React from 'react';
 import {
     View,
@@ -16,6 +32,7 @@ import ExpoCamera from '../components/ExpoCamera';
 import Card from '../components/Card';
 
 export default class ScavengerMode extends React.Component {
+    /*This will be a React Component*/
     constructor(props) {
         super(props);
         this.state = {
@@ -40,18 +57,13 @@ export default class ScavengerMode extends React.Component {
     }
 
     handleCameraClick() {
-        if (this.state.cameraEnabled){
-            this.setState({
-                cameraEnabled: false,
-                result: true,
-            });
-			takePhotoAsync();
-			}
-        else {
-			result = getPermsAsync();
-			//console.log( res
-            this.setState({cameraEnabled: true});
-        }
+
+        result = getPermsAsync();
+        takePhotoAsync();
+        this.setState({
+            cameraEnabled: false,
+            result: true,
+        });
     };
 
     render() {
@@ -82,11 +94,10 @@ export default class ScavengerMode extends React.Component {
             </View>
         </ScrollView>
         );
-        if (this.state.cameraEnabled === true) {
-            screen = (
-                <ExpoCamera clickHandler = {this.handleCameraClick}/>
-            );
-        };
+       if (this.state.cameraEnabled === true) {
+            screen
+
+            };
         if (this.state.result === true) {
             screen = (
                 <ScrollView style={styles.container}>
