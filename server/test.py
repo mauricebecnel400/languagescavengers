@@ -13,8 +13,11 @@ from keras.models import Model
 from keras.preprocessing.image import ImageDataGenerator
 import time
 from tensorflow.python.client import device_lib
-
+import glob
 from googletrans import Translator
+import threading
+
+kill = False
 
 def main():
     base_model = load_base_model('ResNet50', None)
@@ -23,18 +26,36 @@ def main():
         preprocess_input = inception_v3_preprocess_input
     else:
         preprocess_input = preprocess_input_wrapper
-    images, filenames = load_images('image', 224)
-
-    preds = base_model.predict(images)
-    for idx in range(0, len(filenames)):
-        print()
-        print(filenames[idx])
-        print()
-        print('Predicted:', decode_predictions(preds, top=10)[idx])
+    # Rewrite this bad boy
+    waitForIn = threading.Thread(target=waitForTerminate)
+    waitForIn.start()
+    while True:
+        images, filenames = load_images('image', 224)
+        if len(filenames) == 0:
+            if kill:
+                print("The user terminated the program\n")
+                exit(0)
+            time.sleep(2)
+        else:
+            if kill:
+                print("The user terminated the program\n")
+                exit(0)
+            preds = base_model.predict(images)
+            print()
+            print(filenames[0])
+            print()
+            print('Predicted:', decode_predictions(preds, top=10))
+            os.remove('image/'+filenames[0])
 
     #t = Translator()
 
     #print(t.translate('hello', dest='es', src='en'))
+
+def waitForTerminate():
+    terminate = input()
+    kill = True
+    print("user killed the thread")
+    exit(0)
 
 def load_base_model(model_name, input_shape=None):
     if model_name == 'InceptionV3':
