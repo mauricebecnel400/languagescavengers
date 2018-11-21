@@ -23,4 +23,5 @@ def post():
     print(labels)
     return labels
 
+
 app.run( host='localhost', port = 8088 )
