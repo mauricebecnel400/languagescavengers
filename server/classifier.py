@@ -43,6 +43,7 @@ class NN(object):
 
     def clean_classify(self, images, filenames):
             preds = self.base_model.predict(images)
+            print(np.shape(images))
             preds = decode_predictions(preds, top=10)[0]
             names = []
             for i in range(len(preds)):
@@ -55,7 +56,7 @@ class NN(object):
             return names
 
     def clean_classify_one_image(self, image):
-        preds = self.base_model.predict(image)
+        preds = self.base_model.predict(np.expand_dims(image, axis=0))
         preds = decode_predictions(preds, top=10)[0]
         names = []
         for i in range(len(preds)):
