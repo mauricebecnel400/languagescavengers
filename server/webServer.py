@@ -15,7 +15,8 @@ def get():
 @app.route( '/post', methods = ["POST"])
 def post():
     print( 'this is the post: ', request.files['photo'] )
-    imgFile = request.files.get('imagefile', '')
+    # TODO: ACTUALLY VERIFY THAT THE IMAGE HAS BEEN RECIEVED, FILENAME IS NOT SUFFICIENT
+    #imgFile = request.files.get('imagefile', '')
     return ''
 
 app.run( host='localhost', port = 8088 )
