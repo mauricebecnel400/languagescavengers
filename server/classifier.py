@@ -1,20 +1,15 @@
 import os
 import os.path
 from PIL import Image
-from PIL import ImageFile
+
 
 import numpy as np
 import keras
 from keras.applications.inception_v3 import decode_predictions
 from keras.applications.inception_v3 import preprocess_input as inception_v3_preprocess_input
-from keras.layers import Input, Dense, Activation, Dropout
-from keras.layers import ZeroPadding2D, MaxPooling2D, AveragePooling2D, Conv2D, BatchNormalization, Flatten
-from keras.models import Model
-from keras.preprocessing.image import ImageDataGenerator
+
 import time
-from tensorflow.python.client import device_lib
-import glob
-from googletrans import Translator
+
 import threading
 
 
@@ -48,6 +43,7 @@ class NN(object):
 
     def clean_classify(self, images, filenames):
             preds = self.base_model.predict(images)
+            print(np.shape(images))
             preds = decode_predictions(preds, top=10)[0]
             names = []
             for i in range(len(preds)):
@@ -55,16 +51,20 @@ class NN(object):
                     names.append(preds[i][1])
                 else:
                     break
-            '''
-            print()
-            print(filenames[0])
-            print()
-            print('Predicted:', decode_predictions(preds, top=10)[0])
-            '''
+
             os.remove('image/'+filenames[0])
             return names
 
-
+    def clean_classify_one_image(self, image):
+        preds = self.base_model.predict(np.expand_dims(image, axis=0))
+        preds = decode_predictions(preds, top=10)[0]
+        names = []
+        for i in range(len(preds)):
+            if preds[i][2]>0.1:
+                names.append(preds[i][1])
+            else:
+                break
+        return names
 
     def waitForTerminate(self):
         terminate = input()
