@@ -7,6 +7,7 @@ import numpy as np
 import keras
 from keras.applications.inception_v3 import decode_predictions
 from keras.applications.inception_v3 import preprocess_input as inception_v3_preprocess_input
+import tensorflow as tf
 
 import time
 import threading
@@ -15,6 +16,7 @@ import textblob
 class NN(object):
     def __init__(self):
         self.base_model = load_base_model('ResNet50', None)
+        self.graph = tf.get_default_graph()
         # Use correct image preprocessing for model
         if self.base_model.name == ('inception_v3'):
             preprocess_input = inception_v3_preprocess_input
@@ -57,9 +59,10 @@ class NN(object):
     def clean_classify_one_image(self, image):
         # img shape needed: (224,224,3)
         # rbgimg = rbgimg.resize((img_size, img_size), Image.ANTIALIAS)
-
-        preds = self.base_model.predict(image, axis=0)
-        preds = decode_predictions(preds, top=10)[0]
+        image = np.expand_dims(image, axis=0)
+        with self.graph.as_default():
+            preds = self.base_model.predict(image)
+            preds = decode_predictions(preds, top=10)[0]
         names = []
         for i in range(len(preds)):
             if preds[i][2]>0.1:
@@ -72,15 +75,15 @@ class NN(object):
     def translate(self,labels):
         translation = []
         for i in range(len(labels)):
+            labels[i] = labels[i].replace("_", " ")
+        for i in range(len(labels)):
             try:
                 text = labels[i]
                 blob = textblob.TextBlob(text)
-                value = blob.translate(from_lang="en", to="es")
+                value = blob.translate(to="es")
             except textblob.exceptions.NotTranslated:
                 value = text
-            else:
-                value = "error"
-            translation.append(value)
+            translation.append(value.string)
         return translation
 
 

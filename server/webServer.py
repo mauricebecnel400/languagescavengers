@@ -21,10 +21,10 @@ def post():
     print( 'This is the post: ', request.files['photo'] )
     img =request.files['photo'].read()
     img = cv2.imdecode(np.fromstring(img, dtype=np.uint8), -1)
-    resized_image = cv2.resize(img, (224,224,3))
+    resized_image = cv2.resize(img, (224,224))
     labels = NN.clean_classify_one_image(resized_image)
     print(labels)
-    return labels
+    return str(labels)
 
 
 app.run( host='localhost', port = 8088 )
