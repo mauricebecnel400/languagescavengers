@@ -190,14 +190,21 @@ async function takePhotoAsync(){
 
     // Assume "photo" is the name of the form field the server expects
     formData.append('photo', { uri: localUri, name: filename, type });
-	
-    return await fetch('http://251ac471.ngrok.io/post', {
-        method: 'POST',
-        body: formData,
-        header: {
-            'contentt-type': 'multipart/form-data',
-        },
-    });
+	try {
+        const rawResponse = await fetch('http://251ac471.ngrok.io/post', {
+            method: 'POST',
+            body: formData,
+            header: {
+                'contentt-type': 'multipart/form-data',
+            },
+        });
+        const content = await rawResponse.json();
+        console.log(content);
+    } catch(error) {
+        alert(error);
+    }
+
+
 
 }
 const styles =  StyleSheet.create({
