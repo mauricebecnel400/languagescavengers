@@ -30,8 +30,8 @@ export default class ScavengerModeTile extends React.Component {
         let currentWord = await this.getCurrentWord();
         let score = await this.getScore();
         this.setState({
-            currentWord: currentWord,
-            score: score, 
+            currentWord,
+            score, 
         });
     }
 
