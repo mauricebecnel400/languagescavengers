@@ -9,9 +9,8 @@ from keras.applications.inception_v3 import decode_predictions
 from keras.applications.inception_v3 import preprocess_input as inception_v3_preprocess_input
 
 import time
-
 import threading
-
+import textblob
 
 class NN(object):
     def __init__(self):
@@ -56,7 +55,10 @@ class NN(object):
             return names
 
     def clean_classify_one_image(self, image):
-        preds = self.base_model.predict(np.expand_dims(image, axis=0))
+        # img shape needed: (224,224,3)
+        # rbgimg = rbgimg.resize((img_size, img_size), Image.ANTIALIAS)
+
+        preds = self.base_model.predict(image, axis=0)
         preds = decode_predictions(preds, top=10)[0]
         names = []
         for i in range(len(preds)):
@@ -64,7 +66,24 @@ class NN(object):
                 names.append(preds[i][1])
             else:
                 break
-        return names
+        translation = self.translate(names)
+        return [names, translation]
+
+    def translate(self,labels):
+        translation = []
+        for i in range(len(labels)):
+            try:
+                text = labels[i]
+                blob = textblob.TextBlob(text)
+                value = blob.translate(from_lang="en", to="es")
+            except textblob.exceptions.NotTranslated:
+                value = text
+            else:
+                value = "error"
+            translation.append(value)
+        return translation
+
+
 
     def waitForTerminate(self):
         terminate = input()
