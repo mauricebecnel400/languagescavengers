@@ -30,7 +30,7 @@ import CardScroll from '../components/CardScroll';
 import ButtonCamera from '../components/ButtonCamera';
 import ButtonSkip from '../components/ButtonSkip';
 import Card from '../components/Card';
-import Dictionary from '../data/vocabDictionary';
+import vocabDictionary from '../data/vocabDictionary';
 
 export default class ScavengerMode extends React.Component {
 
@@ -46,31 +46,21 @@ export default class ScavengerMode extends React.Component {
         this.handleSkipClick = this.handleSkipClick.bind(this);
     };
 
-    componentDidMount(){
-        let userData = this.getUserData();
-        if (userData.score === undefined){
-            userData.score = 0;
-        }
-        if (userData.currentWord === undefined){
-            userData.currentWord = 'Lapiz';
-        }
-        this.setState({
-            Score: 0,
-            currentWord: userData.currentWord,
-        })
-        console.log(userData);
-    }
-
     static navigationOptions = {
         headerTransparent: true,
     };
 
+    componentDidMount(){
+        this.updateUserData();
+    }
 
-    getUserData () {
-        let data ={};
-        data.currentWord = this.getCurrentWord();
-        data.score = this.getScore();
-        return data;
+    updateUserData = async () => {
+        let currentWord = await this.getCurrentWord();
+        let score = await this.getScore();
+        this.setState({
+            currentWord,
+            score,
+        });
     }
 
     getScore = async () => {
@@ -79,24 +69,33 @@ export default class ScavengerMode extends React.Component {
             if (value !== null) {
               // We have data!!
               return value;
+            } else {
+                await AsyncStorage.setItem('WordBookScore', '0');
+                return 0;
             }
         } catch (error) {
-            return 0;
+            alert("here");
+            return;
         }
     }
 
     getCurrentWord = async () => {
         try {
-            const value = await Async.getItem('ScavengerModeCurrentWord');
+            const value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
             if (value !== null){
                 return value;
+            } else {
+                let word = vocabDictionary.Dictionary[0];
+                await AsyncStorage.setItem('WordBookCurrentWord', word);
+                return word;
             }
         } catch (error) {
-            return '';
+            alert(error);
+            return;
         }
     }
 
-    handleSkipClick() {
+    handleSkipClick = async () => {
         this.setState({
             currentWord: 'Silla',
         })
@@ -121,11 +120,11 @@ export default class ScavengerMode extends React.Component {
                     <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
                 </View>
                 <View style={styles.SubHeader}>
-                    <Text style={styles.SubText}> Overall Score </Text>
+                    <Text style={styles.SubText}> Overall Score: </Text>
                     <Text style={styles.CurrentWord}> {this.state.score} points</Text>
                 </View>
                 <View style={styles.SubHeader}>
-                    <Text style={styles.SubText}> Current Word </Text>
+                    <Text style={styles.SubText}> Current Word: </Text>
                     <Text style={styles.CurrentWord}> {this.state.currentWord} </Text>
                 </View>
             </CardScroll>
@@ -143,8 +142,8 @@ export default class ScavengerMode extends React.Component {
             screen = (
                 <ScrollView style={styles.container}>
                     <Card>
-                        <FontAwesome name="check" size={60} style={styles.Camera} />
-                     Correct
+                        <FontAwesome name="check" size={60} style={styles.Check} />
+                        <Text style={styles.TileHeaderText}> Correct </Text>
                     </Card>
                     <View style={styles.Options}>
                     <ButtonCamera clickHandler = {this.handleCameraClick}/>
@@ -224,6 +223,10 @@ const styles =  StyleSheet.create({
         padding: 10,
         color: 'rgba(96,100,109, 1)',
     },
+    Check: {
+        padding: 10,
+        color: 'rgba(96,100,109, 1)',
+    },
     SubHeader: {
         flex: 1,
         flexDirection: 'row',
@@ -237,8 +240,8 @@ const styles =  StyleSheet.create({
         fontWeight: 'bold',
     },
     CurrentWord: {
-        fontSize: 25,
-        padding: 10,
+        fontSize: 20,
+        paddingTop: 10,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',
