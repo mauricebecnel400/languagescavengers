@@ -7,12 +7,14 @@ import {
     Text,
     TouchableHighlight,
     StyleSheet,
+    AsyncStorage,
 } from 'react-native';
 import ScavengerModeTile from '../components/ScavengerModeTile';
 import WordBookTile from '../components/WordBookTile';
 import SettingTile from '../components/SettingTile';
 
 export default class HomeScreen extends React.Component {
+    
     static navigationOptions = {
         headerTransparent: true
     };

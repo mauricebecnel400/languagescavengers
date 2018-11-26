@@ -6,12 +6,67 @@ import {
     Text,
     TouchableHighlight,
     StyleSheet,
+    AsyncStorage,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Card from './Card';
+import vocabDictionary from '../data/vocabDictionary';
 
 
 export default class ScavengerModeTile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentWord: '',
+            score: 0
+        }
+    }
+
+    componentDidMount() {
+        this.updateUserData();
+    }
+
+    updateUserData = async () => {
+        let currentWord = await this.getCurrentWord();
+        let score = await this.getScore();
+        this.setState({
+            currentWord: currentWord,
+            score: score, 
+        });
+    }
+
+    getScore = async () => {
+        try {
+            const value = await AsyncStorage.getItem('WordBookScore');
+            if (value !== null) {
+              // We have data!!
+              return value;
+            } else {
+                await AsyncStorage.setItem('WordBookScore', '0');
+                return 0;
+            }
+        } catch (error) {
+            alert(error);
+            return;
+        }
+    }
+
+    getCurrentWord = async () => {
+        try {
+            const value = await AsyncStorage.getItem('WordBookCurrentWord');
+            if (value !== null){
+                return value;
+            } else {
+                let word = vocabDictionary.Dictionary[0];
+                await AsyncStorage.setItem('WordBookCurrentWord', word);
+                return word;
+            }
+        } catch (error) {
+            alert(error);
+            return;
+        }
+    }
+
 
     render() {
         return (
@@ -25,8 +80,14 @@ export default class ScavengerModeTile extends React.Component {
                         <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
                     </View>
                     <View style={styles.SubHeader}>
-                        <Text style={styles.SubText}> Current Word  </Text>
-                        <Text style={styles.SubText}> Overall Score  </Text>
+                        <View style={styles.Data}>
+                            <Text style={styles.SubText}> Current Word  </Text>
+                            <Text style={styles.userData}> {this.state.currentWord} </Text>
+                        </View>
+                        <View style={styles.Data}>
+                            <Text style={styles.SubText}> Overall Score  </Text>
+                            <Text style={styles.userData}> {this.state.score} </Text>
+                        </View>
                     </View>
                 </Card>
             </TouchableHighlight>
@@ -61,6 +122,14 @@ const styles =  StyleSheet.create({
     SubText: {
         fontSize: 17,
         padding: 10,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    userData: {
+        fontSize: 15,
+        paddingLeft: 10,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',

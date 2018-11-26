@@ -22,23 +22,23 @@ import {
     Text,
     TouchableOpacity,
     StyleSheet,
+    AsyncStorage,
 } from 'react-native';
 import { Permissions, ImagePicker } from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import CardScroll from '../components/CardScroll';
 import ButtonCamera from '../components/ButtonCamera';
 import ButtonSkip from '../components/ButtonSkip';
-import ExpoCamera from '../components/ExpoCamera';
 import Card from '../components/Card';
+import Dictionary from '../data/vocabDictionary';
 
 export default class ScavengerMode extends React.Component {
-    /*This will be a React Component*/
+
     constructor(props) {
         super(props);
         this.state = {
-            overallScore: 300,
-            roundScore: 10,
-            currentWord: 'Lapiz',
+            score: 0,
+            currentWord: '',
             cameraEnabled: false,
             result: false,
         };
@@ -46,9 +46,55 @@ export default class ScavengerMode extends React.Component {
         this.handleSkipClick = this.handleSkipClick.bind(this);
     };
 
+    componentDidMount(){
+        let userData = this.getUserData();
+        if (userData.score === undefined){
+            userData.score = 0;
+        }
+        if (userData.currentWord === undefined){
+            userData.currentWord = 'Lapiz';
+        }
+        this.setState({
+            Score: 0,
+            currentWord: userData.currentWord,
+        })
+        console.log(userData);
+    }
+
     static navigationOptions = {
         headerTransparent: true,
     };
+
+
+    getUserData () {
+        let data ={};
+        data.currentWord = this.getCurrentWord();
+        data.score = this.getScore();
+        return data;
+    }
+
+    getScore = async () => {
+        try {
+            const value = await AsyncStorage.getItem('ScavengerModeScore');
+            if (value !== null) {
+              // We have data!!
+              return value;
+            }
+        } catch (error) {
+            return 0;
+        }
+    }
+
+    getCurrentWord = async () => {
+        try {
+            const value = await Async.getItem('ScavengerModeCurrentWord');
+            if (value !== null){
+                return value;
+            }
+        } catch (error) {
+            return '';
+        }
+    }
 
     handleSkipClick() {
         this.setState({
@@ -57,7 +103,6 @@ export default class ScavengerMode extends React.Component {
     }
 
     handleCameraClick() {
-
         result = getPermsAsync();
         takePhotoAsync();
         this.setState({
@@ -77,11 +122,7 @@ export default class ScavengerMode extends React.Component {
                 </View>
                 <View style={styles.SubHeader}>
                     <Text style={styles.SubText}> Overall Score </Text>
-                    <Text style={styles.CurrentWord}> {this.state.overallScore} points</Text>
-                </View>
-                <View style={styles.SubHeader}>
-                    <Text style={styles.SubText}> Round Score </Text>
-                    <Text style={styles.CurrentWord}> {this.state.roundScore} points</Text>
+                    <Text style={styles.CurrentWord}> {this.state.score} points</Text>
                 </View>
                 <View style={styles.SubHeader}>
                     <Text style={styles.SubText}> Current Word </Text>
@@ -140,21 +181,22 @@ async function takePhotoAsync(){
     }
     let localUri = result.uri;
     let filename = localUri.split('/').pop();
-    console.log("from result", result, localUri, filename )
+    
     // Infer the type of the image
     let match = /\.(\w+)$/.exec(filename);
     let type = match ? `image/${match[1]}` : `image`;
 
     // Upload the image using the fetch and FormData APIs
     let formData = new FormData();
+
     // Assume "photo" is the name of the form field the server expects
     formData.append('photo', { uri: localUri, name: filename, type });
-	console.log(formData);
+	
     return await fetch('http://251ac471.ngrok.io/post', {
         method: 'POST',
         body: formData,
         header: {
-            'content-type': 'multipart/form-data',
+            'contentt-type': 'multipart/form-data',
         },
     });
 
