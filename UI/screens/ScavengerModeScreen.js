@@ -31,6 +31,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import CardScroll from '../components/CardScroll';
 import ButtonCamera from '../components/ButtonCamera';
 import ButtonSkip from '../components/ButtonSkip';
+import ButtonNextWord from '../components/ButtonNextWord';
 import Card from '../components/Card';
 import vocabDictionary from '../data/vocabDictionary';
 import axios from 'axios';
@@ -41,12 +42,14 @@ export default class ScavengerMode extends React.Component {
         super(props);
         this.state = {
             score: 0,
+            previousWordIndex: 0,
             currentWord: '',
             correct: false,
             incorrect: false,
         };
         this.handleCameraClick = this.handleCameraClick.bind(this);
         this.handleSkipClick = this.handleSkipClick.bind(this);
+        this.handleNextButton = this.handleNextButton.bind(this);
         this.spinValue = new Animated.Value(0)
     };
 
@@ -72,7 +75,7 @@ export default class ScavengerMode extends React.Component {
             const value = await AsyncStorage.getItem('ScavengerModeScore');
             if (value !== null) {
               // We have data!!
-              return value;
+              return parseInt(value);
             } else {
                 await AsyncStorage.setItem('ScavengerModeScore', '0');
                 return 0;
@@ -85,12 +88,12 @@ export default class ScavengerMode extends React.Component {
 
     getCurrentWord = async () => {
         try {
-            const value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
+            let value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
             if (value !== null){
                 let index = parseInt(value);
-                return vocabDictionary.Dictionary[index];
+                return vocabDictionary.DictionarySpanish[index];
             } else {
-                let word = vocabDictionary.Dictionary[0];
+                let word = vocabDictionary.DictionarySpanish[0];
                 await AsyncStorage.setItem('ScavengerModeCurrentWord', '0');
                 return word;
             }
@@ -103,22 +106,34 @@ export default class ScavengerMode extends React.Component {
     handleSkipClick = async () => {
         let index = await this.incrementCurrentWord();
         this.setState({
-            currentWord: vocabDictionary.Dictionary[index],
+            currentWord: vocabDictionary.DictionarySpanish[index],
         })
-        await AsyncStorage.setItem('ScavengerModeCurerntWord', index.toString())
     }
 
     incrementCurrentWord = async () => {
-        const value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
+        let value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
         let index = 0;
         if (value !== null) {
             index = parseInt(value);
-            // index = (index + 1) % vocabDictionary.Dictionary.length
-            index = Math.floor(Math.random()*vocabDictionary.Dictionary.length)
+            // index = (index + 1) % vocabDictionary.DictionarySpanishSpanish.length
+            index = Math.floor(Math.random()*vocabDictionary.DictionarySpanish.length)
         } else {
             await this.getCurrentWord();
         }
+        this.setState({previousWordIndex: value});
+        await AsyncStorage.setItem('ScavengerModeCurrentWord', index.toString());
         return index;
+    }
+
+    incrementScore = async () => {
+        let value = await this.getScore();
+        value++;
+        this.setState({score: value});
+        await AsyncStorage.setItem('ScavengerModeScore', value.toString());
+    }
+
+    handleNextButton () {
+        this.setState({correct: false});
     }
 
     handleCameraClick = async () => {
@@ -126,19 +141,27 @@ export default class ScavengerMode extends React.Component {
             result = getPermsAsync();
             setTimeout(()=>this.setState({loading: true}, () => this.spin()), 1000);
             let response = await takePhotoAsync();
-            console.log(response.data);
-            let currentWord = await this.getCurrentWord();
-            console.log(currentWord);
-            if (response.data.toUpperCase().includes(currentWord.toUpperCase())){
-                this.setState({
-                    loading: false,
-                    correct: true,
-                });
+            if (response !== 0){
+                console.log(response.data);
+                let currentWord = await this.getCurrentWord();
+                console.log(currentWord);
+                if (response.data.toUpperCase().includes(currentWord.toUpperCase())){
+                    await this.incrementScore();
+                    let index = await this.incrementCurrentWord();
+                    this.setState({
+                        loading: false,
+                        correct: true,
+                        currentWord: vocabDictionary.DictionarySpanish[index],
+                    })
+                } else {
+                    this.setState({
+                        loading: false,
+                        incorrect: true,
+                    });
+                }
             } else {
-                this.setState({
-                    loading: false,
-                    incorrect: true,
-                })
+                this.setState({loading: false});
+                return;
             }
         } catch(error){
             alert(error);
@@ -198,13 +221,14 @@ export default class ScavengerMode extends React.Component {
         if (this.state.correct) {
             screen = (
                 <ScrollView style={styles.container}>
-                    <Card>
+                    <CardScroll>
                         <FontAwesome name="check" size={60} style={styles.Check} />
                         <Text style={styles.TileHeaderText}> Correct </Text>
-                    </Card>
+                        <Text style={styles.CurrentWord}> {vocabDictionary.DictionarySpanish[this.state.previousWordIndex]} translates to {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
+                        <Text style={styles.CurrentWord}> Total points: {this.state.score}</Text>
+                    </CardScroll>
                     <View style={styles.Options}>
-                        <ButtonCamera clickHandler = {this.handleCameraClick}/>
-                        <ButtonSkip clickHandler = {this.handleSkipClick}/>
+                        <ButtonNextWord clickHandler = {this.handleNextButton}/>
                     </View>
                 </ScrollView>
             )
@@ -247,7 +271,7 @@ async function takePhotoAsync(){
      });
 
     if (result.cancelled) {
-        return;
+        return 0;
     }
     let localUri = result.uri;
     let filename = localUri.split('/').pop();
@@ -263,7 +287,7 @@ async function takePhotoAsync(){
     formData.append('photo', { uri: localUri, name: filename, type });
     return axios({
         method: 'post',
-        url: 'https://62f1923c.ngrok.io/post',
+        url: 'http://b8cbabfd.ngrok.io/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
