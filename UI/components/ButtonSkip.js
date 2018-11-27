@@ -15,11 +15,11 @@ export default class ButtonSkip extends React.Component {
         return (
             <TouchableHighlight 
             style={styles.container}
-            onPress={() => this.props.this.props.clickHandler()} 
+            onPress={() => this.props.clickHandler()} 
             underlayColor="white"
             >
                 <View style={styles.Button}>
-                    <FontAwesome name="arrow-right" size={60} style={styles.Arrow} />
+                    <FontAwesome name="random" size={60} style={styles.Arrow} />
                 </View>
             </TouchableHighlight>
         )
