@@ -191,7 +191,7 @@ async function takePhotoAsync(){
     // Assume "photo" is the name of the form field the server expects
     formData.append('photo', { uri: localUri, name: filename, type });
 	try {
-        const rawResponse = await fetch('http://251ac471.ngrok.io/post', {
+        const rawResponse = await fetch('http://ac33f564.ngrok.io/post', {
             method: 'POST',
             body: formData,
             header: {
