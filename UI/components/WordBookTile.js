@@ -4,7 +4,7 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableOpacity,
+    TouchableHighlight,
     StyleSheet,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -12,21 +12,39 @@ import Card from './Card';
 
 
 export default class WordBookTile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            totalBooks: 1,
+            score: 0,
+        }
+    }
 
     render() {
         return (
-            <Card> 
-                <View style={styles.container}>
-                    <View style={styles.Header}>
-                        <FontAwesome name="book" size={30} style={styles.MagnifyingGlass} />
-                        <Text style={styles.TileHeaderText}> Word Books </Text>
+            <TouchableHighlight 
+            onPress={() => this.props.navigation.navigate('WordBookMode')} 
+            underlayColor="white" 
+            >
+                <Card> 
+                    <View style={styles.container}>
+                        <View style={styles.Header}>
+                            <FontAwesome name="book" size={30} style={styles.MagnifyingGlass} />
+                            <Text style={styles.TileHeaderText}> Word Books </Text>
+                        </View>
+                        <View style={styles.SubHeader}>
+                            <View style={styles.Data}>
+                                <Text style={styles.SubText}> Total Word Books </Text>
+                                <Text style={styles.userData}> {this.state.totalBooks} </Text>
+                            </View>
+                            <View style={styles.Data}>
+                                <Text style={styles.SubText}> Total Score </Text>
+                                <Text style={styles.userData}> {this.state.score} </Text>
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.SubHeader}>
-                        <Text style={styles.SubText}> Total Word Books </Text>
-                        <Text style={styles.SubText}> Total Score </Text>
-                    </View>
-                </View>
-            </Card>
+                </Card>
+            </TouchableHighlight>
         )
     }
 
@@ -58,6 +76,14 @@ const styles =  StyleSheet.create({
     SubText: {
         fontSize: 17,
         padding: 10,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    userData: {
+        fontSize: 15,
+        paddingLeft: 12,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',

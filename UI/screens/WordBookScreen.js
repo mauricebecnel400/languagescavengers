@@ -14,7 +14,7 @@ import ButtonSkip from '../components/ButtonSkip';
 import ExpoCamera from '../components/ExpoCamera';
 import Card from '../components/Card';
 
-export default class ScavengerMode extends React.Component {
+export default class WordBookScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,30 +53,9 @@ export default class ScavengerMode extends React.Component {
     render() {
         let result;
         let screen = (
-            <ScrollView style={styles.container}>
-            <CardScroll>
-                <View style={styles.Header}>
-                    <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
-                    <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
-                </View>
-                <View style={styles.SubHeader}>
-                    <Text style={styles.SubText}> Overall Score </Text>
-                    <Text style={styles.CurrentWord}> {this.state.overallScore} points</Text>
-                </View>
-                <View style={styles.SubHeader}>
-                    <Text style={styles.SubText}> Round Score </Text>
-                    <Text style={styles.CurrentWord}> {this.state.roundScore} points</Text>
-                </View>
-                <View style={styles.SubHeader}>
-                    <Text style={styles.SubText}> Current Word </Text>
-                    <Text style={styles.CurrentWord}> {this.state.currentWord} </Text>
-                </View>
-            </CardScroll>
-            <View style={styles.Options}>
-                <ButtonCamera clickHandler = {this.handleCameraClick}/>
-                <ButtonSkip clickHandler = {this.handleSkipClick}/>
+            <View style={styles.container}>
+                <Text style={styles.TileHeaderText}> Word Books</Text>
             </View>
-        </ScrollView>
         );
         if (this.state.cameraEnabled === true) {
             screen = (

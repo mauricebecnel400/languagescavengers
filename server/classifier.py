@@ -73,6 +73,8 @@ class NN(object):
         return [names, translation]
 
     def translate(self,labels):
+        if len(labels) == 0:
+            return []
         translation = []
         for i in range(len(labels)):
             labels[i] = labels[i].replace("_", " ")

@@ -55,10 +55,11 @@ export default class ScavengerModeTile extends React.Component {
         try {
             const value = await AsyncStorage.getItem('WordBookCurrentWord');
             if (value !== null){
-                return value;
+                let index = parseInt(value);
+                return vocabDictionary.Dictionary[index];
             } else {
                 let word = vocabDictionary.Dictionary[0];
-                await AsyncStorage.setItem('WordBookCurrentWord', word);
+                await AsyncStorage.setItem('WordBookCurrentWord', '0');
                 return word;
             }
         } catch (error) {
@@ -129,7 +130,7 @@ const styles =  StyleSheet.create({
     },
     userData: {
         fontSize: 15,
-        paddingLeft: 10,
+        paddingLeft: 12,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',
