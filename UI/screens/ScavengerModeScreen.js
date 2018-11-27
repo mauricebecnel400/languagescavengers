@@ -78,7 +78,7 @@ export default class ScavengerMode extends React.Component {
                 return 0;
             }
         } catch (error) {
-            alert("here");
+            alert(error);
             return;
         }
     }
@@ -122,23 +122,27 @@ export default class ScavengerMode extends React.Component {
     }
 
     handleCameraClick = async () => {
-        result = getPermsAsync();
-        setTimeout(()=>this.setState({loading: true}, () => this.spin()), 1000);
-        let response = await takePhotoAsync();
-        console.log(response.data);
-        let currentWord = await this.getCurrentWord();
-        console.log(currentWord);
-        if (response.data.toUpperCase().includes(currentWord.toUpperCase())){
-            this.setState({
-                loading: false,
-                correct: true,
-            });
-        } else {
-            this.setState({
-                loading: false,
-                incorrect: true,
-            })
-        }
+        try {
+            result = getPermsAsync();
+            setTimeout(()=>this.setState({loading: true}, () => this.spin()), 1000);
+            let response = await takePhotoAsync();
+            console.log(response.data);
+            let currentWord = await this.getCurrentWord();
+            console.log(currentWord);
+            if (response.data.toUpperCase().includes(currentWord.toUpperCase())){
+                this.setState({
+                    loading: false,
+                    correct: true,
+                });
+            } else {
+                this.setState({
+                    loading: false,
+                    incorrect: true,
+                })
+            }
+        } catch(error){
+            alert(error);
+        };
 
     };
 
