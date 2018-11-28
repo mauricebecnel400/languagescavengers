@@ -149,6 +149,8 @@ export default class ScavengerMode extends React.Component {
                 // console.log(response.data);
                 let currentWord = await this.getCurrentWord();
                 // console.log(currentWord);
+                currentWord = currentWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                response.data = response.data.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
                 if (response.data.toUpperCase().includes(currentWord.toUpperCase())){
                     await this.incrementScore();
                     let index = await this.incrementCurrentWord();
@@ -172,7 +174,8 @@ export default class ScavengerMode extends React.Component {
             }
         } catch(error){
             this.setState({loading: false});
-            alert('Could Not Classify Image 💩');
+            // alert('Could Not Classify Image 💩');
+            alert(error);
         };
 
     };
@@ -213,15 +216,15 @@ export default class ScavengerMode extends React.Component {
             screen = (
                 <ScrollView style={styles.container}>
                     <CardScroll>
-                        <View style={styles.Header}>
-                            <FontAwesome name="check" size={30} style={styles.Check} />
-                            <Text style={styles.TileHeaderText}> Correct </Text>
+                        <View>
+                            <Text style={styles.ResultHeaderText}> Correct </Text>
                         </View>
                         <View style={styles.SubHeader}>
                             <Text style={styles.CurrentWord}> Total points: {this.state.score}</Text>
                         </View>
                         <View style={styles.SubHeader}>
-                            <Text style={styles.Results}> {vocabDictionary.DictionarySpanish[this.state.previousWordIndex]} translates to {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
+                            <Text style={styles.CurrentWord}> {vocabDictionary.DictionarySpanish[this.state.previousWordIndex]}</Text>
+                            <Text style={styles.GuessResultsTranslate}> {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
                         </View>
                     </CardScroll>
                     <View style={styles.Options}>
@@ -239,13 +242,12 @@ export default class ScavengerMode extends React.Component {
             screen = (
                 <ScrollView style={styles.container}>
                     <CardScroll>
-                        <View style={styles.Header}>
-                            <FontAwesome name="times-circle" size={30} style={styles.Check} />
-                            <Text style={styles.TileHeaderText}> Wrong </Text>
+                        <View>
+                            <Text style={styles.ResultHeaderText}> Wrong </Text>
                         </View> 
                         <View style={styles.SubHeader}>
                             <Text style={styles.CurrentWord}> Current Word your looking for: </Text>
-                            <Text style={styles.Results}>{this.state.currentWord}</Text>
+                            <Text style={styles.GuessResults}>{this.state.currentWord}</Text>
                         </View>
                         <View style={styles.SubHeader}>
                             <Text style={styles.CurrentWord}> We think you took a picture of: </Text>
@@ -300,7 +302,7 @@ async function takePhotoAsync(){
     formData.append(language);
     return axios({
         method: 'post',
-        url: 'http://6fb6f0c2.ngrok.io/post',
+        url: 'https://e309d816.ngrok.io/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
@@ -326,6 +328,15 @@ const styles =  StyleSheet.create({
         lineHeight: 24,
         textAlign: 'left',
         fontWeight: 'bold',
+    },
+    ResultHeaderText:{
+        fontSize: 30,
+        paddingTop: 30,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        padding: 10,
     },
     MagnifyingGlass: {
         padding: 10,
@@ -365,8 +376,17 @@ const styles =  StyleSheet.create({
     },
     GuessResults: {
         fontSize: 17,
-        paddingLeft: 10,
-        color: 'rgba(96,100,109, 1)',
+        paddingLeft: 20,
+        color: '#75a3e7',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    GuessResultsTranslate: {
+        fontSize: 17,
+        paddingTop: 5,
+        paddingLeft: 20, 
+        color: '#75a3e7',
         lineHeight: 24,
         textAlign: 'left',
         fontWeight: 'bold',
