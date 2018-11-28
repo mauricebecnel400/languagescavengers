@@ -296,9 +296,11 @@ async function takePhotoAsync(){
 
     // Assume "photo" is the name of the form field the server expects
     formData.append('photo', { uri: localUri, name: filename, type });
+    language = 'es'
+    formData.append('language', {language});
     return axios({
         method: 'post',
-        url: 'https://2a94a28d.ngrok.io/post',
+        url: 'https://69373217.ngrok.io/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
