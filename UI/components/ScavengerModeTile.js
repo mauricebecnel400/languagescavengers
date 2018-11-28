@@ -37,12 +37,12 @@ export default class ScavengerModeTile extends React.Component {
 
     getScore = async () => {
         try {
-            const value = await AsyncStorage.getItem('WordBookScore');
+            const value = await AsyncStorage.getItem('ScavengerModeScore');
             if (value !== null) {
               // We have data!!
               return value;
             } else {
-                await AsyncStorage.setItem('WordBookScore', '0');
+                await AsyncStorage.setItem('ScavengerModeScore', '0');
                 return 0;
             }
         } catch (error) {
@@ -53,13 +53,13 @@ export default class ScavengerModeTile extends React.Component {
 
     getCurrentWord = async () => {
         try {
-            const value = await AsyncStorage.getItem('WordBookCurrentWord');
+            const value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
             if (value !== null){
                 let index = parseInt(value);
-                return vocabDictionary.Dictionary[index];
+                return vocabDictionary.DictionarySpanish[index];
             } else {
-                let word = vocabDictionary.Dictionary[0];
-                await AsyncStorage.setItem('WordBookCurrentWord', '0');
+                let word = vocabDictionary.DictionarySpanish[0];
+                await AsyncStorage.setItem('ScavengerModeCurrentWord', '0');
                 return word;
             }
         } catch (error) {

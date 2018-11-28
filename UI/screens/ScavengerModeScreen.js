@@ -287,7 +287,7 @@ async function takePhotoAsync(){
     formData.append('photo', { uri: localUri, name: filename, type });
     return axios({
         method: 'post',
-        url: 'http://b8cbabfd.ngrok.io/post',
+        url: 'https://4f317cb5.ngrok.io/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
