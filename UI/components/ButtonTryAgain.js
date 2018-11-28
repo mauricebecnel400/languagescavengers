@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
-export default class ButtonNextWord extends React.Component {
+export default class ButtonTryAgain extends React.Component {
 
     render() {
         return (
@@ -19,7 +19,7 @@ export default class ButtonNextWord extends React.Component {
             underlayColor="white"
             >
                 <View style={styles.Button}>
-                    <Text style={styles.Next}>Next Word</Text>
+                    <Text style={styles.Next}>Try Again</Text>
                 </View>
             </TouchableHighlight>
         )
@@ -34,7 +34,7 @@ const styles =  StyleSheet.create({
         justifyContent: 'center',
         height: 100,
         width: 300,
-        backgroundColor: '#78C928',
+        backgroundColor: '#ff0000',
         borderRadius: 20,
         margin: 15,
         shadowOpacity: 0.75,

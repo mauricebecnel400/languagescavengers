@@ -20,11 +20,9 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableOpacity,
     StyleSheet,
     AsyncStorage,
-    Animated,
-    Easing,
+    ActivityIndicator,
 } from 'react-native';
 import { Permissions, ImagePicker } from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -32,6 +30,7 @@ import CardScroll from '../components/CardScroll';
 import ButtonCamera from '../components/ButtonCamera';
 import ButtonSkip from '../components/ButtonSkip';
 import ButtonNextWord from '../components/ButtonNextWord';
+import ButtonTryAgain from '../components/ButtonTryAgain';
 import Card from '../components/Card';
 import vocabDictionary from '../data/vocabDictionary';
 import axios from 'axios';
@@ -46,11 +45,12 @@ export default class ScavengerMode extends React.Component {
             currentWord: '',
             correct: false,
             incorrect: false,
+            incorrectGuesses: [],
         };
         this.handleCameraClick = this.handleCameraClick.bind(this);
         this.handleSkipClick = this.handleSkipClick.bind(this);
         this.handleNextButton = this.handleNextButton.bind(this);
-        this.spinValue = new Animated.Value(0)
+        this.handleTryAgain = this.handleTryAgain.bind(this);
     };
 
     static navigationOptions = {
@@ -103,13 +103,6 @@ export default class ScavengerMode extends React.Component {
         }
     }
 
-    handleSkipClick = async () => {
-        let index = await this.incrementCurrentWord();
-        this.setState({
-            currentWord: vocabDictionary.DictionarySpanish[index],
-        })
-    }
-
     incrementCurrentWord = async () => {
         let value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
         let index = 0;
@@ -131,15 +124,26 @@ export default class ScavengerMode extends React.Component {
         this.setState({score: value});
         await AsyncStorage.setItem('ScavengerModeScore', value.toString());
     }
+    
+    handleSkipClick = async () => {
+        let index = await this.incrementCurrentWord();
+        this.setState({
+            currentWord: vocabDictionary.DictionarySpanish[index],
+        })
+    }
 
     handleNextButton () {
         this.setState({correct: false});
     }
 
+    handleTryAgain () {
+        this.setState({incorrect: false});
+    }
+
     handleCameraClick = async () => {
         try {
             result = getPermsAsync();
-            setTimeout(()=>this.setState({loading: true}, () => this.spin()), 1000);
+            setTimeout(()=>this.setState({loading: true}), 1000);
             let response = await takePhotoAsync();
             if (response !== 0){
                 console.log(response.data);
@@ -154,9 +158,12 @@ export default class ScavengerMode extends React.Component {
                         currentWord: vocabDictionary.DictionarySpanish[index],
                     })
                 } else {
+                    let temp = response.data.replace(/'/g, '"');
+                    let incorrectGuesses = JSON.parse(temp);
                     this.setState({
                         loading: false,
                         incorrect: true,
+                        incorrectGuesses, 
                     });
                 }
             } else {
@@ -164,27 +171,13 @@ export default class ScavengerMode extends React.Component {
                 return;
             }
         } catch(error){
-            alert(error);
+            this.setState({loading: false});
+            alert('Could Classify Image :(');
         };
 
     };
 
-    spin = () => {
-        this.spinValue.setValue(0);
-        Animated.timing(
-            this.spinValue,
-            {
-                toValue: 1,
-                duration: 1000,
-                easing: Easing.linear,
-                useNativeDriver: true
-            }
-        ).start(() => this.spin());
-    };
-
-
     render() {
-        const rotate = this.spinValue.interpolate({inputRange: [0, 1], outputRange: ['0deg', '360deg']})
         let screen = (
             <ScrollView style={styles.container}>
             <CardScroll>
@@ -192,11 +185,11 @@ export default class ScavengerMode extends React.Component {
                     <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
                     <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
                 </View>
-                <View style={styles.SubHeader}>
+                <View style={styles.Header}>
                     <Text style={styles.SubText}> Overall Score: </Text>
                     <Text style={styles.CurrentWord}> {this.state.score} points</Text>
                 </View>
-                <View style={styles.SubHeader}>
+                <View style={styles.Header}>
                     <Text style={styles.SubText}> Current Word: </Text>
                     <Text style={styles.CurrentWord}> {this.state.currentWord} </Text>
                 </View>
@@ -211,9 +204,7 @@ export default class ScavengerMode extends React.Component {
             screen = (
                 <ScrollView style={styles.container}>
                     <View style={styles.containerLoading}>
-                        <Animated.View style={{transform: [{rotate}]}}>
-                            <FontAwesome name="spinner" size={100} style={styles.Loading} spin/>
-                        </Animated.View>
+                        <ActivityIndicator size="large" color="#0000ff" />
                     </View>
                 </ScrollView>
             )
@@ -222,10 +213,16 @@ export default class ScavengerMode extends React.Component {
             screen = (
                 <ScrollView style={styles.container}>
                     <CardScroll>
-                        <FontAwesome name="check" size={60} style={styles.Check} />
-                        <Text style={styles.TileHeaderText}> Correct </Text>
-                        <Text style={styles.CurrentWord}> {vocabDictionary.DictionarySpanish[this.state.previousWordIndex]} translates to {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
-                        <Text style={styles.CurrentWord}> Total points: {this.state.score}</Text>
+                        <View style={styles.Header}>
+                            <FontAwesome name="check" size={30} style={styles.Check} />
+                            <Text style={styles.TileHeaderText}> Correct </Text>
+                        </View>
+                        <View style={styles.SubHeader}>
+                            <Text style={styles.CurrentWord}> Total points: {this.state.score}</Text>
+                        </View>
+                        <View style={styles.SubHeader}>
+                            <Text style={styles.Results}> {vocabDictionary.DictionarySpanish[this.state.previousWordIndex]} translates to {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
+                        </View>
                     </CardScroll>
                     <View style={styles.Options}>
                         <ButtonNextWord clickHandler = {this.handleNextButton}/>
@@ -234,15 +231,29 @@ export default class ScavengerMode extends React.Component {
             )
         };
         if (this.state.incorrect) {
+            let indents = [];
+            for (var i = 0; i < 3; i++) {
+                console.log(this.state.incorrectGuesses[0][i]);
+                indents.push(<Text style={styles.GuessResults} className='indent' key={i}> {this.state.incorrectGuesses[0][i]} </Text>);
+            }
             screen = (
                 <ScrollView style={styles.container}>
-                    <Card>
-                        <FontAwesome name="times-circle" size={60} style={styles.Check} />
-                        <Text style={styles.TileHeaderText}> Try Again </Text>
-                    </Card>
+                    <CardScroll>
+                        <View style={styles.Header}>
+                            <FontAwesome name="times-circle" size={30} style={styles.Check} />
+                            <Text style={styles.TileHeaderText}> Wrong </Text>
+                        </View> 
+                        <View style={styles.SubHeader}>
+                            <Text style={styles.CurrentWord}> Current Word your looking for: </Text>
+                            <Text style={styles.Results}>{this.state.currentWord}</Text>
+                        </View>
+                        <View style={styles.SubHeader}>
+                            <Text style={styles.CurrentWord}> We think you took a picture of: </Text>
+                            {indents}
+                        </View>
+                    </CardScroll>
                     <View style={styles.Options}>
-                        <ButtonCamera clickHandler = {this.handleCameraClick}/>
-                        <ButtonSkip clickHandler = {this.handleSkipClick}/>
+                        <ButtonTryAgain clickHandler = {this.handleTryAgain}/>
                     </View>
                 </ScrollView>
             )
@@ -287,7 +298,7 @@ async function takePhotoAsync(){
     formData.append('photo', { uri: localUri, name: filename, type });
     return axios({
         method: 'post',
-        url: 'https://4f317cb5.ngrok.io/post',
+        url: 'https://2a94a28d.ngrok.io/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
@@ -305,7 +316,6 @@ const styles =  StyleSheet.create({
     Header: {
         flex: 1,
         flexDirection: 'row',
-        height: 100,
     },
     TileHeaderText: {
         fontSize: 30,
@@ -325,7 +335,6 @@ const styles =  StyleSheet.create({
     },
     SubHeader: {
         flex: 1,
-        flexDirection: 'row',
     },
     SubText: {
         fontSize: 20,
@@ -337,7 +346,24 @@ const styles =  StyleSheet.create({
     },
     CurrentWord: {
         fontSize: 20,
-        paddingTop: 10,
+        padding: 10,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    Results: {
+        fontSize: 17,
+        marginLeft: 5,
+        padding: 10,
+        color: 'rgba(96,100,109, 1)',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    GuessResults: {
+        fontSize: 17,
+        paddingLeft: 10,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',
