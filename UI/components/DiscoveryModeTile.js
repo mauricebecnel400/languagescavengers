@@ -11,7 +11,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Card from './Card';
 
 
-export default class WordBookTile extends React.Component {
+export default class DiscoveryModeTile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,18 +29,12 @@ export default class WordBookTile extends React.Component {
                 <Card> 
                     <View style={styles.container}>
                         <View style={styles.Header}>
-                            <FontAwesome name="book" size={30} style={styles.MagnifyingGlass} />
-                            <Text style={styles.TileHeaderText}> Word Books </Text>
+                            <FontAwesome name="globe" size={30} style={styles.MagnifyingGlass} />
+                            <Text style={styles.TileHeaderText}> Discovery Mode </Text>
                         </View>
                         <View style={styles.SubHeader}>
-                            <View style={styles.Data}>
-                                <Text style={styles.SubText}> Total Word Books </Text>
-                                <Text style={styles.userData}> {this.state.totalBooks} </Text>
-                            </View>
-                            <View style={styles.Data}>
-                                <Text style={styles.SubText}> Total Score </Text>
-                                <Text style={styles.userData}> {this.state.score} </Text>
-                            </View>
+                            <Text style={styles.SubText}> Take pictures and we will tell you the </Text>
+                            <Text style={styles.SubText}> objects translation</Text>
                         </View>
                     </View>
                 </Card>
@@ -71,11 +65,11 @@ const styles =  StyleSheet.create({
     },
     SubHeader: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
+        padding: 10,
     },
     SubText: {
-        fontSize: 17,
-        padding: 10,
+        fontSize: 15,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',
@@ -83,7 +77,7 @@ const styles =  StyleSheet.create({
     },
     userData: {
         fontSize: 15,
-        paddingLeft: 12,
+        margin: 15,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',

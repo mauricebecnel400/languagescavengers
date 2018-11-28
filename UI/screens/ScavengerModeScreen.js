@@ -146,9 +146,9 @@ export default class ScavengerMode extends React.Component {
             setTimeout(()=>this.setState({loading: true}), 1000);
             let response = await takePhotoAsync();
             if (response !== 0){
-                console.log(response.data);
+                // console.log(response.data);
                 let currentWord = await this.getCurrentWord();
-                console.log(currentWord);
+                // console.log(currentWord);
                 if (response.data.toUpperCase().includes(currentWord.toUpperCase())){
                     await this.incrementScore();
                     let index = await this.incrementCurrentWord();
@@ -172,7 +172,7 @@ export default class ScavengerMode extends React.Component {
             }
         } catch(error){
             this.setState({loading: false});
-            alert('Could Classify Image :(');
+            alert('Could Not Classify Image 💩');
         };
 
     };
@@ -233,7 +233,7 @@ export default class ScavengerMode extends React.Component {
         if (this.state.incorrect) {
             let indents = [];
             for (var i = 0; i < 3; i++) {
-                console.log(this.state.incorrectGuesses[0][i]);
+                // console.log(this.state.incorrectGuesses[0][i]);
                 indents.push(<Text style={styles.GuessResults} className='indent' key={i}> {this.state.incorrectGuesses[0][i]} </Text>);
             }
             screen = (
@@ -296,8 +296,8 @@ async function takePhotoAsync(){
 
     // Assume "photo" is the name of the form field the server expects
     formData.append('photo', { uri: localUri, name: filename, type });
-    language = 'es'
-    formData.append('language', {language});
+    let language = 'es'
+    formData.append(language);
     return axios({
         method: 'post',
         url: 'https://69373217.ngrok.io/post',

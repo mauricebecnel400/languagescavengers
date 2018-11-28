@@ -10,7 +10,7 @@ import {
     AsyncStorage,
 } from 'react-native';
 import ScavengerModeTile from '../components/ScavengerModeTile';
-import WordBookTile from '../components/WordBookTile';
+import DiscoveryModeTile from '../components/DiscoveryModeTile';
 import SettingTile from '../components/SettingTile';
 
 export default class HomeScreen extends React.Component {
@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
                         <Text style={styles.headerSubText}> Let's Find New Words</Text>
                     </View>
                     <ScavengerModeTile navigation={this.props.navigation}/>
-                    <WordBookTile navigation={this.props.navigation}/>
+                    <DiscoveryModeTile navigation={this.props.navigation}/>
                     <SettingTile navigation={this.props.navigation}/>
                 </View>
             </ScrollView>
