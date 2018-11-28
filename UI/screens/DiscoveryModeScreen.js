@@ -1,19 +1,3 @@
-/*****************************************************************************************
- * Team: Language Scavengers
- * Date: 11/13/2018
- * Description: This screen will be for Scavenger Mode.
- * Display:
- *      - Word to find
- *      - points at stake
- *      - Current score
- *
- * Buttons:
- *      - Camera Button
- *          -goes to camera
- *      - Skip Button
- *          -finds another word to be found
- *
- *****************************************************************************************/
 import React from 'react';
 import {
     View,
@@ -35,7 +19,7 @@ import Card from '../components/Card';
 import vocabDictionary from '../data/vocabDictionary';
 import axios from 'axios';
 
-export default class ScavengerMode extends React.Component {
+export default class DiscoveryModeScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -180,20 +164,16 @@ export default class ScavengerMode extends React.Component {
     render() {
         let screen = (
             <ScrollView style={styles.container}>
-            <CardScroll>
-                <View style={styles.Header}>
-                    <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
-                    <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
-                </View>
-                <View style={styles.Header}>
-                    <Text style={styles.SubText}> Overall Score: </Text>
-                    <Text style={styles.CurrentWord}> {this.state.score} points</Text>
-                </View>
-                <View style={styles.Header}>
-                    <Text style={styles.SubText}> Current Word: </Text>
-                    <Text style={styles.CurrentWord}> {this.state.currentWord} </Text>
-                </View>
-            </CardScroll>
+                <Card>
+                    <View style={styles.Header}>
+                        <FontAwesome name="globe" size={30} style={styles.MagnifyingGlass} />
+                        <Text style={styles.TileHeaderText}> Discovery Mode </Text>
+                    </View>
+                    <View style={styles.SubHeader}>
+                        <Text style={styles.Results}> Take a picture and we can translate </Text>
+                        <Text style={styles.Results}> the object for you</Text>
+                    </View>
+                </Card>
             <View style={styles.Options}>
                 <ButtonCamera clickHandler = {this.handleCameraClick}/>
                 <ButtonSkip clickHandler = {this.handleSkipClick}/>
@@ -337,6 +317,7 @@ const styles =  StyleSheet.create({
     },
     SubHeader: {
         flex: 1,
+        padding: 10,
     },
     SubText: {
         fontSize: 20,
@@ -357,7 +338,6 @@ const styles =  StyleSheet.create({
     Results: {
         fontSize: 17,
         marginLeft: 5,
-        padding: 10,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',

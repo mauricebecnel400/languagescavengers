@@ -23,7 +23,7 @@ export default class DiscoveryModeTile extends React.Component {
     render() {
         return (
             <TouchableHighlight 
-            onPress={() => this.props.navigation.navigate('WordBookMode')} 
+            onPress={() => this.props.navigation.navigate('DiscoveryMode')} 
             underlayColor="white" 
             >
                 <Card> 
@@ -34,7 +34,7 @@ export default class DiscoveryModeTile extends React.Component {
                         </View>
                         <View style={styles.SubHeader}>
                             <Text style={styles.SubText}> Take pictures and we will tell you the </Text>
-                            <Text style={styles.SubText}> objects translation</Text>
+                            <Text style={styles.SubText}> objects translation </Text>
                         </View>
                     </View>
                 </Card>

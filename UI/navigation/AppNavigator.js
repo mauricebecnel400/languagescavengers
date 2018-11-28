@@ -3,10 +3,10 @@ import {
   } from 'react-navigation';
 import HomeScreen from '../screens/HomeScreen';
 import ScavengerModeScreen from '../screens/ScavengerModeScreen';
-import WordBookScreen from '../screens/WordBookScreen';
 import SettingScreen from '../screens/SettingScreen';
 import LanguageSelectScreen from '../screens/LanguageSelectScreen';
 import VolumeScreen from '../screens/VolumeScreen';
+import DiscoveryModeScreen from '../screens/DiscoveryModeScreen';
 
   const AppNavigator = createStackNavigator(
     {
@@ -16,8 +16,8 @@ import VolumeScreen from '../screens/VolumeScreen';
       ScavengerMode: {
         screen: ScavengerModeScreen
       },
-      WordBookMode: {
-        screen: WordBookScreen
+      DiscoveryMode: {
+        screen: DiscoveryModeScreen
       },
       SettingMode: {
         screen: SettingScreen
