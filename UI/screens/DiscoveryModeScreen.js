@@ -46,6 +46,7 @@ export default class DiscoveryModeScreen extends React.Component {
             let response = await takePhotoAsync();
             if (response !== 0){
                 let temp = response.data.replace(/'/g, '"');
+                temp = temp.replace(/\\"/g, '\\\'');
                 let Guesses = JSON.parse(temp);
                 this.setState({
                     loading: false,

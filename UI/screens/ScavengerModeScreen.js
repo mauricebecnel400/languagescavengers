@@ -155,6 +155,8 @@ export default class ScavengerMode extends React.Component {
                 // console.log(currentWord);
                 currentWord = currentWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
                 let compare = response.data.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                // console.log(compare.toUpperCase());
+                // console.log(currentWord.toUpperCase());
                 if (compare.toUpperCase().includes(currentWord.toUpperCase())){
                     await this.incrementScore();
                     let index = await this.incrementCurrentWord();
@@ -166,6 +168,8 @@ export default class ScavengerMode extends React.Component {
                     })
                 } else {
                     let temp = response.data.replace(/'/g, '"');
+                    temp = temp.replace(/\\"/g, '\\\'');
+                    console.log('here', temp);
                     let incorrectGuesses = JSON.parse(temp);
                     this.setState({
                         loading: false,
@@ -179,8 +183,8 @@ export default class ScavengerMode extends React.Component {
             }
         } catch(error){
             this.setState({loading: false});
-            alert('Huh... We couldn\'t classify your image 💩');
-            // alert(error);
+            //alert('Huh... We couldn\'t classify your image 💩');
+            alert(error);
         };
 
     };
