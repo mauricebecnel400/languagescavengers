@@ -83,7 +83,7 @@ class NN(object):
                 text = labels[i]
                 blob = textblob.TextBlob(text)
                 value = blob.translate(to=language)
-                value = value.string.replace("'", "\\'")
+                value = value.string.replace("'", "\\\'")
                 translation.append(value)
             except textblob.exceptions.NotTranslated:
                 value = text

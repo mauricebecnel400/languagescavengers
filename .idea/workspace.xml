@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f403ebc3-24a4-42d7-8af1-fdf4808fe7e2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="f403ebc3-24a4-42d7-8af1-fdf4808fe7e2" name="Default" comment="" />
     <ignored path="languagescavengers.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -33,33 +31,44 @@
       <file leaf-file-name="ScavengerModeScreen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UI/screens/ScavengerModeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.666667">
-              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state vertical-scroll-proportion="-11.222222">
+              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding>
-                <marker date="1543467263159" expanded="true" signature="1462:1564" placeholder="{...}" />
-                <marker date="1543467263159" expanded="true" signature="1476:1564" placeholder="{...}" />
-                <marker date="1543467263159" expanded="true" signature="10958:11143" placeholder="{&quot;method&quot;: 'post'...}" />
+                <marker date="1543473228807" expanded="true" signature="1384:1399" placeholder="{...}" />
+                <marker date="1543473228807" expanded="true" signature="10799:10984" placeholder="{&quot;method&quot;: 'post'...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webServer.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="webServer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/webServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.77329975">
               <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SettingScreen.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/UI/screens/SettingScreen.js">
+      <file leaf-file-name="translate.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/translate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.0201511">
+            <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SettingScreen.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UI/screens/SettingScreen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1543473228807" expanded="true" signature="2002:2008" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -68,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/server/classifier.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="50" selection-start-line="84" selection-start-column="50" selection-end-line="84" selection-end-column="50" />
+              <caret line="86" column="41" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -105,10 +114,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/webServer.py" />
-        <option value="$PROJECT_DIR$/server/classifier.py" />
         <option value="$PROJECT_DIR$/UI/screens/ScavengerModeScreen.js" />
         <option value="$PROJECT_DIR$/UI/data/vocabDictionary.js" />
         <option value="$PROJECT_DIR$/server/webServer.py" />
+        <option value="$PROJECT_DIR$/UI/screens/SettingScreen.js" />
+        <option value="$PROJECT_DIR$/server/classifier.py" />
       </list>
     </option>
   </component>
@@ -118,6 +128,7 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="-13" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="722" />
@@ -541,7 +552,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="722" extended-state="6" />
+    <frame x="-13" y="23" width="1280" height="722" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27382874" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -592,7 +603,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/UI/screens/ScavengerModeScreen.js</url>
-          <line>221</line>
+          <line>223</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -609,9 +620,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1543467263159" expanded="true" signature="1462:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="1476:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="10958:11143" placeholder="{&quot;method&quot;: 'post'...}" />
+            <marker date="1543473228807" expanded="true" signature="1384:1399" placeholder="{...}" />
+            <marker date="1543473228807" expanded="true" signature="10799:10984" placeholder="{&quot;method&quot;: 'post'...}" />
           </folding>
         </state>
       </provider>
@@ -639,9 +649,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="201" column="1" selection-start-line="201" selection-start-column="1" selection-end-line="201" selection-end-column="1" />
           <folding>
-            <marker date="1543467263159" expanded="true" signature="1462:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="1476:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="10958:11143" placeholder="{&quot;method&quot;: 'post'...}" />
+            <marker date="1543473228807" expanded="true" signature="1384:1399" placeholder="{...}" />
+            <marker date="1543473228807" expanded="true" signature="10799:10984" placeholder="{&quot;method&quot;: 'post'...}" />
           </folding>
         </state>
       </provider>
@@ -669,9 +678,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="152" column="48" selection-start-line="152" selection-start-column="48" selection-end-line="152" selection-end-column="48" />
           <folding>
-            <marker date="1543467263159" expanded="true" signature="1462:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="1476:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="10958:11143" placeholder="{&quot;method&quot;: 'post'...}" />
+            <marker date="1543473228807" expanded="true" signature="1384:1399" placeholder="{...}" />
+            <marker date="1543473228807" expanded="true" signature="10799:10984" placeholder="{&quot;method&quot;: 'post'...}" />
           </folding>
         </state>
       </provider>
@@ -715,9 +723,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="152" column="48" selection-start-line="152" selection-start-column="48" selection-end-line="152" selection-end-column="48" />
           <folding>
-            <marker date="1543467263159" expanded="true" signature="1462:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="1476:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="10958:11143" placeholder="{&quot;method&quot;: 'post'...}" />
+            <marker date="1543473228807" expanded="true" signature="1384:1399" placeholder="{...}" />
+            <marker date="1543473228807" expanded="true" signature="10799:10984" placeholder="{&quot;method&quot;: 'post'...}" />
           </folding>
         </state>
       </provider>
@@ -761,9 +768,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="152" column="48" selection-start-line="152" selection-start-column="48" selection-end-line="152" selection-end-column="48" />
           <folding>
-            <marker date="1543467263159" expanded="true" signature="1462:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="1476:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="10958:11143" placeholder="{&quot;method&quot;: 'post'...}" />
+            <marker date="1543473228807" expanded="true" signature="1384:1399" placeholder="{...}" />
+            <marker date="1543473228807" expanded="true" signature="10799:10984" placeholder="{&quot;method&quot;: 'post'...}" />
           </folding>
         </state>
       </provider>
@@ -848,13 +854,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UI/app.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/translate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -984,12 +983,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/UI/screens/ScavengerModeScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.666667">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+        <state vertical-scroll-proportion="-11.222222">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
           <folding>
-            <marker date="1543467263159" expanded="true" signature="1462:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="1476:1564" placeholder="{...}" />
-            <marker date="1543467263159" expanded="true" signature="10958:11143" placeholder="{&quot;method&quot;: 'post'...}" />
+            <marker date="1543473228807" expanded="true" signature="1384:1399" placeholder="{...}" />
+            <marker date="1543473228807" expanded="true" signature="10799:10984" placeholder="{&quot;method&quot;: 'post'...}" />
           </folding>
         </state>
       </provider>
@@ -1002,10 +1000,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/UI/screens/SettingScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1543473228807" expanded="true" signature="2002:2008" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/translate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/classifier.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="50" selection-start-line="84" selection-start-column="50" selection-end-line="84" selection-end-column="50" />
+          <caret line="86" column="41" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -1014,16 +1030,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/webServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.77329975">
           <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/screens/SettingScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0201511">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -35,7 +35,7 @@ def post():
     if (len(labels[0]) == 0):
         labels = ''
     print(labels)
-    return str(labels)
+    return str(labels).replace('"',"'")
 
 
 @app.route('/translate', methods = ["POST"])
