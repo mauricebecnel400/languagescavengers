@@ -187,8 +187,8 @@ export default class ScavengerMode extends React.Component {
             }
         } catch(error){
             this.setState({loading: false});
-            //alert('Huh... We couldn\'t classify your image 💩');
-            alert(error);
+            alert('Huh... We couldn\'t classify your image 💩');
+            //alert(error);
         };
 
     };
