@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     View,
-    Image,
     ScrollView,
     Text,
     StyleSheet,
@@ -12,10 +11,7 @@ import { Permissions, ImagePicker } from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import CardScroll from '../components/CardScroll';
 import ButtonCameraLarge from '../components/ButtonCameraLarge'
-import ButtonNextWord from '../components/ButtonNextWord';
-import ButtonTryAgain from '../components/ButtonTryAgain';
 import Card from '../components/Card';
-import vocabDictionary from '../data/vocabDictionary';
 import axios from 'axios';
 
 export default class DiscoveryModeScreen extends React.Component {
@@ -43,6 +39,7 @@ export default class DiscoveryModeScreen extends React.Component {
 
     handleCameraClick = async () => {
         try {
+            setTimeout(()=>this.setState({results: false}), 1000);
             result = getPermsAsync();
             setTimeout(()=>this.setState({loading: true}), 1000);
             let response = await takePhotoAsync();
@@ -60,8 +57,8 @@ export default class DiscoveryModeScreen extends React.Component {
             }
         } catch(error){
             this.setState({loading: false});
-            // alert('Could Not Classify Image 💩');
-            alert(error);
+            alert('Could Not Classify Image 💩');
+            // alert(error);
         };
 
     };
@@ -76,7 +73,7 @@ export default class DiscoveryModeScreen extends React.Component {
                     </View>
                     <View style={styles.SubHeader}>
                         <Text style={styles.Results}> Take a picture and we can translate </Text>
-                        <Text style={styles.Results}> the object for you</Text>
+                        <Text style={styles.Results}> the object for you.</Text>
                     </View>
                 </Card>
             <View style={styles.Options}>
@@ -163,7 +160,7 @@ async function takePhotoAsync(){
     formData.append(language);
     return axios({
         method: 'post',
-        url: 'https://e309d816.ngrok.io/post',
+        url: 'https://e34f70a6.ngrok.io/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
@@ -176,7 +173,7 @@ const styles =  StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ADD8E6',
-        paddingTop: 100,
+        paddingTop: 60,
     },
     Header: {
         flex: 1,
@@ -264,6 +261,7 @@ const styles =  StyleSheet.create({
         justifyContent: 'center'
     },
     containerLoading: {
+        paddingTop: 100,
         alignItems: 'center',
     },
     Loading: {

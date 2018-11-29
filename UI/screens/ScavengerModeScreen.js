@@ -150,8 +150,8 @@ export default class ScavengerMode extends React.Component {
                 let currentWord = await this.getCurrentWord();
                 // console.log(currentWord);
                 currentWord = currentWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-                response.data = response.data.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-                if (response.data.toUpperCase().includes(currentWord.toUpperCase())){
+                let compare = response.data.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                if (compare.toUpperCase().includes(currentWord.toUpperCase())){
                     await this.incrementScore();
                     let index = await this.incrementCurrentWord();
                     this.setState({
@@ -174,8 +174,8 @@ export default class ScavengerMode extends React.Component {
             }
         } catch(error){
             this.setState({loading: false});
-            // alert('Could Not Classify Image 💩');
-            alert(error);
+            alert('Could Not Classify Image 💩');
+            // alert(error);
         };
 
     };
@@ -302,7 +302,7 @@ async function takePhotoAsync(){
     formData.append(language);
     return axios({
         method: 'post',
-        url: 'https://e309d816.ngrok.io/post',
+        url: 'https://e34f70a6.ngrok.io/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
@@ -399,6 +399,7 @@ const styles =  StyleSheet.create({
     },
     containerLoading: {
         alignItems: 'center',
+        paddingTop: 100,
     },
     Loading: {
         margin: 40,

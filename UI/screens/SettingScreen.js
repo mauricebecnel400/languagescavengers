@@ -27,13 +27,9 @@ export default class SettingScreen extends React.Component{
             <ScrollView style={styles.container}>
                 <View>
                     <View style={styles.container}>
-                        <Image
-                            style={styles.earth}
-                            source={require('../assets/gear1.png')}
-                        />
+                        <LanguageSelectTile navigation={this.props.navigation}/>
+                        <VolumeTile navigation={this.props.navigation}/>
                     </View>
-                    <LanguageSelectTile navigation={this.props.navigation}/>
-                    <VolumeTile navigation={this.props.navigation}/>
                 </View>
             </ScrollView>
         )
