@@ -47,11 +47,17 @@ export default class ScavengerMode extends React.Component {
     }
 
     translateDictionary = async () => {
-        return axios({
-            method: 'post',
-            url: vocabDictionary.urlApi +'/translate',
-            data: vocabDictionary.DictionaryEnglish,
-        });
+        try {
+            let language = await AsyncStorage.getItem('CurrentLanguage');
+            let package = vocabDictionary.DictionaryEnglish.unshift(language);
+            return axios({
+                method: 'post',
+                url: vocabDictionary.urlApi +'/translate',
+                data: package,
+            });
+        } catch (error){
+            alert('Huh... Can\'t grab your 💩');
+        }
     }
 
     updateUserData = async () => {
@@ -170,7 +176,7 @@ export default class ScavengerMode extends React.Component {
             }
         } catch(error){
             this.setState({loading: false});
-            alert('Could Not Classify Image 💩');
+            alert('Huh... We couldn\'t classify your image 💩');
             // alert(error);
         };
 
