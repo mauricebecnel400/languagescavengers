@@ -49,8 +49,10 @@ export default class ScavengerMode extends React.Component {
     translateDictionary = async () => {
         try {
             let language = await AsyncStorage.getItem('CurrentLanguage');
-            let payload = vocabDictionary.DictionaryEnglish.unshift(language);
-            return axios({
+            // console.log(language);
+            let payload = vocabDictionary.DictionaryEnglish.slice();
+            payload.unshift(language);
+            return await axios({
                 method: 'post',
                 url: vocabDictionary.urlApi +'/translate',
                 data: payload,
@@ -69,7 +71,6 @@ export default class ScavengerMode extends React.Component {
             score,
             translations,
         });
-        console.log(this.state.translations);
     }
 
     getScore = async () => {
@@ -302,7 +303,7 @@ async function takePhotoAsync(){
     formData.append('photo', { uri: localUri, name: filename, type });
     let language = await AsyncStorage.getItem('CurrentLanguage');
     formData.append(language);
-    return axios({
+    return await axios({
         method: 'post',
         url: vocabDictionary.urlApi +'/post',
         data: formData,
