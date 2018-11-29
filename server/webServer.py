@@ -47,7 +47,7 @@ def translate():
     except:
         words = ["Sorry"]
         lang = "es"
-    translation = [NN.translate(elem, lang) for elem in words]
+    translation = [NN.translate([elem], lang)[0] for elem in words]
     jsonval = json.dumps({"words":words, "translation":translation})
     return jsonval
 
