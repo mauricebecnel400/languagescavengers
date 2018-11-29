@@ -9,9 +9,10 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import vocabDictionary from '../data/vocabDictionary';
@@ -26,6 +27,7 @@ export default class SettingScreen extends React.Component{
         super(props);
         this.state = {
             currentLanguage: '',
+            loading: false,
         }
         clickHandler = this.clickHandler.bind(this);
     }
@@ -40,11 +42,14 @@ export default class SettingScreen extends React.Component{
 
     clickHandler = async (code) =>{
         try {
+            this.setState({loading: true});
             await AsyncStorage.setItem('CurrentLanguage', code);
             await this.setLocalCurrentLanguage();
-            let value = await this.translateDictionary(); 
-            value = value.data.translation;
-            await AsyncStorage.setItem('Translations', JSON.stringify(value));
+            let value = await this.translateDictionary();
+            value = JSON.stringify(value.data.translation).replace(/\\'/g, '\"');
+            value = value.replace('Une b', 'B');
+            await AsyncStorage.setItem('Translations', value);
+            this.setState({loading: false});
         } catch(error){
             alert(error);
         }  
@@ -120,6 +125,9 @@ export default class SettingScreen extends React.Component{
 
     render(){
         let current = this.displayLanguage();
+        if (this.state.loading) {
+            current = (<ActivityIndicator style={styles.Loading} size="small" color="#0000ff" />);
+        }
         return (
             <ScrollView style={styles.container}>
                 <Card>
@@ -142,6 +150,7 @@ export default class SettingScreen extends React.Component{
         )
     }
 }
+
 const styles =  StyleSheet.create({
     container: {
         flex: 1,
@@ -162,7 +171,7 @@ const styles =  StyleSheet.create({
         fontWeight: 'bold',
     },
     LanguageHeaderText: {
-        fontSize: 20,
+        fontSize: 25,
         padding: 15,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
@@ -181,7 +190,13 @@ const styles =  StyleSheet.create({
         padding: 5,
     },
     ButtonContainer: {
-
         alignContent: 'center',
-    }
+    },
+    containerLoading: {
+        
+    },
+    Loading: {
+        paddingTop: 30,
+        paddingLeft: 20,
+    },
 });

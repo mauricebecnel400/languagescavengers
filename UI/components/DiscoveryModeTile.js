@@ -4,7 +4,7 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -22,7 +22,7 @@ export default class DiscoveryModeTile extends React.Component {
 
     render() {
         return (
-            <TouchableHighlight 
+            <TouchableOpacity 
             onPress={() => this.props.navigation.navigate('DiscoveryMode')} 
             underlayColor="white" 
             >
@@ -38,7 +38,7 @@ export default class DiscoveryModeTile extends React.Component {
                         </View>
                     </View>
                 </Card>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 

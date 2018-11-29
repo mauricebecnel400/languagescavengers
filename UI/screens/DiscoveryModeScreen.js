@@ -99,7 +99,7 @@ export default class DiscoveryModeScreen extends React.Component {
                 // console.log(this.state.incorrectGuesses[0][i]);
                 indents.push(
                 <View className='parentResults' key={i}> 
-                    <Text style={styles.GuessResults} className='guess'> {this.state.Guesses[0][i]} </Text> 
+                    <Text style={styles.GuessResults} className='guess'> - {this.state.Guesses[0][i]} </Text> 
                     <Text style={styles.GuessResultsTranslate} className='translate'> {this.state.Guesses[1][i]}</Text>
                 </View>
                 );
@@ -213,6 +213,7 @@ const styles =  StyleSheet.create({
     },
     SubHeader: {
         flex: 1,
+        paddingLeft: 10,
     },
     SubText: {
         fontSize: 20,
@@ -250,7 +251,7 @@ const styles =  StyleSheet.create({
     GuessResultsTranslate: {
         fontSize: 17,
         paddingTop: 5,
-        paddingLeft: 20, 
+        paddingLeft: 33, 
         color: '#75a3e7',
         lineHeight: 24,
         textAlign: 'left',

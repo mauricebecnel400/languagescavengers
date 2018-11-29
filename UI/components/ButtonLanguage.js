@@ -4,7 +4,7 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ export default class ButtonLanguage extends React.Component {
 
     render() {
         return (
-            <TouchableHighlight 
+            <TouchableOpacity 
             style={styles.container}
             onPress={() => this.props.clickHandler(code)} 
             underlayColor="white"
@@ -21,7 +21,7 @@ export default class ButtonLanguage extends React.Component {
                 <View style={styles.Button}>
                     <Text style={styles.Next}>{this.props.language}</Text>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 

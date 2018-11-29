@@ -15,7 +15,6 @@ import ButtonCamera from '../components/ButtonCamera';
 import ButtonSkip from '../components/ButtonSkip';
 import ButtonNextWord from '../components/ButtonNextWord';
 import ButtonTryAgain from '../components/ButtonTryAgain';
-import Card from '../components/Card';
 import vocabDictionary from '../data/vocabDictionary';
 import axios from 'axios';
 
@@ -51,9 +50,13 @@ export default class ScavengerMode extends React.Component {
         try {
             let translations = await AsyncStorage.getItem('Translations');
             translations = JSON.parse(translations);
+            if (translations === null){
+                translations = vocabDictionary.DictionarySpanish;
+            }
             this.setState({
                 translations,
-            })
+            });
+
         } catch (error) {
             alert(error);
         }
@@ -155,6 +158,8 @@ export default class ScavengerMode extends React.Component {
                 // console.log(currentWord);
                 currentWord = currentWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
                 let compare = response.data.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                currentWord = currentWord.replace(/\\'/g, '\\"');
+                compare = compare.replace(/\\\\'/g, '"');
                 // console.log(compare.toUpperCase());
                 // console.log(currentWord.toUpperCase());
                 if (compare.toUpperCase().includes(currentWord.toUpperCase())){
@@ -168,8 +173,7 @@ export default class ScavengerMode extends React.Component {
                     })
                 } else {
                     let temp = response.data.replace(/'/g, '"');
-                    temp = temp.replace(/\\"/g, '\\\'');
-                    console.log('here', temp);
+                    temp = temp.replace(/\\"/g, '\"');
                     let incorrectGuesses = JSON.parse(temp);
                     this.setState({
                         loading: false,
@@ -193,15 +197,14 @@ export default class ScavengerMode extends React.Component {
         let screen = (
             <ScrollView style={styles.container}>
             <CardScroll>
-                <View style={styles.Header}>
-                    <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
-                    <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
+                <View>
+                    <Text style={styles.ResultHeaderText}> Scavenger Mode </Text>
                 </View>
-                <View style={styles.Header}>
+                <View style={{paddingTop: 20}}>
                     <Text style={styles.SubText}> Overall Score: </Text>
                     <Text style={styles.CurrentWord}> {this.state.score} points</Text>
                 </View>
-                <View style={styles.Header}>
+                <View style={{paddingTop: 20}}>
                     <Text style={styles.SubText}> Current Word: </Text>
                     <Text style={styles.CurrentWord}> {this.state.currentWord} </Text>
                 </View>
@@ -228,12 +231,13 @@ export default class ScavengerMode extends React.Component {
                         <View>
                             <Text style={styles.ResultHeaderText}> Correct </Text>
                         </View>
-                        <View style={styles.SubHeader}>
-                            <Text style={styles.CurrentWord}> Total points: {this.state.score}</Text>
+                        <View style={{paddingTop: 20}}>
+                            <Text style={styles.SubText}> Score: </Text>
+                            <Text style={styles.CurrentWord}> {this.state.score} points </Text>
                         </View>
-                        <View style={styles.SubHeader}>
-                            <Text style={styles.CurrentWord}> {this.state.translations[this.state.previousWordIndex]}</Text>
-                            <Text style={styles.GuessResultsTranslate}> {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
+                        <View style={{paddingTop: 20}}>
+                            <Text style={styles.SubText}> {this.state.translations[this.state.previousWordIndex]}</Text>
+                            <Text style={styles.CurrentWord}> {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
                         </View>
                     </CardScroll>
                     <View style={styles.Options}>
@@ -245,21 +249,20 @@ export default class ScavengerMode extends React.Component {
         if (this.state.incorrect) {
             let indents = [];
             for (var i = 0; i < 3; i++) {
-                // console.log(this.state.incorrectGuesses[0][i]);
                 indents.push(<Text style={styles.GuessResults} className='indent' key={i}> {this.state.incorrectGuesses[0][i]} </Text>);
             }
             screen = (
                 <ScrollView style={styles.container}>
                     <CardScroll>
                         <View>
-                            <Text style={styles.ResultHeaderText}> Wrong </Text>
+                            <Text style={styles.ResultHeaderText}> Are you sure? </Text>
                         </View> 
-                        <View style={styles.SubHeader}>
-                            <Text style={styles.CurrentWord}> Current Word your looking for: </Text>
+                        <View style={{paddingTop: 20}}>
+                            <Text style={styles.Label}> Current Word your looking for: </Text>
                             <Text style={styles.GuessResults}>{this.state.currentWord}</Text>
                         </View>
-                        <View style={styles.SubHeader}>
-                            <Text style={styles.CurrentWord}> We think you took a picture of: </Text>
+                        <View style={{paddingTop: 20}}>
+                            <Text style={styles.Label}> We think you took a picture of: </Text>
                             {indents}
                         </View>
                     </CardScroll>
@@ -359,7 +362,7 @@ const styles =  StyleSheet.create({
         flex: 1,
     },
     SubText: {
-        fontSize: 20,
+        fontSize: 25,
         padding: 10,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
@@ -367,6 +370,16 @@ const styles =  StyleSheet.create({
         fontWeight: 'bold',
     },
     CurrentWord: {
+        fontSize: 20,
+        paddingTop: 5,
+        paddingLeft: 25,
+        paddingBottom: 10,
+        color: '#75a3e7',
+        lineHeight: 24,
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    Label : {
         fontSize: 20,
         padding: 10,
         color: 'rgba(96,100,109, 1)',

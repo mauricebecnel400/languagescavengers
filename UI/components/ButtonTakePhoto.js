@@ -4,7 +4,7 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ export default class ButtonCamera extends React.Component {
 
     render() {
         return (
-            <TouchableHighlight 
+            <TouchableOpacity 
             style={styles.container}
             onPress={() => this.props.clickHandler()} 
             underlayColor="transparent"
@@ -21,7 +21,7 @@ export default class ButtonCamera extends React.Component {
                 <View style={styles.Button}>
                     <FontAwesome name="camera" size={60} style={styles.Camera} />
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 

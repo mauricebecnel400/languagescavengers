@@ -4,7 +4,7 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ export default class ButtonSkip extends React.Component {
 
     render() {
         return (
-            <TouchableHighlight 
+            <TouchableOpacity 
             style={styles.container}
             onPress={() => this.props.clickHandler()} 
             underlayColor="white"
@@ -21,7 +21,7 @@ export default class ButtonSkip extends React.Component {
                 <View style={styles.Button}>
                     <FontAwesome name="random" size={60} style={styles.Arrow} />
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 

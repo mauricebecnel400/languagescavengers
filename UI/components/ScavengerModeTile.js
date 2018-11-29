@@ -4,7 +4,7 @@ import {
     Image,
     ScrollView,
     Text,
-    TouchableHighlight,
+    TouchableOpacity,
     StyleSheet,
     AsyncStorage,
 } from 'react-native';
@@ -71,7 +71,7 @@ export default class ScavengerModeTile extends React.Component {
 
     render() {
         return (
-            <TouchableHighlight 
+            <TouchableOpacity 
                 onPress={() => this.props.navigation.navigate('ScavengerMode')} 
                 underlayColor="white" 
             >
@@ -85,7 +85,7 @@ export default class ScavengerModeTile extends React.Component {
                         <Text style={styles.SubText}> Play for points! </Text>
                     </View>
                 </Card>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 
