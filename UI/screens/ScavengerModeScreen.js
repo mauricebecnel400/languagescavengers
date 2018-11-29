@@ -30,6 +30,7 @@ export default class ScavengerMode extends React.Component {
             correct: false,
             incorrect: false,
             incorrectGuesses: [],
+            translations: [],
         };
         this.handleCameraClick = this.handleCameraClick.bind(this);
         this.handleSkipClick = this.handleSkipClick.bind(this);
@@ -45,13 +46,24 @@ export default class ScavengerMode extends React.Component {
         this.updateUserData();
     }
 
+    translateDictionary = async () => {
+        return axios({
+            method: 'post',
+            url: vocabDictionary.urlApi +'/translate',
+            data: vocabDictionary.DictionaryEnglish,
+        });
+    }
+
     updateUserData = async () => {
         let currentWord = await this.getCurrentWord();
         let score = await this.getScore();
+        let translations = await this.translateDictionary();
         this.setState({
             currentWord,
             score,
+            translations,
         });
+        console.log(this.state.translations);
     }
 
     getScore = async () => {
@@ -282,7 +294,7 @@ async function takePhotoAsync(){
 
     // Assume "photo" is the name of the form field the server expects
     formData.append('photo', { uri: localUri, name: filename, type });
-    let language = 'yi';
+    let language = await AsyncStorage.getItem('CurrentLanguage');
     formData.append(language);
     return axios({
         method: 'post',

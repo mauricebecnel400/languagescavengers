@@ -66,6 +66,4 @@ const styles =  StyleSheet.create({
         textAlign: 'left',
         fontWeight: 'bold',
     }
-
-
 });

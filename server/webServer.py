@@ -39,8 +39,9 @@ def post():
 
 
 @app.route('/translate', methods = ["POST"])
-def trans():
+def translate():
     try:
+        print('WE ARE TRANSLATING STUFF')
         vals = request.values.dicts[1].to_dict(flat=False)
         vals = list(vals.items())[0][0]
         print("The language is: ", vals)
