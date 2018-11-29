@@ -14,6 +14,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import vocabDictionary from '../data/vocabDictionary';
 import Card from '../components/Card';
 import LanguageButton from '../components/ButtonLanguage';
 import axios from 'axios';
@@ -41,9 +42,29 @@ export default class SettingScreen extends React.Component{
         try {
             await AsyncStorage.setItem('CurrentLanguage', code);
             await this.setLocalCurrentLanguage();
+            let value = await this.translateDictionary(); 
+            value = value.data.translation;
+            await AsyncStorage.setItem('Translations', JSON.stringify(value));
         } catch(error){
             alert(error);
         }  
+    }
+
+    translateDictionary = async () => {
+        try {
+            let language = this.state.currentLanguage;
+            // console.log(language);
+            let payload = vocabDictionary.DictionaryEnglish.slice();
+            payload.unshift(language);
+            return await axios({
+                method: 'post',
+                url: vocabDictionary.urlApi +'/translate',
+                data: payload,
+            });
+        } catch (error){
+            // alert(error);
+            alert('Huh... Can\'t grab your 💩');
+        }
     }
 
     setLocalCurrentLanguage = async () => {

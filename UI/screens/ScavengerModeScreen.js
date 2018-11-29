@@ -43,34 +43,35 @@ export default class ScavengerMode extends React.Component {
     };
 
     componentDidMount(){
+        this.grabDictionary();
         this.updateUserData();
     }
 
-    translateDictionary = async () => {
+    grabDictionary = async () => {
         try {
-            let language = await AsyncStorage.getItem('CurrentLanguage');
-            // console.log(language);
-            let payload = vocabDictionary.DictionaryEnglish.slice();
-            payload.unshift(language);
-            return await axios({
-                method: 'post',
-                url: vocabDictionary.urlApi +'/translate',
-                data: payload,
-            });
-        } catch (error){
-            alert('Huh... Can\'t grab your 💩');
+            let translations = await AsyncStorage.getItem('Translations');
+            translations = JSON.parse(translations);
+            this.setState({
+                translations,
+            })
+        } catch (error) {
+            alert(error);
         }
     }
 
     updateUserData = async () => {
-        let currentWord = await this.getCurrentWord();
-        let score = await this.getScore();
-        let translations = await this.translateDictionary();
-        this.setState({
-            currentWord,
-            score,
-            translations,
-        });
+        try {
+            this.setState({loading: true});
+            let currentWord = await this.getCurrentWord();
+            let score = await this.getScore();
+            this.setState({
+                currentWord,
+                score,
+                loading: false,
+            });
+        } catch (error) {
+            alert(error);
+        }
     }
 
     getScore = async () => {
@@ -94,9 +95,9 @@ export default class ScavengerMode extends React.Component {
             let value = await AsyncStorage.getItem('ScavengerModeCurrentWord');
             if (value !== null){
                 let index = parseInt(value);
-                return vocabDictionary.DictionarySpanish[index];
+                return this.state.translations[index];
             } else {
-                let word = vocabDictionary.DictionarySpanish[0];
+                let word = this.state.translations[0];
                 await AsyncStorage.setItem('ScavengerModeCurrentWord', '0');
                 return word;
             }
@@ -111,8 +112,7 @@ export default class ScavengerMode extends React.Component {
         let index = 0;
         if (value !== null) {
             index = parseInt(value);
-            // index = (index + 1) % vocabDictionary.DictionarySpanishSpanish.length
-            index = Math.floor(Math.random()*vocabDictionary.DictionarySpanish.length)
+            index = (index + 1) % this.state.translations.length;
         } else {
             await this.getCurrentWord();
         }
@@ -130,8 +130,9 @@ export default class ScavengerMode extends React.Component {
     
     handleSkipClick = async () => {
         let index = await this.incrementCurrentWord();
+        let translations = this.state.translations;
         this.setState({
-            currentWord: vocabDictionary.DictionarySpanish[index],
+            currentWord: translations[index],
         })
     }
 
@@ -157,10 +158,11 @@ export default class ScavengerMode extends React.Component {
                 if (compare.toUpperCase().includes(currentWord.toUpperCase())){
                     await this.incrementScore();
                     let index = await this.incrementCurrentWord();
+                    let translations = this.state.translations;
                     this.setState({
                         loading: false,
                         correct: true,
-                        currentWord: vocabDictionary.DictionarySpanish[index],
+                        currentWord: translations[index],
                     })
                 } else {
                     let temp = response.data.replace(/'/g, '"');
@@ -226,7 +228,7 @@ export default class ScavengerMode extends React.Component {
                             <Text style={styles.CurrentWord}> Total points: {this.state.score}</Text>
                         </View>
                         <View style={styles.SubHeader}>
-                            <Text style={styles.CurrentWord}> {vocabDictionary.DictionarySpanish[this.state.previousWordIndex]}</Text>
+                            <Text style={styles.CurrentWord}> {this.state.translations[this.state.previousWordIndex]}</Text>
                             <Text style={styles.GuessResultsTranslate}> {vocabDictionary.DictionaryEnglish[this.state.previousWordIndex]} </Text>
                         </View>
                     </CardScroll>
