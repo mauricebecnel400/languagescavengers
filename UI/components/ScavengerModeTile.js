@@ -81,14 +81,8 @@ export default class ScavengerModeTile extends React.Component {
                         <Text style={styles.TileHeaderText}> Scavenger Mode </Text>
                     </View>
                     <View style={styles.SubHeader}>
-                        <View style={styles.Data}>
-                            <Text style={styles.SubText}> Current Word  </Text>
-                            <Text style={styles.userData}> {this.state.currentWord} </Text>
-                        </View>
-                        <View style={styles.Data}>
-                            <Text style={styles.SubText}> Overall Score  </Text>
-                            <Text style={styles.userData}> {this.state.score} </Text>
-                        </View>
+                        <Text style={styles.SubText}> Try to find the word we give you. </Text>
+                        <Text style={styles.SubText}> Play for points! </Text>
                     </View>
                 </Card>
             </TouchableHighlight>
@@ -118,11 +112,11 @@ const styles =  StyleSheet.create({
     },
     SubHeader: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
+        padding: 10,
     },
     SubText: {
-        fontSize: 17,
-        padding: 10,
+        fontSize: 15,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
         textAlign: 'left',

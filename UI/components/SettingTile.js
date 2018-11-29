@@ -20,7 +20,7 @@ export default class SettingTile extends React.Component {
              >
                   <Card>
                       <View style={styles.Header}>
-                          <FontAwesome name="search" size={30} style={styles.MagnifyingGlass} />
+                          <FontAwesome name="cogs" size={30} style={styles.MagnifyingGlass} />
                           <Text style={styles.TileHeaderText}> Settings </Text>
                       </View>
                       <View style={styles.SubHeader}>
