@@ -41,14 +41,11 @@ def post():
 @app.route('/translate', methods = ["POST"])
 def translate():
     try:
-        print('WE ARE TRANSLATING STUFF')
-        vals = request.values.dicts[1].to_dict(flat=False)
-        vals = list(vals.items())[0][0]
-        print("The language is: ", vals)
-        lang = vals
+        words = json.loads(request.data)[1:]
+        lang = json.loads(request.data)[0]
     except:
+        words = ["Sorry"]
         lang = "es"
-    words = ["one", "two", "three", "four"]
     translation = [NN.translate(elem, lang) for elem in words]
     jsonval = json.dumps({"words":words, "translation":translation})
     return jsonval
