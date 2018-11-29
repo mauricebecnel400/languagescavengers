@@ -49,11 +49,11 @@ export default class ScavengerMode extends React.Component {
     translateDictionary = async () => {
         try {
             let language = await AsyncStorage.getItem('CurrentLanguage');
-            let package = vocabDictionary.DictionaryEnglish.unshift(language);
+            let payload = vocabDictionary.DictionaryEnglish.unshift(language);
             return axios({
                 method: 'post',
                 url: vocabDictionary.urlApi +'/translate',
-                data: package,
+                data: payload,
             });
         } catch (error){
             alert('Huh... Can\'t grab your 💩');

@@ -40,6 +40,7 @@ def post():
 
 @app.route('/translate', methods = ["POST"])
 def translate():
+    print("hello")
     try:
         words = json.loads(request.data)[1:]
         lang = json.loads(request.data)[0]
