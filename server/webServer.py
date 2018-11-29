@@ -4,7 +4,7 @@ import classifier
 import numpy as np
 import cv2
 import base64
-import werkzeug as wk
+import json
 
 
 
@@ -36,6 +36,21 @@ def post():
         labels = ''
     print(labels)
     return str(labels)
+
+
+@app.route('/translate', methods = ["POST"])
+def trans():
+    try:
+        vals = request.values.dicts[1].to_dict(flat=False)
+        vals = list(vals.items())[0][0]
+        print("The language is: ", vals)
+        lang = vals
+    except:
+        lang = "es"
+    words = ["one", "two", "three", "four"]
+    translation = [NN.translate(elem, lang) for elem in words]
+    jsonval = json.dumps({"words":words, "translation":translation})
+    return jsonval
 
 
 app.run( host='localhost', port = 8088 )

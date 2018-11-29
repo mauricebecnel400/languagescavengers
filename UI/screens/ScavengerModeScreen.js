@@ -296,7 +296,7 @@ async function takePhotoAsync(){
 
     // Assume "photo" is the name of the form field the server expects
     formData.append('photo', { uri: localUri, name: filename, type });
-    let language = 'es';
+    let language = 'yi';
     formData.append(language);
     return axios({
         method: 'post',
