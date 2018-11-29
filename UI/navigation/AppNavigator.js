@@ -4,8 +4,6 @@ import {
 import HomeScreen from '../screens/HomeScreen';
 import ScavengerModeScreen from '../screens/ScavengerModeScreen';
 import SettingScreen from '../screens/SettingScreen';
-import LanguageSelectScreen from '../screens/LanguageSelectScreen';
-import VolumeScreen from '../screens/VolumeScreen';
 import DiscoveryModeScreen from '../screens/DiscoveryModeScreen';
 
   const AppNavigator = createStackNavigator(
@@ -21,12 +19,6 @@ import DiscoveryModeScreen from '../screens/DiscoveryModeScreen';
       },
       SettingMode: {
         screen: SettingScreen
-      },
-      LanguageSelectMode: {
-        screen: LanguageSelectScreen
-      },
-      VolumeMode: {
-        screen: VolumeScreen
       },
     },
     {

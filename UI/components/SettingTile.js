@@ -41,7 +41,6 @@ const styles =  StyleSheet.create({
     Header: {
         flex: 1,
         flexDirection: 'row',
-
     },
     MagnifyingGlass: {
         padding: 10,

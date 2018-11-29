@@ -13,6 +13,7 @@ import CardScroll from '../components/CardScroll';
 import ButtonCameraLarge from '../components/ButtonCameraLarge'
 import Card from '../components/Card';
 import axios from 'axios';
+import vocabDictionary from '../data/vocabDictionary';
 
 export default class DiscoveryModeScreen extends React.Component {
 
@@ -160,7 +161,7 @@ async function takePhotoAsync(){
     formData.append(language);
     return axios({
         method: 'post',
-        url: 'https://e34f70a6.ngrok.io/post',
+        url: vocabDictionary.urlApi + '/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',

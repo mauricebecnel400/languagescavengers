@@ -12,9 +12,9 @@ import {
   TouchableHighlight,
   StyleSheet,
 } from 'react-native';
-
-import LanguageSelectTile from '../components/LanguageSelectTile';
-import VolumeTile from '../components/VolumeTile';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import CardScroll from '../components/CardScroll';
+import axios from 'axios';
 
 
 export default class SettingScreen extends React.Component{
@@ -22,15 +22,16 @@ export default class SettingScreen extends React.Component{
       headerTransparent: true
     };
 
+
     render(){
         return (
             <ScrollView style={styles.container}>
-                <View>
-                    <View style={styles.container}>
-                        <LanguageSelectTile navigation={this.props.navigation}/>
-                        <VolumeTile navigation={this.props.navigation}/>
+                <CardScroll>
+                    <View style={styles.Header}>
+                        <FontAwesome name="cogs" size={30} style={styles.Icon} />
+                        <Text style={styles.TileHeaderText}> Settings </Text>
                     </View>
-                </View>
+                </CardScroll>
             </ScrollView>
         )
     }
@@ -41,21 +42,22 @@ const styles =  StyleSheet.create({
         backgroundColor: '#ADD8E6',
         paddingTop: 35,
     },
-    earthcontainer: {
-        width: '100%',
-        alignItems: 'center',
+    Header: {
+        flex: 1,
+        flexDirection: 'row',
     },
-    logoText: {
+    TileHeaderText: {
         fontSize: 30,
+        paddingTop: 20,
         color: 'rgba(96,100,109, 1)',
         lineHeight: 24,
-        textAlign: 'center',
+        textAlign: 'left',
         fontWeight: 'bold',
     },
-    earth: {
-        resizeMode: 'contain',
+    Icon: {
+        padding: 10,
+        color: 'rgba(96,100,109, 1)',
     },
-
     headerSubText: {
         fontSize: 14,
         color: 'rgba(96,100,109, 1)',

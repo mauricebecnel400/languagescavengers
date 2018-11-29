@@ -1,19 +1,3 @@
-/*****************************************************************************************
- * Team: Language Scavengers
- * Date: 11/13/2018
- * Description: This screen will be for Scavenger Mode.
- * Display:
- *      - Word to find
- *      - points at stake
- *      - Current score
- *
- * Buttons:
- *      - Camera Button
- *          -goes to camera
- *      - Skip Button
- *          -finds another word to be found
- *
- *****************************************************************************************/
 import React from 'react';
 import {
     View,
@@ -302,7 +286,7 @@ async function takePhotoAsync(){
     formData.append(language);
     return axios({
         method: 'post',
-        url: 'https://e34f70a6.ngrok.io/post',
+        url: vocabDictionary.urlApi +'/post',
         data: formData,
         headers: {
             'contentt-type': 'multipart/form-data',
