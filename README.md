@@ -1,4 +1,4 @@
-![Logo](https://github.com/mauricebecnel400/languagescavengers/blob/90a46c117e9a62225be061612fe40011b0fdf10a/lang_Logo.png)
+![Logo](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/LanguageScavengers.png)
 
 ## Authors:
 Maurice Becnel, Jimmie Hagle, Boaz Cogan, Draven Pena
