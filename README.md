@@ -9,12 +9,19 @@ Maurice Becnel, Jimmie Hagle, Boaz Cogan, Draven Pena
 ## [Installation Directions](https://github.com/mauricebecnel400/languagescavengers/blob/master/README.md#installation-directions-1)
 
 # ScreenShots
-![HomeMenu] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/HomeMenu.PNG)
-![Settings] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/Settings.PNG)
-![DiscoveryMode] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryMode.PNG)
-![DiscoveryModeResults] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryModeResults.PNG)
-![ScavengerMode] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerMode.PNG)
+##### Home Screen
+![HomeMenu] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/HomeMenu.png)
+
+![Settings] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/Settings.png)
+
+![DiscoveryMode] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryMode.png)
+
+![DiscoveryModeResults] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryModeResults.png)
+
+![ScavengerMode] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerMode.png)
+
 ![ScavengerModeResults] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerModeResults.PNG)
+
 
 # Report
 ### "Phase 3: Design"
