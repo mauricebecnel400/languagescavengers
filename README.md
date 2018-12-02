@@ -4,23 +4,23 @@
 Maurice Becnel, Jimmie Hagle, Boaz Cogan, Draven Pena
 
 # Contents
-## [ScreenShots] (https://github.com/mauricebecnel400/languagescavengers/blob/master/README.md#screenshots-1)
+## [ScreenShots](https://github.com/mauricebecnel400/languagescavengers/blob/master/README.md#screenshots-1)
 ## [Report](https://github.com/mauricebecnel400/languagescavengers/blob/master/README.md#report-1)
 ## [Installation Directions](https://github.com/mauricebecnel400/languagescavengers/blob/master/README.md#installation-directions-1)
 
 # ScreenShots
 ##### Home Screen
-![HomeMenu] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/HomeMenu.png)
+![HomeMenu](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/HomeMenu.png)
 
-![Settings] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/Settings.png)
+![Settings](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/Settings.png)
 
-![DiscoveryMode] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryMode.png)
+![DiscoveryMode](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryMode.png)
 
-![DiscoveryModeResults] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryModeResults.png)
+![DiscoveryModeResults](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryModeResults.png)
 
-![ScavengerMode] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerMode.png)
+![ScavengerMode](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerMode.png)
 
-![ScavengerModeResults] (https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerModeResults.PNG)
+![ScavengerModeResults](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerModeResults.PNG)
 
 
 # Report
