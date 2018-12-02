@@ -10,15 +10,15 @@ Maurice Becnel, Jimmie Hagle, Boaz Cogan, Draven Pena
 
 # ScreenShots
 ##### Home Screen
-![HomeMenu](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/HomeMenu.png)
+![HomeMenu](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/HomeMenu.PNG)
 
-![Settings](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/Settings.png)
+![Settings](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/Settings.PNG)
 
 ![DiscoveryMode](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryMode.PNG)
 
 ![DiscoveryModeResults](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryModeResults.PNG)
 
-![ScavengerMode](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerMode.png)
+![ScavengerMode](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerMode.PNG)
 
 ![ScavengerModeResults](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerModeResults.PNG)
 
