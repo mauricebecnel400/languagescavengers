@@ -16,7 +16,7 @@ Maurice Becnel, Jimmie Hagle, Boaz Cogan, Draven Pena
 
 ![DiscoveryMode](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryMode.PNG)
 
-![DiscoveryModeResults](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryModeResults.png)
+![DiscoveryModeResults](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/DiscoveryModeResults.PNG)
 
 ![ScavengerMode](https://github.com/mauricebecnel400/languagescavengers/blob/Logo/ScavengerMode.png)
 
